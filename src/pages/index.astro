@@ -13,6 +13,26 @@ import App from '../components/app';
 		<meta name="generator" content={Astro.generator} />
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<script is:inline>
+      const isDarkMode = (() => {
+        if (
+          typeof localStorage !== 'undefined' &&
+          localStorage.getItem('is-dark-mode')
+        ) {
+          return localStorage.getItem('is-dark-mode') === 'true'
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return true
+        }
+        return false
+      })()
+
+      if (isDarkMode) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+		</script>
 	</head>
 	<body>
 		<main>

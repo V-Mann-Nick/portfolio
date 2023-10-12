@@ -12,6 +12,7 @@ import {
   onCleanup,
   Show,
 } from 'solid-js'
+import { isServer } from 'solid-js/web'
 
 export type SectionDefinition = {
   key: string
@@ -68,25 +69,30 @@ const Section: Component<SectionDefinition> = (props) => {
   )
 }
 
-const [isDarkMode, setIsDarkMode] = createSignal(false)
-
-createEffect(() => {
-  if (isDarkMode()) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
-})
-
-const DarkModeToggle: Component<{ class?: string }> = (props) => (
-  <Button
-    onClick={() => setIsDarkMode((prev) => !prev)}
-    class={props.class}
-    shape="circle"
-  >
-    {isDarkMode() ? <FaSolidMoon size={20} /> : <FaSolidSun size={20} />}
-  </Button>
+const [isDarkMode, setIsDarkMode] = createSignal(
+  isServer ? null : document.documentElement.classList.contains('dark')
 )
+
+const onDarkModeChange = (isDarkMode: boolean) => {
+  localStorage.setItem('is-dark-mode', isDarkMode ? 'true' : 'false')
+  setIsDarkMode(isDarkMode)
+  if (isDarkMode) document.documentElement.classList.add('dark')
+  else document.documentElement.classList.remove('dark')
+}
+
+const DarkModeToggle: Component<{ class?: string }> = (props) => {
+  return (
+    <Button
+      onClick={() => onDarkModeChange(!isDarkMode())}
+      class={props.class}
+      shape="circle"
+    >
+      <Show when={isDarkMode() !== null}>
+        {isDarkMode() ? <FaSolidMoon size={20} /> : <FaSolidSun size={20} />}
+      </Show>
+    </Button>
+  )
+}
 
 const navigationItemStyles = tw.toggle({
   base: {
