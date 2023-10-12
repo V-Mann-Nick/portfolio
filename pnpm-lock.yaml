@@ -7,6 +7,9 @@ dependencies:
   '@astrojs/tailwind':
     specifier: ^5.0.2
     version: 5.0.2(astro@3.2.4)(tailwindcss@3.3.3)
+  '@fontsource-variable/fira-code':
+    specifier: ^5.0.13
+    version: 5.0.13
   astro:
     specifier: ^3.2.4
     version: 3.2.4
@@ -920,6 +923,10 @@ packages:
     resolution: {integrity: sha512-HxjQ8Qn+4SI3/AFv6sOrDB+g6PpUTDwSJiQqOrnneEk8L71161srI9gjzzZvYVbzHiVg/BvcH95+cK/zfIt4pg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fontsource-variable/fira-code@5.0.13:
+    resolution: {integrity: sha512-dzmEk2tuvUcz/pcf9vhSir8K8G7fIdmJA7E5t1MTD/2s0vjbBDVCqYr4gC84L8c/XzmwtXg56GhY6rcl91JFRA==}
+    dev: false
 
   /@humanwhocodes/config-array@0.11.11:
     resolution: {integrity: sha512-N2brEuAadi0CcdeMXUkhbZB84eskAc8MEX1By6qEchoVywSgXPIjou4rYsl0V3Hj0ZnuGycGCjdNgockbzeWNA==}
