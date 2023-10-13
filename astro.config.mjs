@@ -6,5 +6,5 @@ import { defineConfig } from 'astro/config'
  * @type {import('astro/types').AstroConfig}
  */
 export default defineConfig({
-  integrations: [solid(), tailwind()],
+  integrations: [solid(), tailwind({ applyBaseStyles: false })],
 })

@@ -1,3 +1,4 @@
+import typography from '@tailwindcss/typography'
 import daisyui from 'daisyui'
 import defaultTheme from 'tailwindcss/defaultTheme'
 
@@ -14,7 +15,7 @@ export default {
       ],
     },
   },
-  plugins: [daisyui],
+  plugins: [daisyui, typography],
   daisyui: {
     logs: false,
     themes: [
@@ -74,6 +75,10 @@ export default {
           success: '#A3BE8C',
           warning: '#D08770',
           error: '#BF616A',
+
+          '.tooltip::before': {
+            'background-color': '#434c5e',
+          },
         },
       },
     ],

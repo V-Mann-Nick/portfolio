@@ -1,4 +1,5 @@
 import { DarkModeToggle } from './dark-mode-toggle'
+import { Experience } from './experience'
 import { Landing } from './landing'
 import { Navigation } from './navigation'
 import { Section } from './section'
@@ -8,9 +9,9 @@ import { type Component, For, Show } from 'solid-js'
 
 const sectionDefinitions: SectionDefinition[] = [
   {
-    key: 'about',
-    label: 'About',
-    content: <></>,
+    key: 'experience',
+    label: 'Experience',
+    content: <Experience />,
   },
   {
     key: 'projects',
@@ -26,7 +27,7 @@ const sectionDefinitions: SectionDefinition[] = [
 
 export const App: Component = () => {
   return (
-    <main class="min-h-screen bg-base-100 text-base-content transition-colors duration-100 ease-linear">
+    <main class="min-h-screen bg-base-300 text-base-content transition-colors duration-100 ease-linear">
       <DarkModeToggle class="absolute right-5 top-5" />
       <Landing />
       <div>
