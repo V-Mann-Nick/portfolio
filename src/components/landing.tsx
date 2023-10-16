@@ -1,3 +1,5 @@
+import meImage from '../assets/me.jpg'
+
 import { Section } from './section'
 
 import { type IconTypes } from 'solid-icons'
@@ -28,7 +30,7 @@ export const Landing: Component = () => (
     key="landing"
     content={
       <>
-        <img src="/me.png" class="h-52 w-52 rounded-full object-cover" />
+        <img src={meImage.src} class="h-52 w-52 rounded-full object-cover" />
         <div class="flex flex-col items-center gap-2">
           <h1 class="text-4xl">Nicklas Sedlock,</h1>
           <h2 class="text-2xl">Programmer</h2>

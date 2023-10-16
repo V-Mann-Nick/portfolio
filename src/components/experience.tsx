@@ -1,3 +1,5 @@
+import delphaiLogo from '../assets/delphai.svg'
+
 import { ExperienceBox } from './experience-box'
 
 import type { Component } from 'solid-js'
@@ -7,8 +9,8 @@ export const Experience: Component = () => (
     <ExperienceBox
       title="delphai"
       key="delphai"
-      image="/delphai.svg"
-      link={'https://delphai.com'}
+      image={delphaiLogo.src}
+      link="https://delphai.com"
       position="Fullstack Developer"
       techStack={['react', 'keycloak']}
       more={
