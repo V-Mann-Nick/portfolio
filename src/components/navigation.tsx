@@ -1,20 +1,25 @@
 import { DarkModeToggle } from './dark-mode-toggle'
+import { useLocale } from './locale-provider'
+import { LocaleSwitcher } from './locale-switcher'
 import { currentSection } from './state'
 import type { SectionDefinition } from './types'
 
 import { type Component, For } from 'solid-js'
 
-const NavigationItem: Component<SectionDefinition> = (props) => (
-  <a
-    class="btn btn-info rounded-none px-6 normal-case"
-    classList={{
-      'btn-info': currentSection() === props.key,
-    }}
-    href={`#${props.key}`}
-  >
-    {props.label}
-  </a>
-)
+const NavigationItem: Component<SectionDefinition> = (props) => {
+  const { messages } = useLocale()
+  return (
+    <a
+      class="btn btn-info rounded-none px-6 normal-case"
+      classList={{
+        'btn-info': currentSection() === props.key,
+      }}
+      href={`#${props.key}`}
+    >
+      {props.label(messages())}
+    </a>
+  )
+}
 
 export const Navigation: Component<{ sections: SectionDefinition[] }> = (
   props
@@ -29,6 +34,9 @@ export const Navigation: Component<{ sections: SectionDefinition[] }> = (
         )}
       </For>
     </ul>
-    <DarkModeToggle class="self-center" />
+    <div>
+      <DarkModeToggle btnClass="rounded-none h-full" />
+      <LocaleSwitcher btnClass="rounded-none" />
+    </div>
   </header>
 )

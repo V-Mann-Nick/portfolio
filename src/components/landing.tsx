@@ -3,6 +3,7 @@ import FaBrandsLinkedin from '~icons/fa-brands/linkedin'
 
 import meImage from '../assets/me.jpg'
 
+import { useLocale } from './locale-provider'
 import { Section } from './section'
 
 import { type Component, type ComponentProps, For, type JSX } from 'solid-js'
@@ -26,33 +27,38 @@ const socialMedia: SocialMedia[] = [
   },
 ]
 
+const LandingContent: Component = () => {
+  const { messages } = useLocale()
+  return (
+    <>
+      <img src={meImage.src} class="h-52 w-52 rounded-full object-cover" />
+      <div class="flex flex-col items-center gap-2">
+        <h1 class="text-4xl">Nicklas Sedlock</h1>
+        <h2 class="text-2xl">{messages().landing.subtitle}</h2>
+        <div class="flex gap-1">
+          <For each={socialMedia}>
+            {(media) => (
+              <div class="tooltip tooltip-bottom" data-tip={media.title}>
+                <a
+                  class="btn btn-circle btn-ghost"
+                  href={media.href}
+                  target="_blank"
+                >
+                  <media.Icon style={{ 'font-size': '1.5rem' }} />
+                </a>
+              </div>
+            )}
+          </For>
+        </div>
+      </div>
+    </>
+  )
+}
+
 export const Landing: Component = () => (
   <Section
     key="landing"
-    Content={() => (
-      <>
-        <img src={meImage.src} class="h-52 w-52 rounded-full object-cover" />
-        <div class="flex flex-col items-center gap-2">
-          <h1 class="text-4xl">Nicklas Sedlock,</h1>
-          <h2 class="text-2xl">Programmer</h2>
-          <div class="flex gap-1">
-            <For each={socialMedia}>
-              {(media) => (
-                <div class="tooltip tooltip-bottom" data-tip={media.title}>
-                  <a
-                    class="btn btn-circle btn-ghost"
-                    href={media.href}
-                    target="_blank"
-                  >
-                    <media.Icon style={{ 'font-size': '1.5rem' }} />
-                  </a>
-                </div>
-              )}
-            </For>
-          </div>
-        </div>
-      </>
-    )}
+    Content={LandingContent}
     class="flex h-screen flex-col items-center justify-center gap-5"
     noNavigate
   />

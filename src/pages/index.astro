@@ -1,10 +1,13 @@
 ---
 import { App } from '../components/app';
+import { getLocale } from "astro-i18n-aut";
 import '@fontsource-variable/fira-code';
 import '../base.css';
+
+const locale = getLocale(Astro.url);
 ---
 
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -34,6 +37,6 @@ import '../base.css';
 		</script>
 	</head>
 	<body>
-    <App client:visible />
+    <App client:visible locale={locale} />
 	</body>
 </html>
