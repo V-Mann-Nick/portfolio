@@ -1,21 +1,12 @@
-import { isDarkMode, setIsDarkMode } from './state'
+import IconFaSolidMoon from '~icons/fa-solid/moon'
+import IconFaSolidSun from '~icons/fa-solid/sun'
 
-import { FaSolidMoon, FaSolidSun } from 'solid-icons/fa'
-import { type Component, Show } from 'solid-js'
+import { initializeDarkModeState, isDarkMode, onDarkModeChange } from './state'
 
-const onDarkModeChange = (isDarkMode: boolean) => {
-  localStorage.setItem('is-dark-mode', isDarkMode ? 'true' : 'false')
-  setIsDarkMode(isDarkMode)
-  if (isDarkMode) {
-    document.documentElement.classList.add('dark')
-    document.documentElement.dataset.theme = 'nord-dark'
-  } else {
-    document.documentElement.classList.remove('dark')
-    document.documentElement.dataset.theme = 'nord-light'
-  }
-}
+import { type Component, onMount, Show } from 'solid-js'
 
 export const DarkModeToggle: Component<{ class?: string }> = (props) => {
+  onMount(initializeDarkModeState)
   return (
     <div
       class={['tooltip', 'tooltip-left', props.class].filter(Boolean).join(' ')}
@@ -26,7 +17,11 @@ export const DarkModeToggle: Component<{ class?: string }> = (props) => {
         onClick={() => onDarkModeChange(!isDarkMode())}
       >
         <Show when={isDarkMode() !== null}>
-          {isDarkMode() ? <FaSolidMoon size={20} /> : <FaSolidSun size={20} />}
+          {isDarkMode() ? (
+            <IconFaSolidMoon font-size="1rem" />
+          ) : (
+            <IconFaSolidSun font-size="1rem" />
+          )}
         </Show>
       </button>
     </div>

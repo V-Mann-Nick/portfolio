@@ -1,13 +1,14 @@
+import FaBrandsGithub from '~icons/fa-brands/github'
+import FaBrandsLinkedin from '~icons/fa-brands/linkedin'
+
 import meImage from '../assets/me.jpg'
 
 import { Section } from './section'
 
-import { type IconTypes } from 'solid-icons'
-import { FaBrandsGithub, FaBrandsLinkedin } from 'solid-icons/fa'
-import { type Component, For } from 'solid-js'
+import { type Component, type ComponentProps, For, type JSX } from 'solid-js'
 
 type SocialMedia = {
-  Icon: IconTypes
+  Icon: (props: ComponentProps<'svg'>) => JSX.Element
   title: string
   href: string
 }
@@ -43,7 +44,7 @@ export const Landing: Component = () => (
                     href={media.href}
                     target="_blank"
                   >
-                    <media.Icon size={30} />
+                    <media.Icon style={{ 'font-size': '1.5rem' }} />
                   </a>
                 </div>
               )}

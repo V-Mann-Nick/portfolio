@@ -1,9 +1,11 @@
+import FaSolidChevronDown from '~icons/fa-solid/chevron-down'
+import FaSolidChevronUp from '~icons/fa-solid/chevron-up'
+
 import { ContentFrame } from './content-frame'
 import type { TechKey } from './tech'
 import techStack from './tech'
 
 import { Collapse } from 'solid-collapse'
-import { FaSolidChevronDown, FaSolidChevronUp } from 'solid-icons/fa'
 import {
   type Component,
   createMemo,
