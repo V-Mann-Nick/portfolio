@@ -35,7 +35,7 @@ export const Section: Component<
       ref={ref!}
       class={['min-h-screen', props.class].filter(Boolean).join(' ')}
     >
-      {props.content}
+      <props.Content />
     </section>
   )
 }

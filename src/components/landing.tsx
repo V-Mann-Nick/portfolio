@@ -29,7 +29,7 @@ const socialMedia: SocialMedia[] = [
 export const Landing: Component = () => (
   <Section
     key="landing"
-    content={
+    Content={() => (
       <>
         <img src={meImage.src} class="h-52 w-52 rounded-full object-cover" />
         <div class="flex flex-col items-center gap-2">
@@ -52,7 +52,7 @@ export const Landing: Component = () => (
           </div>
         </div>
       </>
-    }
+    )}
     class="flex h-screen flex-col items-center justify-center gap-5"
     noNavigate
   />

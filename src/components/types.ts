@@ -1,8 +1,8 @@
-import type { JSX } from 'solid-js'
+import type { Component } from 'solid-js'
 
 export type SectionDefinition = {
   key: string
   label: string
-  content: JSX.Element
+  Content: Component
   noNavigate?: boolean
 }

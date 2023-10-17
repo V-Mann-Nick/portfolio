@@ -11,17 +11,17 @@ const sectionDefinitions: SectionDefinition[] = [
   {
     key: 'experience',
     label: 'Experience',
-    content: <Experience />,
+    Content: Experience,
   },
   {
     key: 'projects',
     label: 'Projects',
-    content: <></>,
+    Content: () => <></>,
   },
   {
     key: 'contact',
     label: 'Contact',
-    content: <></>,
+    Content: () => <></>,
   },
 ]
 
