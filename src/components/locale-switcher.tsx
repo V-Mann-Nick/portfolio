@@ -25,6 +25,7 @@ export const LocaleSwitcher: Component<{ btnClass?: string }> = (props) => {
     <DropdownMenu
       label={label()}
       items={localeOptions}
+      dropdownClass="dropdown-end"
       triggerChildren={
         <>
           <IconFaSolidGlobe />
@@ -34,7 +35,7 @@ export const LocaleSwitcher: Component<{ btnClass?: string }> = (props) => {
       triggerClass={props.btnClass}
       onSelect={(item) => setCurrentLocale(item.key as Locale)}
       currentSelection={currentLocale()}
-      tooltip={{ text: label(), position: 'left' }}
+      tooltip={{ text: label(), class: 'tooltip-left' }}
       extraATagProps={({ key }) => ({ lang: key, hreflang: key })}
     />
   )

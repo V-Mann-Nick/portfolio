@@ -25,15 +25,15 @@ export const DarkModeToggle: Component<{
         data-tip={label()}
       >
         <button
-          class={['btn btn-ghost', props.btnClass].filter(Boolean).join(' ')}
+          class={['btn btn-ghost swap swap-flip', props.btnClass]
+            .filter(Boolean)
+            .join(' ')}
+          classList={{ 'swap-active': isDarkMode() as boolean }}
           onClick={() => onDarkModeChange(!isDarkMode())}
           aria-label={label()}
         >
-          {isDarkMode() ? (
-            <IconFaSolidMoon font-size="1rem" />
-          ) : (
-            <IconFaSolidSun font-size="1rem" />
-          )}
+          <IconFaSolidMoon font-size="1rem" class="swap-on" />
+          <IconFaSolidSun font-size="1rem" class="swap-off" />
         </button>
       </div>
     </Show>

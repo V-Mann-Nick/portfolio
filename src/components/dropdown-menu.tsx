@@ -13,18 +13,19 @@ const clickOutside = clickOutsideDirective
 
 type Item = {
   key: string
-  label?: string
+  label?: JSX.Element
   href?: string
 }
 
 type DropdownProps = {
   label: string
   items: Item[]
+  dropdownClass?: string
   triggerClass?: string
   triggerChildren: JSX.Element
   onSelect: (item: Item) => void
   currentSelection?: string
-  tooltip?: { text: string; position: 'top' | 'bottom' | 'left' | 'right' }
+  tooltip?: { text: string; class?: string }
   extraATagProps?: (item: Item) => JSX.HTMLAttributes<HTMLAnchorElement>
 }
 
@@ -48,7 +49,7 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
 
   const dropdown = (
     <div
-      class="dropdown-end dropdown"
+      class={['dropdown', props.dropdownClass].filter(Boolean).join(' ')}
       classList={{ 'dropdown-open': isExpanded() }}
       use:clickOutside={() => onClose()}
     >
@@ -144,7 +145,7 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
                   classList={{
                     focus: activeDescendantIdx() === idx(),
                     border: isCurrent(),
-                    'border-primary': isCurrent(),
+                    'border-info': isCurrent(),
                   }}
                   {...(props.extraATagProps?.(item) ?? {})}
                 >
@@ -162,7 +163,7 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
     <>
       {props.tooltip ? (
         <div
-          class={`tooltip tooltip-${props.tooltip.position}`}
+          class={['tooltip', props.tooltip.class].filter(Boolean).join(' ')}
           data-tip={props.tooltip.text}
         >
           {dropdown}

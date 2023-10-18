@@ -6,6 +6,9 @@ export default {
   localeSwitcher: {
     label: 'Change language',
   },
+  mobileNavigation: {
+    label: 'Navigation',
+  },
   landing: {
     subtitle: 'Programmer',
   },

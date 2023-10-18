@@ -1,3 +1,6 @@
+import IconFaSolidFlask from '~icons/fa-solid/flask'
+import IconFaSolidLightbulb from '~icons/fa-solid/lightbulb'
+
 import { DarkModeToggle } from './dark-mode-toggle'
 import { Experience } from './experience'
 import type { Locale } from './i18n'
@@ -14,11 +17,13 @@ const sectionDefinitions: SectionDefinition[] = [
   {
     key: 'experience',
     label: (messages) => messages.experience.title,
+    Icon: IconFaSolidFlask,
     Content: Experience,
   },
   {
     key: 'projects',
     label: (messages) => messages.projects.title,
+    Icon: IconFaSolidLightbulb,
     Content: () => <></>,
   },
 ]

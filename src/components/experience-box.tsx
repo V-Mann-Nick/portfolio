@@ -30,8 +30,12 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
   return (
     <ContentFrame>
       <article class="prose max-w-none">
-        <div class="flex items-center justify-around">
-          <a href={props.link} class="h-max w-[30%]">
+        <div class="flex flex-col items-center justify-around sm:flex-row">
+          <a
+            href={props.link}
+            target="_blank"
+            class="h-max w-[min(100%,theme(spacing.72))] sm:w-72"
+          >
             <img src={props.image} alt={props.title} class="my-0" />
           </a>
           <dl>

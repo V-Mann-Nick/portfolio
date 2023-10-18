@@ -25,6 +25,7 @@ export const LocaleProvider: ParentComponent<{ initialLocale: Locale }> = (
     if (defaultLocale === locale) {
       history.pushState(null, '', '/' + location.hash)
     } else history.pushState(null, '', `/${locale}/` + location.hash)
+    document.documentElement.lang = locale
   }
   const messages = () => dictonaries[currentLocale()]
 

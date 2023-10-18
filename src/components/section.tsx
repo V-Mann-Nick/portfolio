@@ -4,7 +4,7 @@ import type { SectionDefinition } from './types'
 import { type Component, createEffect, onCleanup } from 'solid-js'
 
 export const Section: Component<
-  Omit<SectionDefinition, 'label'> & { class?: string }
+  Omit<SectionDefinition, 'label' | 'Icon'> & { class?: string }
 > = (props) => {
   let ref: HTMLElement | undefined
   createEffect(() => {
