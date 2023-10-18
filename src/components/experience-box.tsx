@@ -2,6 +2,7 @@ import FaSolidChevronDown from '~icons/fa-solid/chevron-down'
 import FaSolidChevronUp from '~icons/fa-solid/chevron-up'
 
 import { ContentFrame } from './content-frame'
+import { useLocale } from './locale-provider'
 import type { TechKey } from './tech'
 import techStack from './tech'
 
@@ -19,9 +20,13 @@ type ExperienceBoxProps = {
 }
 
 export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
+  const { messages } = useLocale()
+
   const [isExpanded, setIsExpanded] = createSignal(false)
+
   const moreButtonId = () => `${props.key}-more-button`
   const collapseId = () => `${props.key}-collapsed}`
+
   return (
     <ContentFrame>
       <article class="prose max-w-none">
@@ -30,9 +35,9 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
             <img src={props.image} alt={props.title} class="my-0" />
           </a>
           <dl>
-            <dt>Position:</dt>
+            <dt>{messages().experience.box.position}:</dt>
             <dd>{props.position}</dd>
-            <dt>Tech stack:</dt>
+            <dt>{messages().experience.box.techStack}:</dt>
             <dd>
               <ul class="not-prose flex list-none gap-2">
                 <For each={Array.from(props.techStack)}>
@@ -70,11 +75,11 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
         >
           {isExpanded() ? (
             <>
-              Less <FaSolidChevronUp />
+              {messages().experience.box.less} <FaSolidChevronUp />
             </>
           ) : (
             <>
-              More <FaSolidChevronDown />
+              {messages().experience.box.more} <FaSolidChevronDown />
             </>
           )}
         </button>

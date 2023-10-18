@@ -23,29 +23,27 @@ const sectionDefinitions: SectionDefinition[] = [
   },
 ]
 
-export const App: Component<{ locale: Locale }> = (props) => {
-  return (
-    <LocaleProvider initialLocale={props.locale}>
-      <main class="min-h-screen bg-base-300 text-base-content transition-colors duration-100 ease-linear">
-        <div class="absolute right-5 top-5 flex items-center gap-2">
-          <DarkModeToggle />
-          <LocaleSwitcher />
-        </div>
-        <Landing />
-        <div>
-          <Navigation sections={sectionDefinitions} />
-          <For each={sectionDefinitions}>
-            {(sectionDefinition, idx) => (
-              <>
-                <Section {...sectionDefinition} />
-                <Show when={idx() + 1 < sectionDefinitions.length}>
-                  <div class="divider px-[10%]" />
-                </Show>
-              </>
-            )}
-          </For>
-        </div>
-      </main>
-    </LocaleProvider>
-  )
-}
+export const App: Component<{ locale: Locale }> = (props) => (
+  <LocaleProvider initialLocale={props.locale}>
+    <main class="min-h-screen bg-base-300 text-base-content transition-colors duration-100 ease-linear">
+      <div class="absolute right-5 top-5 flex items-center gap-2">
+        <DarkModeToggle />
+        <LocaleSwitcher />
+      </div>
+      <Landing />
+      <div>
+        <Navigation sections={sectionDefinitions} />
+        <For each={sectionDefinitions}>
+          {(sectionDefinition, idx) => (
+            <>
+              <Section {...sectionDefinition} />
+              <Show when={idx() + 1 < sectionDefinitions.length}>
+                <div class="divider px-[10%]" />
+              </Show>
+            </>
+          )}
+        </For>
+      </div>
+    </main>
+  </LocaleProvider>
+)

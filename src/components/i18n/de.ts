@@ -13,6 +13,12 @@ export default {
   },
   experience: {
     title: 'Erfahrung',
+    box: {
+      position: 'Stelle',
+      techStack: 'Technologie-Stack',
+      more: 'Mehr',
+      less: 'Weniger',
+    },
   },
   projects: {
     title: 'Projekte',

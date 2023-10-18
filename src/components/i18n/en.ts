@@ -11,6 +11,12 @@ export default {
   },
   experience: {
     title: 'Experience',
+    box: {
+      position: 'Position',
+      techStack: 'Tech Stack',
+      more: 'More',
+      less: 'Less',
+    },
   },
   projects: {
     title: 'Projects',

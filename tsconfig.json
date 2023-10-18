@@ -3,6 +3,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    "exactOptionalPropertyTypes": false,
     "types": ["unplugin-icons/types/solid"]
   }, 
   "include": ["src", ".eslintrc.cjs", "tailwind.config.mjs", "astro.config.mjs"]
