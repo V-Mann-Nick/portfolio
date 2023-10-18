@@ -12,27 +12,30 @@ export const DarkModeToggle: Component<{
 }> = (props) => {
   onMount(initializeDarkModeState)
   const { messages } = useLocale()
+  const label = () =>
+    isDarkMode()
+      ? messages().darkModeToggleTooltip.light
+      : messages().darkModeToggleTooltip.dark
   return (
-    <div
-      class={['tooltip', 'tooltip-left', props.class].filter(Boolean).join(' ')}
-      data-tip={
-        isDarkMode()
-          ? messages().darkModeToggleTooltip.light
-          : messages().darkModeToggleTooltip.dark
-      }
-    >
-      <button
-        class={['btn btn-ghost', props.btnClass].filter(Boolean).join(' ')}
-        onClick={() => onDarkModeChange(!isDarkMode())}
+    <Show when={isDarkMode() !== null}>
+      <div
+        class={['tooltip', 'tooltip-left', props.class]
+          .filter(Boolean)
+          .join(' ')}
+        data-tip={label()}
       >
-        <Show when={isDarkMode() !== null}>
+        <button
+          class={['btn btn-ghost', props.btnClass].filter(Boolean).join(' ')}
+          onClick={() => onDarkModeChange(!isDarkMode())}
+          aria-label={label()}
+        >
           {isDarkMode() ? (
             <IconFaSolidMoon font-size="1rem" />
           ) : (
             <IconFaSolidSun font-size="1rem" />
           )}
-        </Show>
-      </button>
-    </div>
+        </button>
+      </div>
+    </Show>
   )
 }

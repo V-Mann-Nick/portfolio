@@ -6,13 +6,7 @@ import type { TechKey } from './tech'
 import techStack from './tech'
 
 import { Collapse } from 'solid-collapse'
-import {
-  type Component,
-  createMemo,
-  createSignal,
-  For,
-  type JSX,
-} from 'solid-js'
+import { type Component, createSignal, For, type JSX } from 'solid-js'
 
 type ExperienceBoxProps = {
   key: string
@@ -26,8 +20,8 @@ type ExperienceBoxProps = {
 
 export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
   const [isExpanded, setIsExpanded] = createSignal(false)
-  const moreButtonId = createMemo(() => `${props.key}-more-button`)
-  const collapseId = createMemo(() => `${props.key}-collapsed}`)
+  const moreButtonId = () => `${props.key}-more-button`
+  const collapseId = () => `${props.key}-collapsed}`
   return (
     <ContentFrame>
       <article class="prose max-w-none">

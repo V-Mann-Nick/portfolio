@@ -3,7 +3,6 @@ import { defaultLocale, type DictI18n, dictonaries, type Locale } from './i18n'
 import {
   type Accessor,
   createContext,
-  createMemo,
   createSignal,
   type ParentComponent,
   useContext,
@@ -27,7 +26,7 @@ export const LocaleProvider: ParentComponent<{ initialLocale: Locale }> = (
       history.pushState(null, '', '/' + location.hash)
     } else history.pushState(null, '', `/${locale}/` + location.hash)
   }
-  const messages = createMemo(() => dictonaries[currentLocale()])
+  const messages = () => dictonaries[currentLocale()]
 
   return (
     <LocaleContext.Provider

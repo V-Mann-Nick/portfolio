@@ -5,6 +5,9 @@ export default {
     light: 'Zu hellem Modus wechseln',
     dark: 'Zu dunklem Modus wechseln',
   },
+  localeSwitcher: {
+    label: 'Sprache verändern',
+  },
   landing: {
     subtitle: 'Programmierer',
   },

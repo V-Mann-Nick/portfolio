@@ -33,6 +33,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }],
   },
   parserOptions: {
     project: ['./tsconfig.json'],

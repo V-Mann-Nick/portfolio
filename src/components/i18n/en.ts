@@ -3,6 +3,9 @@ export default {
     light: 'Switch to light mode',
     dark: 'Switch to dark mode',
   },
+  localeSwitcher: {
+    label: 'Change language',
+  },
   landing: {
     subtitle: 'Programmer',
   },
