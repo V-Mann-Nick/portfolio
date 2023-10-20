@@ -13,6 +13,7 @@ export default {
   },
   landing: {
     subtitle: 'Programmer',
+    scrollDownTooltip: 'Scroll down',
   },
   experience: {
     title: 'Experience',

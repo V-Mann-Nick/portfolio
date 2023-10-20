@@ -142,10 +142,10 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
                   onMouseEnter={() => setActiveDescendantIdx(idx())}
                   onMouseLeave={() => setActiveDescendantIdx(-1)}
                   href={item.href}
-                  class="whitespace-nowrap hover:bg-transparent"
+                  class="whitespace-nowrap border hover:bg-transparent"
                   classList={{
                     focus: activeDescendantIdx() === idx(),
-                    border: isCurrent(),
+                    'border-transparent': !isCurrent(),
                     'border-info': isCurrent(),
                   }}
                   {...(props.extraATagProps?.(item) ?? {})}

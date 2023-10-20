@@ -15,6 +15,7 @@ export default {
   },
   landing: {
     subtitle: 'Programmierer',
+    scrollDownTooltip: 'Nach unten scrollen',
   },
   experience: {
     title: 'Erfahrung',
