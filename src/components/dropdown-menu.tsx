@@ -31,13 +31,13 @@ type DropdownProps = {
 
 export const DropdownMenu: Component<DropdownProps> = (props) => {
   const [isExpanded, setIsExpanded] = createSignal(false)
-  const [activeDescendantIdx, setActiveDescendantIdx] = createSignal(0)
+  const [activeDescendantIdx, setActiveDescendantIdx] = createSignal(-1)
   let menuRef: HTMLUListElement | undefined
   let triggerRef: HTMLButtonElement | undefined
 
   const onClose = (options?: { focusTrigger?: boolean }) => {
     setIsExpanded(false)
-    setActiveDescendantIdx(0)
+    setActiveDescendantIdx(-1)
     if (options?.focusTrigger) {
       triggerRef?.focus()
     }
@@ -65,21 +65,22 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
         }}
         onKeyDown={(event) => {
           if (isExpanded()) return
-          if (event.key === 'ArrowUp') {
+          const handlers = {
+            ArrowUp: () => {
+              setActiveDescendantIdx(props.items.length - 1)
+            },
+            ArrowDown: () => {
+              setActiveDescendantIdx(0)
+            },
+          }
+          if (event.key in handlers) {
             event.preventDefault()
             setIsExpanded(true)
             menuRef?.focus()
-            setActiveDescendantIdx(props.items.length - 1)
-          } else if (event.key === 'ArrowDown') {
-            event.preventDefault()
-            setIsExpanded(true)
-            menuRef?.focus()
-            setActiveDescendantIdx(0)
+            handlers[event.key as keyof typeof handlers]()
           }
         }}
-        class={['btn btn-ghost normal-case', props.triggerClass]
-          .filter(Boolean)
-          .join(' ')}
+        class={['btn btn-ghost', props.triggerClass].filter(Boolean).join(' ')}
       >
         {props.triggerChildren}
       </button>

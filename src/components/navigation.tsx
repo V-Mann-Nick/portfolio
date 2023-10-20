@@ -13,7 +13,7 @@ const NavigationItem: Component<SectionDefinition> = (props) => {
   const { messages } = useLocale()
   return (
     <a
-      class="btn btn-info rounded-none px-6 normal-case"
+      class="btn rounded-none px-6"
       classList={{
         'btn-info': currentSection() === props.key,
       }}
@@ -60,7 +60,7 @@ export const Navigation: Component<{ sections: SectionDefinition[] }> = (
 ) => (
   <nav
     aria-label="Main site navigation"
-    class="sticky top-0 flex h-12 justify-between bg-base-200 px-3 shadow-lg"
+    class="sticky top-0 z-10 flex h-12 justify-between bg-base-200 px-3 shadow-lg"
   >
     <ul class="hidden sm:flex">
       <For each={props.sections}>

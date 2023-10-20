@@ -7,6 +7,10 @@ html {
   @apply scroll-pt-12;
 }
 
+.btn {
+  @apply normal-case;
+}
+
 .collapse-transition {
   transition: height 300ms cubic-bezier(0.65, 0, 0.35, 1);
 }
