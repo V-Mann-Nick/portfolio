@@ -37,6 +37,6 @@ const locale = getLocale(Astro.url);
 		</script>
 	</head>
 	<body>
-    <App client:visible locale={locale} />
+    <App client:load locale={locale} />
 	</body>
 </html>
