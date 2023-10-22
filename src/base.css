@@ -11,8 +11,19 @@ html {
   @apply normal-case;
 }
 
-.collapse-transition {
-  transition: height 300ms cubic-bezier(0.65, 0, 0.35, 1);
+.collapse {
+  transition: height var(--sc-auto-duration) cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* solid-collapse calculates the target height based on scrollHeight which does
+ * not include margins. Because of this the first and the last children of the
+ * collapsed content's descendents may not have margins. */
+.collapse *:first-child {
+  margin-top: 0;
+}
+
+.collapse *:last-child {
+  margin-bottom: 0;
 }
 
 .dropdown > :not(summary,ul):focus-visible {

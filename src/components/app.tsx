@@ -11,6 +11,7 @@ import { Navigation } from './navigation'
 import { Section } from './section'
 import { setCurrentSection } from './state'
 import type { SectionDefinition } from './types'
+import { throttle } from './utils'
 
 import { type Component, For, onCleanup, onMount, Show } from 'solid-js'
 
@@ -30,19 +31,11 @@ export const sectionDefinitions: SectionDefinition[] = [
 ]
 
 export const App: Component<{ locale: Locale }> = (props) => {
+  // Track the currently visible section
   const sectionRefsByKey: Record<string, HTMLElement | undefined> = {}
   onMount(() => {
-    const recomputeDebounce = 200
-    let lastComputeTimestamp = Date.now() - recomputeDebounce // force initial compute
-    let recomputeTimeout: number | undefined = undefined
     const handler = () => {
-      clearTimeout(recomputeTimeout)
       if (!Object.keys(sectionRefsByKey).length) return
-      if (Date.now() - lastComputeTimestamp < recomputeDebounce) {
-        recomputeTimeout = setTimeout(handler, recomputeDebounce)
-        return
-      }
-      lastComputeTimestamp = Date.now()
       const [closestKey] = Object.entries(sectionRefsByKey).reduce(
         ([closestKey, closestDistance], [key, ref]) => {
           if (!ref) return [closestKey, closestDistance] as const
@@ -55,8 +48,9 @@ export const App: Component<{ locale: Locale }> = (props) => {
       setCurrentSection(closestKey)
     }
     handler()
-    document.addEventListener('scroll', handler)
-    onCleanup(() => document.removeEventListener('scroll', handler))
+    const throttledHandler = throttle(handler, 150)
+    document.addEventListener('scroll', throttledHandler)
+    onCleanup(() => document.removeEventListener('scroll', throttledHandler))
   })
   return (
     <LocaleProvider initialLocale={props.locale}>
@@ -66,22 +60,20 @@ export const App: Component<{ locale: Locale }> = (props) => {
           <LocaleSwitcher />
         </div>
         <Landing sectionKey="landing" ref={sectionRefsByKey['landing']} />
-        <div>
-          <Navigation sections={sectionDefinitions} />
-          <For each={sectionDefinitions}>
-            {(sectionDefinition, idx) => (
-              <>
-                <Section
-                  ref={sectionRefsByKey[sectionDefinition.key]}
-                  {...sectionDefinition}
-                />
-                <Show when={idx() + 1 < sectionDefinitions.length}>
-                  <div class="divider px-[10%]" />
-                </Show>
-              </>
-            )}
-          </For>
-        </div>
+        <Navigation sections={sectionDefinitions} />
+        <For each={sectionDefinitions}>
+          {(sectionDefinition, idx) => (
+            <>
+              <Section
+                ref={sectionRefsByKey[sectionDefinition.key]}
+                {...sectionDefinition}
+              />
+              <Show when={idx() + 1 < sectionDefinitions.length}>
+                <div class="divider px-[10%]" />
+              </Show>
+            </>
+          )}
+        </For>
       </main>
     </LocaleProvider>
   )

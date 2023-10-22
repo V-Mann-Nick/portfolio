@@ -23,62 +23,60 @@ const OpenSourceContributions: Component = () => {
 export const Experience: Component = () => {
   const { messages } = useLocale()
   return (
-    <div class="py-12">
-      <div class="flex flex-col gap-8">
-        <ExperienceBox
-          title="delphai"
-          image={delphaiLogo.src}
-          link="https://delphai.com"
-          position={messages().experience.fullstackEngineer}
-          dates={{
-            start: new Date(Date.UTC(2020, 6)),
-            end: new Date(Date.UTC(2022, 4)),
-          }}
-          techStack={[
-            'typescript',
-            'react',
-            'keycloak',
-            'python',
-            'gRPC',
-            'elasticsearch',
-            'kubernetes',
-            'terraform',
-            'docker',
-          ]}
-          more={messages().experience.delphai.more()}
-        />
-        <ExperienceBox
-          title="Citywalx"
-          image={citywalxLogo.src}
-          link="https://citywalx.net"
-          position={messages().experience.fullstackEngineer}
-          dates={{
-            start: new Date(Date.UTC(2021, 11)),
-            end: new Date(Date.UTC(2023, 7)),
-          }}
-          techStack={[
-            'fastApi',
-            'python',
-            'postgresql',
-            'podman',
-            'nomad',
-            'consul',
-            'vault',
-            'terraform',
-            'typescript',
-            'nextjs',
-            'react',
-            'mapbox',
-            'turborepo',
-            'cypress',
-            'gherkinCucumber',
-            'stripe',
-            'keycloak',
-          ]}
-          more={messages().experience.citywalx.more()}
-        />
-        <OpenSourceContributions />
-      </div>
+    <div class="flex flex-col gap-8 py-12">
+      <ExperienceBox
+        title="delphai"
+        image={delphaiLogo.src}
+        link="https://delphai.com"
+        position={messages().experience.fullstackEngineer}
+        dates={{
+          start: new Date(Date.UTC(2020, 6)),
+          end: new Date(Date.UTC(2022, 4)),
+        }}
+        techStack={[
+          'typescript',
+          'react',
+          'keycloak',
+          'python',
+          'gRPC',
+          'elasticsearch',
+          'kubernetes',
+          'terraform',
+          'docker',
+        ]}
+        more={messages().experience.delphai.more()}
+      />
+      <ExperienceBox
+        title="Citywalx"
+        image={citywalxLogo.src}
+        link="https://citywalx.net"
+        position={messages().experience.fullstackEngineer}
+        dates={{
+          start: new Date(Date.UTC(2021, 11)),
+          end: new Date(Date.UTC(2023, 7)),
+        }}
+        techStack={[
+          'fastApi',
+          'python',
+          'postgresql',
+          'podman',
+          'nomad',
+          'consul',
+          'vault',
+          'terraform',
+          'typescript',
+          'nextjs',
+          'react',
+          'mapbox',
+          'turborepo',
+          'cypress',
+          'gherkinCucumber',
+          'stripe',
+          'keycloak',
+        ]}
+        more={messages().experience.citywalx.more()}
+      />
+      <OpenSourceContributions />
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import FaSolidChevronDown from '~icons/fa-solid/chevron-down'
-import FaSolidChevronUp from '~icons/fa-solid/chevron-up'
 
 import { ContentFrame } from './content-frame'
 import { useLocale } from './locale-provider'
@@ -44,65 +43,61 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
   const endDate = () => formatDate(props.dates.end)
 
   return (
-    <ContentFrame class="shadow">
-      <article class="prose max-w-none">
-        <div>
-          <div
-            class="not-prose tooltip tooltip-bottom w-[min(100%,theme(spacing.64))]"
-            data-tip={props.title}
-          >
-            <a href={props.link} target="_blank">
-              <img src={props.image} alt={props.title} />
-            </a>
-          </div>
-          <dl>
-            <dt>{messages().experience.box.position}:</dt>
-            <dd>{props.position}</dd>
-            <dt>{messages().experience.box.dates}:</dt>
-            <dd>
-              {startDate()} - {endDate()}
-            </dd>
-            <dt>{messages().experience.box.techStack}:</dt>
-            <dd>
-              <ul class="not-prose flex list-none flex-wrap gap-2">
-                <For each={Array.from(props.techStack)}>
-                  {(techKey) => (
-                    <li class="inline">
-                      <TechTag techKey={techKey} />
-                    </li>
-                  )}
-                </For>
-              </ul>
-            </dd>
-          </dl>
+    <ContentFrame class="prose max-w-none shadow" as="article">
+      <div>
+        <div
+          class="not-prose tooltip tooltip-bottom w-[min(100%,theme(spacing.64))]"
+          data-tip={props.title}
+        >
+          <a href={props.link} target="_blank">
+            <img src={props.image} alt={props.title} />
+          </a>
         </div>
-        <Collapse
-          value={isExpanded()}
-          id="collapsed"
-          aria-labelledby={moreButtonId}
-          role="region"
-          class="collapse-transition"
-        >
-          {props.more}
-        </Collapse>
-        <button
-          onClick={() => setIsExpanded((prev) => !prev)}
-          class="btn btn-accent btn-sm btn-block"
-          id={moreButtonId}
-          aria-expanded={isExpanded()}
-          aria-controls={collapseId}
-        >
-          {isExpanded() ? (
-            <>
-              {messages().experience.box.less} <FaSolidChevronUp />
-            </>
-          ) : (
-            <>
-              {messages().experience.box.more} <FaSolidChevronDown />
-            </>
-          )}
-        </button>
-      </article>
+        <dl>
+          <dt>{messages().experience.box.position}:</dt>
+          <dd>{props.position}</dd>
+          <dt>{messages().experience.box.dates}:</dt>
+          <dd>
+            {startDate()} - {endDate()}
+          </dd>
+          <dt>{messages().experience.box.techStack}:</dt>
+          <dd>
+            <ul class="not-prose flex list-none flex-wrap gap-2">
+              <For each={Array.from(props.techStack)}>
+                {(techKey) => (
+                  <li class="inline">
+                    <TechTag techKey={techKey} />
+                  </li>
+                )}
+              </For>
+            </ul>
+          </dd>
+        </dl>
+      </div>
+      <Collapse
+        value={isExpanded()}
+        id="collapsed"
+        aria-labelledby={moreButtonId}
+        role="region"
+        class="collapse"
+      >
+        <div class="py-4">{props.more}</div>
+      </Collapse>
+      <button
+        onClick={() => setIsExpanded((prev) => !prev)}
+        class="btn btn-accent btn-sm btn-block"
+        id={moreButtonId}
+        aria-expanded={isExpanded()}
+        aria-controls={collapseId}
+      >
+        {isExpanded()
+          ? messages().experience.box.less
+          : messages().experience.box.more}{' '}
+        <FaSolidChevronDown
+          classList={{ 'rotate-180': isExpanded() }}
+          class="transition-transform"
+        />
+      </button>
     </ContentFrame>
   )
 }
