@@ -1,4 +1,17 @@
-import type { Component } from 'solid-js'
+import { defaultLocale } from './i18n'
+import { useLinkPreviews } from './link-preview-provider'
+import { useLocale } from './locale-provider'
+
+import {
+  type Component,
+  createEffect,
+  createResource,
+  createSignal,
+  onCleanup,
+  Show,
+} from 'solid-js'
+import { Portal } from 'solid-js/web'
+import usePopper from 'solid-popper'
 
 type Tech = {
   name: string
@@ -134,18 +147,120 @@ export const techStack = {
 
 export type TechKey = keyof typeof techStack
 
-export const TechTag: Component<{ techKey: TechKey }> = (props) => (
-  <a
-    class="badge badge-outline no-underline hover:underline"
-    href={techStack[props.techKey].link}
-    target="_blank"
-  >
-    {techStack[props.techKey].name}
-  </a>
-)
+type TechLinkProps = {
+  techKey: TechKey
+  asTag?: boolean
+}
 
-export const TechLink: Component<{ techKey: TechKey }> = (props) => (
-  <a href={techStack[props.techKey].link} target="_blank">
-    {techStack[props.techKey].name}
-  </a>
-)
+export const TechLink: Component<TechLinkProps> = (props) => {
+  const { currentLocale } = useLocale()
+  const linkPreviews = useLinkPreviews()
+  const linkPreview = () =>
+    linkPreviews[props.techKey].previews[currentLocale()] ??
+    linkPreviews[props.techKey].previews[defaultLocale]
+
+  let hoverTimeout: NodeJS.Timeout | undefined
+  const [isHovered, setIsHovered] = createSignal(false)
+  const [isAnimatedIn, setIsAnimatedIn] = createSignal(false)
+  const [anchor, setAnchor] = createSignal<HTMLElement>()
+  const [popper, setPopper] = createSignal<HTMLElement>()
+
+  createEffect(() => {
+    if (isHovered()) {
+      requestAnimationFrame(() => setIsAnimatedIn(true))
+    } else {
+      setIsAnimatedIn(false)
+    }
+  })
+
+  usePopper(anchor, popper, {
+    placement: 'bottom',
+    modifiers: [
+      { name: 'offset', options: { offset: [0, 10] } },
+      { name: 'preventOverflow', options: { padding: 10 } },
+      {
+        name: 'addZIndex',
+        enabled: true,
+        phase: 'write',
+        fn({ state }) {
+          state.elements.popper.classList.add('z-50')
+        },
+      },
+    ],
+  })
+
+  const classes = () =>
+    props.asTag ? 'badge badge-outline no-underline hover:underline' : ''
+
+  const imageLink = () => (isHovered() ? linkPreview()?.image : undefined)
+  const [image] = createResource(imageLink, (imageLink) => {
+    const image = new Image()
+    image.src = imageLink
+    return new Promise<typeof image>((resolve, reject) => {
+      image.onload = () => resolve(image)
+      image.onerror = () => reject(undefined)
+    })
+  })
+  createEffect(() => {
+    if (image.loading) {
+      const style = document.createElement('style')
+      document.head.appendChild(style)
+      style.sheet?.insertRule(`* { cursor: wait !important; }`)
+      onCleanup(() => {
+        document.head.removeChild(style)
+      })
+    }
+  })
+
+  const showLinkPreview = () => {
+    if (!linkPreview() || !isHovered() || image.loading) return false
+    const hasImage = imageLink() && !image.loading && !image.error
+    const hasDescription = linkPreview()?.description?.length
+    return hasImage || hasDescription
+  }
+
+  return (
+    <>
+      <a
+        href={techStack[props.techKey].link}
+        target="_blank"
+        ref={setAnchor}
+        class={classes()}
+        onMouseEnter={() => {
+          hoverTimeout = setTimeout(() => setIsHovered(true), 500)
+        }}
+        onMouseLeave={() => {
+          clearTimeout(hoverTimeout)
+          setIsHovered(false)
+        }}
+      >
+        {techStack[props.techKey].name}
+      </a>
+      <Show when={showLinkPreview()}>
+        <Portal ref={setPopper}>
+          <div
+            class="card-compact card w-96 bg-base-100 shadow-xl transition-opacity transition-transform"
+            classList={{
+              'opacity-0': !isAnimatedIn(),
+              'opacity-100': isAnimatedIn(),
+              'scale-95': !isAnimatedIn(),
+              'scale-100': isAnimatedIn(),
+            }}
+          >
+            <Show when={imageLink() && !image.error}>
+              <figure>
+                <img src={imageLink()} />
+              </figure>
+            </Show>
+            <div class="card-body">
+              <h2 class="card-title text-base">{linkPreview()?.title}</h2>
+              <Show when={linkPreview()?.description}>
+                <p class="text-sm">{linkPreview()?.description}</p>
+              </Show>
+            </div>
+          </div>
+        </Portal>
+      </Show>
+    </>
+  )
+}

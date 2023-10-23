@@ -1,10 +1,13 @@
 import IconFaSolidFlask from '~icons/fa-solid/flask'
 import IconFaSolidLightbulb from '~icons/fa-solid/lightbulb'
 
+import type { LinkPreviews } from '../link-previews'
+
 import { DarkModeToggle } from './dark-mode-toggle'
 import { Experience } from './experience'
 import type { Locale } from './i18n'
 import { Landing } from './landing'
+import { LinkPreviewProvider } from './link-preview-provider'
 import { LocaleProvider } from './locale-provider'
 import { LocaleSwitcher } from './locale-switcher'
 import { Navigation } from './navigation'
@@ -30,7 +33,9 @@ export const sectionDefinitions: SectionDefinition[] = [
   },
 ]
 
-export const App: Component<{ locale: Locale }> = (props) => {
+export const App: Component<{ locale: Locale; linkPreviews: LinkPreviews }> = (
+  props
+) => {
   // Track the currently visible section
   const sectionRefsByKey: Record<string, HTMLElement | undefined> = {}
   onMount(() => {
@@ -53,28 +58,31 @@ export const App: Component<{ locale: Locale }> = (props) => {
     onCleanup(() => document.removeEventListener('scroll', throttledHandler))
   })
   return (
-    <LocaleProvider initialLocale={props.locale}>
-      <main class="min-h-screen bg-base-300 text-base-content transition-colors duration-100 ease-linear">
-        <div class="absolute right-5 top-5 flex items-center gap-2">
-          <DarkModeToggle />
-          <LocaleSwitcher />
-        </div>
-        <Landing sectionKey="landing" ref={sectionRefsByKey['landing']} />
-        <Navigation sections={sectionDefinitions} />
-        <For each={sectionDefinitions}>
-          {(sectionDefinition, idx) => (
-            <>
-              <Section
-                ref={sectionRefsByKey[sectionDefinition.key]}
-                {...sectionDefinition}
-              />
-              <Show when={idx() + 1 < sectionDefinitions.length}>
-                <div class="divider px-[10%]" />
-              </Show>
-            </>
-          )}
-        </For>
-      </main>
-    </LocaleProvider>
+    // eslint-disable-next-line solid/reactivity
+    <LinkPreviewProvider value={props.linkPreviews}>
+      <LocaleProvider initialLocale={props.locale}>
+        <main class="min-h-screen bg-base-300 text-base-content transition-colors duration-100 ease-linear">
+          <div class="absolute right-5 top-5 flex items-center gap-2">
+            <DarkModeToggle />
+            <LocaleSwitcher />
+          </div>
+          <Landing sectionKey="landing" ref={sectionRefsByKey['landing']} />
+          <Navigation sections={sectionDefinitions} />
+          <For each={sectionDefinitions}>
+            {(sectionDefinition, idx) => (
+              <>
+                <Section
+                  ref={sectionRefsByKey[sectionDefinition.key]}
+                  {...sectionDefinition}
+                />
+                <Show when={idx() + 1 < sectionDefinitions.length}>
+                  <div class="divider px-[10%]" />
+                </Show>
+              </>
+            )}
+          </For>
+        </main>
+      </LocaleProvider>
+    </LinkPreviewProvider>
   )
 }

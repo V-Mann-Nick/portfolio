@@ -9,5 +9,5 @@ export const dictonaries = {
 } satisfies Record<string, DictI18n>
 
 export type Locale = keyof typeof dictonaries
-export const locales = ['en', 'de'] as Locale[]
+export const locales = ['en', 'de'] as const
 export const defaultLocale = 'en' satisfies Locale

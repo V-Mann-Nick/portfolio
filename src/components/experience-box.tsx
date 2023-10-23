@@ -2,7 +2,7 @@ import FaSolidChevronDown from '~icons/fa-solid/chevron-down'
 
 import { ContentFrame } from './content-frame'
 import { useLocale } from './locale-provider'
-import { type TechKey, TechTag } from './tech'
+import { type TechKey, TechLink } from './tech'
 
 import { Collapse } from 'solid-collapse'
 import {
@@ -66,7 +66,7 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
               <For each={Array.from(props.techStack)}>
                 {(techKey) => (
                   <li class="inline">
-                    <TechTag techKey={techKey} />
+                    <TechLink techKey={techKey} asTag />
                   </li>
                 )}
               </For>

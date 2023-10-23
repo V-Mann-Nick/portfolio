@@ -1,10 +1,12 @@
 ---
+import fetchLinkPreviews from '../link-previews'
 import { App } from '../components/app';
 import { getLocale } from "astro-i18n-aut";
 import '@fontsource-variable/fira-code';
 import '../base.css';
 
 const locale = getLocale(Astro.url);
+const linkPreviews = await fetchLinkPreviews()
 ---
 
 <html lang={locale}>
@@ -37,6 +39,6 @@ const locale = getLocale(Astro.url);
 		</script>
 	</head>
 	<body>
-    <App client:load locale={locale} />
+    <App client:load locale={locale} linkPreviews={linkPreviews} />
 	</body>
 </html>

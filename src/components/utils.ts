@@ -3,7 +3,7 @@ export const throttle = <TFunction extends () => void>(
   wait: number
 ) => {
   let lastCall = 0
-  let timeoutId: number | undefined = undefined
+  let timeoutId: NodeJS.Timeout | undefined = undefined
   const newFunc = () => {
     clearTimeout(timeoutId)
     const now = Date.now()
