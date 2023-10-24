@@ -5,47 +5,30 @@ import IconFaSolidArrowDown from '~icons/fa-solid/arrow-down'
 import meImage from '../assets/me.jpg'
 
 import { sectionDefinitions } from './app'
-import { Link, type LinkKey } from './links'
 import { useLocale } from './locale-provider'
 import { Section } from './section'
+import { Tooltip } from './tooltip'
 
-import {
-  type Component,
-  type ComponentProps,
-  For,
-  type JSX,
-  splitProps,
-} from 'solid-js'
+import { type Component, type ComponentProps, For, type JSX } from 'solid-js'
 
 type SocialMedia = {
   Icon: (props: ComponentProps<'svg'>) => JSX.Element
-  linkKey: LinkKey
+  title: string
+  href: string
 }
 
 const socialMedia: SocialMedia[] = [
   {
     Icon: FaBrandsGithub,
-    linkKey: 'myGithub',
+    title: 'Github',
+    href: 'https://github.com/V-Mann-Nick',
   },
   {
     Icon: FaBrandsLinkedin,
-    linkKey: 'myLinkedin',
+    title: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/nicklas-sedlock-53764b1a8',
   },
 ]
-
-const SocialLink: Component<SocialMedia> = (props) => {
-  const Button: Component<JSX.HTMLAttributes<HTMLAnchorElement>> = (
-    _buttonProps
-  ) => {
-    const [, buttonProps] = splitProps(_buttonProps, ['class', 'children'])
-    return (
-      <a class="btn btn-circle btn-ghost" {...buttonProps}>
-        <props.Icon style={{ 'font-size': '1.5rem' }} />
-      </a>
-    )
-  }
-  return <Link linkKey={props.linkKey} as={Button} />
-}
 
 const LandingContent: Component = () => {
   const { messages } = useLocale()
@@ -57,7 +40,22 @@ const LandingContent: Component = () => {
         <h1 class="text-4xl">Nicklas Sedlock</h1>
         <h2 class="text-2xl">{messages().landing.subtitle}</h2>
         <div class="flex gap-1">
-          <For each={socialMedia}>{(media) => <SocialLink {...media} />}</For>
+          <For each={socialMedia}>
+            {(media) => (
+              <Tooltip placement="bottom" tooltip={media.title}>
+                {(anchorProps) => (
+                  <a
+                    href={media.href}
+                    target="_blank"
+                    class="btn btn-circle btn-ghost"
+                    {...anchorProps}
+                  >
+                    <media.Icon style={{ 'font-size': '1.5rem' }} />
+                  </a>
+                )}
+              </Tooltip>
+            )}
+          </For>
         </div>
       </div>
       <div

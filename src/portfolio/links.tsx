@@ -146,14 +146,6 @@ export const links = {
     name: 'SaaS',
     link: 'https://en.wikipedia.org/wiki/Software_as_a_service',
   },
-  myGithub: {
-    name: 'Github',
-    link: 'https://github.com/V-Mann-Nick',
-  },
-  myLinkedin: {
-    name: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/nicklas-sedlock-53764b1a8',
-  },
 } satisfies Record<string, Link>
 
 export type LinkKey = keyof typeof links
