@@ -55,7 +55,7 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
               class="not-prose block w-[min(100%,theme(spacing.64))]"
               {...anchorProps}
             >
-              <img src={props.image} alt={props.title} />
+              <img src={props.image} alt={props.title} loading="lazy" />
             </a>
           )}
         </Tooltip>

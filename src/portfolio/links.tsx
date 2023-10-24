@@ -1,6 +1,4 @@
-import { defaultLocale } from './i18n'
 import { useLinkPreviews } from './link-preview-provider'
-import { useLocale } from './locale-provider'
 import { Tooltip } from './tooltip'
 
 import clsx from 'clsx'
@@ -134,10 +132,6 @@ export const links = {
     name: 'Fastify',
     link: 'https://www.fastify.io/',
   },
-  baseweb: {
-    name: 'Baseweb',
-    link: 'https://baseweb.design/',
-  },
   gitlabCi: {
     name: 'Gitlab CI',
     link: 'https://docs.gitlab.com/ee/ci/',
@@ -145,6 +139,38 @@ export const links = {
   saas: {
     name: 'SaaS',
     link: 'https://en.wikipedia.org/wiki/Software_as_a_service',
+  },
+  lokiGithub: {
+    name: 'Loki',
+    link: 'https://github.com/grafana/loki',
+  },
+  lokiContribution: {
+    name: 'Loki Contribution',
+    link: 'https://github.com/grafana/loki/pull/6139',
+  },
+  baseweb: {
+    name: 'Baseweb',
+    link: 'https://github.com/uber/baseweb',
+  },
+  basewebContribution: {
+    name: 'Baseweb Contribution',
+    link: 'https://github.com/uber/baseweb/pull/5218',
+  },
+  jotaiLocation: {
+    name: 'jotai-location',
+    link: 'https://github.com/jotaijs/jotai-location',
+  },
+  jotaiLocationContribution: {
+    name: 'jotai-location Contribution',
+    link: 'https://github.com/jotaijs/jotai-location/pull/4',
+  },
+  jotaiTanstackQuery: {
+    name: 'jotai-tanstack-query',
+    link: 'https://github.com/jotaijs/jotai-tanstack-query',
+  },
+  jotaiTanstackQueryContribution: {
+    name: 'jotai-tanstack-query Contribution',
+    link: 'https://github.com/jotaijs/jotai-tanstack-query/pull/35',
   },
 } satisfies Record<string, Link>
 
@@ -159,11 +185,8 @@ type LinkProps = {
 export const Link: Component<LinkProps> = (_props) => {
   const props = mergeProps({ as: 'a' }, _props)
 
-  const { currentLocale } = useLocale()
-  const linkPreviews = useLinkPreviews()
-  const linkPreview = () =>
-    linkPreviews[props.linkKey].previews[currentLocale()] ??
-    linkPreviews[props.linkKey].previews[defaultLocale]
+  const { getLinkPreview } = useLinkPreviews()
+  const linkPreview = () => getLinkPreview(props.linkKey)
 
   const classes = () =>
     props.asTag ? 'badge badge-outline no-underline hover:underline' : ''

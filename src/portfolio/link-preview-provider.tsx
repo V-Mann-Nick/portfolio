@@ -1,10 +1,30 @@
-import type { LinkPreviews } from './link-previews'
+import { defaultLocale } from './i18n'
+import type { LinkPreview, LinkPreviews } from './link-previews'
+import type { LinkKey } from './links'
+import { useLocale } from './locale-provider'
 
-import { createContext, useContext } from 'solid-js'
+import { createContext, type ParentComponent, useContext } from 'solid-js'
 
-const linkPreviewContext = createContext<LinkPreviews>()
+type LinkPreviewContext = {
+  getLinkPreview: (key: LinkKey) => LinkPreview
+}
 
-export const LinkPreviewProvider = linkPreviewContext.Provider
+const linkPreviewContext = createContext<LinkPreviewContext>()
+
+export const LinkPreviewProvider: ParentComponent<{
+  linkPreviews: LinkPreviews
+}> = (props) => {
+  const { currentLocale } = useLocale()
+  const getLinkPreview = (key: LinkKey) => {
+    const preview = props.linkPreviews[key]
+    return preview.previews[currentLocale()] ?? preview.previews[defaultLocale]
+  }
+  return (
+    <linkPreviewContext.Provider value={{ getLinkPreview }}>
+      {props.children}
+    </linkPreviewContext.Provider>
+  )
+}
 
 export const useLinkPreviews = () => {
   const context = useContext(linkPreviewContext)

@@ -99,6 +99,10 @@ const fetchLinkPreview = async (key: string, link: string) => {
   }
 }
 
+export type LinkPreview = Awaited<
+  ReturnType<typeof fetchLinkPreview>
+>['previews'][Locale]
+
 const cachedFetchLinkPreview = async (key: string, link: string) => {
   const cached = await fileCache.get(key)
   if (cached) return cached

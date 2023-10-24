@@ -57,9 +57,8 @@ export const App: Component<{ locale: Locale; linkPreviews: LinkPreviews }> = (
     onCleanup(() => document.removeEventListener('scroll', throttledHandler))
   })
   return (
-    // eslint-disable-next-line solid/reactivity
-    <LinkPreviewProvider value={props.linkPreviews}>
-      <LocaleProvider initialLocale={props.locale}>
+    <LocaleProvider initialLocale={props.locale}>
+      <LinkPreviewProvider linkPreviews={props.linkPreviews}>
         <main class="min-h-screen bg-base-300 text-base-content transition-colors duration-100 ease-linear">
           <div class="absolute right-5 top-5 flex items-center gap-2">
             <DarkModeToggle />
@@ -81,7 +80,7 @@ export const App: Component<{ locale: Locale; linkPreviews: LinkPreviews }> = (
             )}
           </For>
         </main>
-      </LocaleProvider>
-    </LinkPreviewProvider>
+      </LinkPreviewProvider>
+    </LocaleProvider>
   )
 }

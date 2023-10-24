@@ -136,6 +136,12 @@ export default {
     },
     openSource: {
       title: 'Open-Source Beiträge',
+      pullRequests: {
+        lokiDocs: 'Beitrag zur Loki-Dokumentation',
+        baseweb: 'Bugfix in der Baseweb React-Komponentenbibliothek',
+        jotaiLocation: 'API-Erweiterung bei jotai-location',
+        jotaiTanstackQuery: 'Bugfix bei jotai-tanstack-query',
+      },
     },
   },
   projects: {
