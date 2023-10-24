@@ -74,7 +74,7 @@ export const Tooltip: Component<TooltipProps> = (_props) => {
   })
 
   usePopper(anchor, popper, {
-    placement: 'bottom',
+    placement: props.placement,
     modifiers: [
       { name: 'offset', options: { offset: [0, 10] } },
       { name: 'preventOverflow', options: { padding: 10 } },

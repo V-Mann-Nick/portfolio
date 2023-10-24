@@ -58,17 +58,21 @@ const LandingContent: Component = () => {
           </For>
         </div>
       </div>
-      <div
-        class="tooltip tooltip-top mb-16 mt-auto before:text-base"
-        data-tip={messages().landing.scrollDownTooltip}
+      <Tooltip
+        tooltipContainerClass="text-base"
+        tooltip={messages().landing.scrollDownTooltip}
+        placement="top"
       >
-        <a
-          class="btn btn-circle btn-ghost h-24 w-24"
-          href={`#${sectionDefinitions[0]!.key}`}
-        >
-          <IconFaSolidArrowDown class="animate-bounce text-5xl text-secondary" />
-        </a>
-      </div>
+        {(anchorProps) => (
+          <a
+            class="btn btn-circle btn-ghost mb-16 mt-auto h-24 w-24"
+            href={`#${sectionDefinitions[0]!.key}`}
+            {...anchorProps}
+          >
+            <IconFaSolidArrowDown class="animate-bounce text-5xl text-secondary" />
+          </a>
+        )}
+      </Tooltip>
     </>
   )
 }
