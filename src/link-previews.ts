@@ -1,5 +1,5 @@
 import { defaultLocale, type Locale, locales } from './components/i18n'
-import { techStack } from './components/tech'
+import { links } from './components/links'
 
 import { z } from 'astro/zod'
 import { getLinkPreview } from 'link-preview-js'
@@ -45,7 +45,7 @@ const fetchLinkPreview = async (key: string, link: string) => {
   const getLinkPreviewWithOptions = (locale: Locale) =>
     getLinkPreview(link, {
       followRedirects: 'follow',
-      timeout: 20000,
+      timeout: 60000,
       imagesPropertyType: 'og',
       headers: { 'Accept-Language': locale },
     }).catch((error) => {
@@ -115,14 +115,11 @@ const choosenFetchLinkPreview =
 const fetchLinkPreviews = async () =>
   Object.fromEntries(
     await Promise.all(
-      Object.entries(techStack).map(async ([key, { link }]) => {
+      Object.entries(links).map(async ([key, { link }]) => {
         return [key, await choosenFetchLinkPreview(key, link)]
       })
     )
-  ) as Record<
-    keyof typeof techStack,
-    Awaited<ReturnType<typeof fetchLinkPreview>>
-  >
+  ) as Record<keyof typeof links, Awaited<ReturnType<typeof fetchLinkPreview>>>
 
 export default fetchLinkPreviews
 export type LinkPreviews = Awaited<ReturnType<typeof fetchLinkPreviews>>

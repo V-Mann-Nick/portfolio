@@ -3,7 +3,9 @@ import IconFaSolidSun from '~icons/fa-solid/sun'
 
 import { useLocale } from './locale-provider'
 import { initializeDarkModeState, isDarkMode, onDarkModeChange } from './state'
+import { Tooltip } from './tooltip'
 
+import clsx from 'clsx'
 import { type Component, onMount, Show } from 'solid-js'
 
 export const DarkModeToggle: Component<{
@@ -18,24 +20,23 @@ export const DarkModeToggle: Component<{
       : messages().darkModeToggleTooltip.dark
   return (
     <Show when={isDarkMode() !== null}>
-      <div
-        class={['tooltip', 'tooltip-left', props.class]
-          .filter(Boolean)
-          .join(' ')}
-        data-tip={label()}
-      >
-        <button
-          class={['btn btn-ghost swap swap-flip', props.btnClass]
-            .filter(Boolean)
-            .join(' ')}
-          classList={{ 'swap-active': isDarkMode() as boolean }}
-          onClick={() => onDarkModeChange(!isDarkMode())}
-          aria-label={label()}
-        >
-          <IconFaSolidMoon font-size="1rem" class="swap-on" />
-          <IconFaSolidSun font-size="1rem" class="swap-off" />
-        </button>
-      </div>
+      <Tooltip tooltip={label()} placement="bottom">
+        {(childProps) => (
+          <button
+            class={clsx(
+              'btn btn-ghost swap swap-flip',
+              props.btnClass,
+              isDarkMode() && 'swap-active'
+            )}
+            onClick={() => onDarkModeChange(!isDarkMode())}
+            aria-label={label()}
+            {...childProps}
+          >
+            <IconFaSolidMoon font-size="1rem" class="swap-on" />
+            <IconFaSolidSun font-size="1rem" class="swap-off" />
+          </button>
+        )}
+      </Tooltip>
     </Show>
   )
 }

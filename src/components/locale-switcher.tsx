@@ -35,7 +35,7 @@ export const LocaleSwitcher: Component<{ btnClass?: string }> = (props) => {
       triggerClass={props.btnClass}
       onSelect={(item) => setCurrentLocale(item.key as Locale)}
       currentSelection={currentLocale()}
-      tooltip={{ text: label(), class: 'tooltip-left' }}
+      tooltip={{ tooltip: label(), placement: 'bottom' }}
       extraATagProps={({ key }) => ({ lang: key, hreflang: key })}
     />
   )

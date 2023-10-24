@@ -4,7 +4,8 @@ const config = {
   tabWidth: 2,
   semi: false,
   singleQuote: true,
-  plugins: ['prettier-plugin-tailwindcss']
+  plugins: ['prettier-plugin-tailwindcss'],
+  tailwindFunctions: ['clsx']
 }
 
 export default config

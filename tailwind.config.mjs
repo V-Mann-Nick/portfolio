@@ -75,10 +75,6 @@ export default {
           success: '#A3BE8C',
           warning: '#D08770',
           error: '#BF616A',
-
-          '.tooltip::before': {
-            'background-color': '#434c5e',
-          },
         },
       },
     ],

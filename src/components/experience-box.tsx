@@ -1,9 +1,11 @@
 import FaSolidChevronDown from '~icons/fa-solid/chevron-down'
 
 import { ContentFrame } from './content-frame'
+import { Link, type LinkKey } from './links'
 import { useLocale } from './locale-provider'
-import { type TechKey, TechLink } from './tech'
+import { Tooltip } from './tooltip'
 
+import clsx from 'clsx'
 import { Collapse } from 'solid-collapse'
 import {
   type Component,
@@ -22,7 +24,7 @@ type ExperienceBoxProps = {
     start: Date
     end: Date
   }
-  techStack: TechKey[]
+  techStack: LinkKey[]
   more: JSX.Element
 }
 
@@ -45,14 +47,18 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
   return (
     <ContentFrame class="prose max-w-none shadow" as="article">
       <div>
-        <div
-          class="not-prose tooltip tooltip-bottom w-[min(100%,theme(spacing.64))]"
-          data-tip={props.title}
-        >
-          <a href={props.link} target="_blank">
-            <img src={props.image} alt={props.title} />
-          </a>
-        </div>
+        <Tooltip placement="bottom" tooltip={props.title}>
+          {(anchorProps) => (
+            <a
+              href={props.link}
+              target="_blank"
+              class="not-prose block w-[min(100%,theme(spacing.64))]"
+              {...anchorProps}
+            >
+              <img src={props.image} alt={props.title} />
+            </a>
+          )}
+        </Tooltip>
         <dl>
           <dt>{messages().experience.box.position}:</dt>
           <dd>{props.position}</dd>
@@ -66,7 +72,7 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
               <For each={Array.from(props.techStack)}>
                 {(techKey) => (
                   <li class="inline">
-                    <TechLink techKey={techKey} asTag />
+                    <Link linkKey={techKey} asTag />
                   </li>
                 )}
               </For>
@@ -94,8 +100,7 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
           ? messages().experience.box.less
           : messages().experience.box.more}{' '}
         <FaSolidChevronDown
-          classList={{ 'rotate-180': isExpanded() }}
-          class="transition-transform"
+          class={clsx('transition-transform', isExpanded() && 'rotate-180')}
         />
       </button>
     </ContentFrame>

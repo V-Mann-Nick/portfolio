@@ -5,29 +5,47 @@ import IconFaSolidArrowDown from '~icons/fa-solid/arrow-down'
 import meImage from '../assets/me.jpg'
 
 import { sectionDefinitions } from './app'
+import { Link, type LinkKey } from './links'
 import { useLocale } from './locale-provider'
 import { Section } from './section'
 
-import { type Component, type ComponentProps, For, type JSX } from 'solid-js'
+import {
+  type Component,
+  type ComponentProps,
+  For,
+  type JSX,
+  splitProps,
+} from 'solid-js'
 
 type SocialMedia = {
   Icon: (props: ComponentProps<'svg'>) => JSX.Element
-  title: string
-  href: string
+  linkKey: LinkKey
 }
 
 const socialMedia: SocialMedia[] = [
   {
     Icon: FaBrandsGithub,
-    title: 'Github',
-    href: 'https://github.com/V-Mann-Nick',
+    linkKey: 'myGithub',
   },
   {
     Icon: FaBrandsLinkedin,
-    title: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/nicklas-sedlock-53764b1a8',
+    linkKey: 'myLinkedin',
   },
 ]
+
+const SocialLink: Component<SocialMedia> = (props) => {
+  const Button: Component<JSX.HTMLAttributes<HTMLAnchorElement>> = (
+    _buttonProps
+  ) => {
+    const [, buttonProps] = splitProps(_buttonProps, ['class', 'children'])
+    return (
+      <a class="btn btn-circle btn-ghost" {...buttonProps}>
+        <props.Icon style={{ 'font-size': '1.5rem' }} />
+      </a>
+    )
+  }
+  return <Link linkKey={props.linkKey} as={Button} />
+}
 
 const LandingContent: Component = () => {
   const { messages } = useLocale()
@@ -39,19 +57,7 @@ const LandingContent: Component = () => {
         <h1 class="text-4xl">Nicklas Sedlock</h1>
         <h2 class="text-2xl">{messages().landing.subtitle}</h2>
         <div class="flex gap-1">
-          <For each={socialMedia}>
-            {(media) => (
-              <div class="tooltip tooltip-bottom" data-tip={media.title}>
-                <a
-                  class="btn btn-circle btn-ghost"
-                  href={media.href}
-                  target="_blank"
-                >
-                  <media.Icon style={{ 'font-size': '1.5rem' }} />
-                </a>
-              </div>
-            )}
-          </For>
+          <For each={socialMedia}>{(media) => <SocialLink {...media} />}</For>
         </div>
       </div>
       <div

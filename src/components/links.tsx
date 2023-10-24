@@ -1,24 +1,27 @@
 import { defaultLocale } from './i18n'
 import { useLinkPreviews } from './link-preview-provider'
 import { useLocale } from './locale-provider'
+import { Tooltip } from './tooltip'
 
+import clsx from 'clsx'
 import {
   type Component,
   createEffect,
   createResource,
   createSignal,
+  mergeProps,
   onCleanup,
   Show,
+  type ValidComponent,
 } from 'solid-js'
-import { Portal } from 'solid-js/web'
-import usePopper from 'solid-popper'
+import { Dynamic } from 'solid-js/web'
 
-type Tech = {
+type Link = {
   name: string
   link: string
 }
 
-export const techStack = {
+export const links = {
   react: {
     name: 'React',
     link: 'https://reactjs.org/',
@@ -143,56 +146,38 @@ export const techStack = {
     name: 'SaaS',
     link: 'https://en.wikipedia.org/wiki/Software_as_a_service',
   },
-} satisfies Record<string, Tech>
+  myGithub: {
+    name: 'Github',
+    link: 'https://github.com/V-Mann-Nick',
+  },
+  myLinkedin: {
+    name: 'LinkedIn',
+    link: 'https://www.linkedin.com/in/nicklas-sedlock-53764b1a8',
+  },
+} satisfies Record<string, Link>
 
-export type TechKey = keyof typeof techStack
+export type LinkKey = keyof typeof links
 
-type TechLinkProps = {
-  techKey: TechKey
+type LinkProps = {
+  linkKey: LinkKey
   asTag?: boolean
+  as?: ValidComponent
 }
 
-export const TechLink: Component<TechLinkProps> = (props) => {
+export const Link: Component<LinkProps> = (_props) => {
+  const props = mergeProps({ as: 'a' }, _props)
+
   const { currentLocale } = useLocale()
   const linkPreviews = useLinkPreviews()
   const linkPreview = () =>
-    linkPreviews[props.techKey].previews[currentLocale()] ??
-    linkPreviews[props.techKey].previews[defaultLocale]
-
-  let hoverTimeout: NodeJS.Timeout | undefined
-  const [isHovered, setIsHovered] = createSignal(false)
-  const [isAnimatedIn, setIsAnimatedIn] = createSignal(false)
-  const [anchor, setAnchor] = createSignal<HTMLElement>()
-  const [popper, setPopper] = createSignal<HTMLElement>()
-
-  createEffect(() => {
-    if (isHovered()) {
-      requestAnimationFrame(() => setIsAnimatedIn(true))
-    } else {
-      setIsAnimatedIn(false)
-    }
-  })
-
-  usePopper(anchor, popper, {
-    placement: 'bottom',
-    modifiers: [
-      { name: 'offset', options: { offset: [0, 10] } },
-      { name: 'preventOverflow', options: { padding: 10 } },
-      {
-        name: 'addZIndex',
-        enabled: true,
-        phase: 'write',
-        fn({ state }) {
-          state.elements.popper.classList.add('z-50')
-        },
-      },
-    ],
-  })
+    linkPreviews[props.linkKey].previews[currentLocale()] ??
+    linkPreviews[props.linkKey].previews[defaultLocale]
 
   const classes = () =>
     props.asTag ? 'badge badge-outline no-underline hover:underline' : ''
 
-  const imageLink = () => (isHovered() ? linkPreview()?.image : undefined)
+  const [showTooltip, setShowTooltip] = createSignal(false)
+  const imageLink = () => (showTooltip() ? linkPreview()?.image : undefined)
   const [image] = createResource(imageLink, (imageLink) => {
     const image = new Image()
     image.src = imageLink
@@ -213,54 +198,57 @@ export const TechLink: Component<TechLinkProps> = (props) => {
   })
 
   const showLinkPreview = () => {
-    if (!linkPreview() || !isHovered() || image.loading) return false
+    if (!linkPreview() || image.loading) return false
     const hasImage = imageLink() && !image.loading && !image.error
     const hasDescription = linkPreview()?.description?.length
-    return hasImage || hasDescription
+    return !!(hasImage || hasDescription)
   }
 
   return (
-    <>
-      <a
-        href={techStack[props.techKey].link}
-        target="_blank"
-        ref={setAnchor}
-        class={classes()}
-        onMouseEnter={() => {
-          hoverTimeout = setTimeout(() => setIsHovered(true), 500)
-        }}
-        onMouseLeave={() => {
-          clearTimeout(hoverTimeout)
-          setIsHovered(false)
-        }}
-      >
-        {techStack[props.techKey].name}
-      </a>
-      <Show when={showLinkPreview()}>
-        <Portal ref={setPopper}>
-          <div
-            class="card-compact card w-96 bg-base-100 shadow-xl transition-opacity transition-transform"
-            classList={{
-              'opacity-0': !isAnimatedIn(),
-              'opacity-100': isAnimatedIn(),
-              'scale-95': !isAnimatedIn(),
-              'scale-100': isAnimatedIn(),
+    <Tooltip
+      tooltipContainerClass={clsx(
+        'card-compact card w-80 bg-base-100 shadow-xl transition-opacity transition-transform'
+      )}
+      delay={500}
+      hideTooltip={!showLinkPreview()}
+      placement="bottom"
+      tooltip={
+        <>
+          <Show when={imageLink() && !image.error}>
+            <figure>
+              <img src={imageLink()} />
+            </figure>
+          </Show>
+          <div class="card-body">
+            <h2 class="card-title text-base">{linkPreview()?.title}</h2>
+            <Show when={linkPreview()?.description}>
+              <p class="text-sm">{linkPreview()?.description}</p>
+            </Show>
+          </div>
+        </>
+      }
+    >
+      {(anchorProps) => {
+        return (
+          <Dynamic
+            component={props.as}
+            href={links[props.linkKey].link}
+            target="_blank"
+            class={classes()}
+            ref={anchorProps.ref}
+            onMouseEnter={() => {
+              setShowTooltip(true)
+              anchorProps.onMouseEnter()
+            }}
+            onMouseLeave={() => {
+              setShowTooltip(false)
+              anchorProps.onMouseLeave()
             }}
           >
-            <Show when={imageLink() && !image.error}>
-              <figure>
-                <img src={imageLink()} />
-              </figure>
-            </Show>
-            <div class="card-body">
-              <h2 class="card-title text-base">{linkPreview()?.title}</h2>
-              <Show when={linkPreview()?.description}>
-                <p class="text-sm">{linkPreview()?.description}</p>
-              </Show>
-            </div>
-          </div>
-        </Portal>
-      </Show>
-    </>
+            {links[props.linkKey].name}
+          </Dynamic>
+        )
+      }}
+    </Tooltip>
   )
 }

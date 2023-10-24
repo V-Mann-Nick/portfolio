@@ -7,16 +7,17 @@ import { LocaleSwitcher } from './locale-switcher'
 import { currentSection } from './state'
 import type { SectionDefinition } from './types'
 
+import clsx from 'clsx'
 import { type Component, For } from 'solid-js'
 
 const NavigationItem: Component<SectionDefinition> = (props) => {
   const { messages } = useLocale()
   return (
     <a
-      class="btn rounded-none px-6"
-      classList={{
-        'btn-info': currentSection() === props.key,
-      }}
+      class={clsx(
+        'btn rounded-none px-6',
+        currentSection() === props.key && 'btn-info'
+      )}
       href={`#${props.key}`}
     >
       <props.Icon />
@@ -43,8 +44,8 @@ const MobileNavigation: Component<{
         href: `#${section.key}`,
       }))}
       tooltip={{
-        text: messages().mobileNavigation.label,
-        class: 'tooltip-right',
+        tooltip: messages().mobileNavigation.label,
+        placement: 'right',
       }}
       dropdownClass={props.dropdownClass}
       triggerClass="rounded-none"
