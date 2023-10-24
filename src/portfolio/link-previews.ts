@@ -1,5 +1,5 @@
-import { defaultLocale, type Locale, locales } from './components/i18n'
-import { links } from './components/links'
+import { defaultLocale, type Locale, locales } from './i18n'
+import { links } from './links'
 
 import { z } from 'astro/zod'
 import { getLinkPreview } from 'link-preview-js'

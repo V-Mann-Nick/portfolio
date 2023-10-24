@@ -1,13 +1,12 @@
 import IconFaSolidFlask from '~icons/fa-solid/flask'
 import IconFaSolidLightbulb from '~icons/fa-solid/lightbulb'
 
-import type { LinkPreviews } from '../link-previews'
-
 import { DarkModeToggle } from './dark-mode-toggle'
 import { Experience } from './experience'
 import type { Locale } from './i18n'
 import { Landing } from './landing'
 import { LinkPreviewProvider } from './link-preview-provider'
+import type { LinkPreviews } from './link-previews'
 import { LocaleProvider } from './locale-provider'
 import { LocaleSwitcher } from './locale-switcher'
 import { Navigation } from './navigation'

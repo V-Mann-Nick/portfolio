@@ -1,4 +1,4 @@
-import type { LinkPreviews } from '../link-previews'
+import type { LinkPreviews } from './link-previews'
 
 import { createContext, useContext } from 'solid-js'
 
