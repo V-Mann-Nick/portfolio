@@ -45,7 +45,8 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
   const endDate = () => formatDate(props.dates.end)
 
   return (
-    <ContentFrame class="prose max-w-none shadow" as="article">
+    <ContentFrame>
+      <h2 class="hidden">{props.title}</h2>
       <div>
         <Tooltip placement="bottom" tooltip={props.title}>
           {(anchorProps) => (

@@ -17,6 +17,58 @@ export default {
     subtitle: 'Programmierer',
     scrollDownTooltip: 'Nach unten scrollen',
   },
+  aboutMe: {
+    title: 'Über mich',
+    content: {
+      p1: () => (
+        <p>
+          Hallo! Ich bin Nicklas und ich bin nicht dein gewöhnlicher
+          Programmierer. Ich glaube, dass es im Leben vor allem um den Weg geht,
+          und deshalb findet man mich oft auf weniger begangenen Wegen, wo ich
+          die Natur durch meine Lieblingshobbys – Klettern, Wandern und
+          Kanufahren – erkunde. Diese Erfahrungen lehren mich wertvolle
+          Lektionen über Entschlossenheit, Ausdauer und den Nervenkitzel, meine
+          Grenzen auszuloten.
+        </p>
+      ),
+      p2: () => (
+        <p>
+          Mein akademischer Hintergrund mag dich überraschen – ich habe
+          Philosophie studiert. Es ist eine Disziplin, die kritisches Denken,
+          Problemlösung und die Erforschung abstrakter Konzepte fördert –
+          Fähigkeiten, die sich in meiner Karriere als Programmierer als äußerst
+          wertvoll erwiesen haben. Mein Weg in die Welt des Programmierens war
+          unkonventionell, da ich es mir größtenteils selbst beigebracht habe.
+          Ich liebe die Herausforderung, mich komplexen Problemen zu stellen und
+          Lösungen von Grund auf zu entwickeln. Diese Leidenschaft ist im Laufe
+          der Jahre nur noch stärker geworden.
+        </p>
+      ),
+      p3: () => (
+        <p>
+          In meiner Arbeit als Programmierer lege ich großen Wert auf effektive
+          Kommunikation, sowohl durch Dokumentation als auch im Gespräch mit
+          meinen Kollegen. Ich verfolge einen strukturierten Ansatz, der
+          umfangreiche Tests und gründliche Code-Reviews beinhaltet. Mir ist es
+          besonders wichtig, saubere und benutzerfreundliche Schnittstellen zu
+          erstellen – sei es durch APIs für andere Programmierer oder durch UIs
+          für Endbenutzer – um nahtlose und zufriedenstellende Erfahrungen zu
+          ermöglichen.
+        </p>
+      ),
+      p4: () => (
+        <p>
+          Ich bin nicht nur ein Programmierer, ich bin ein Problemlöser, ein
+          lebenslanger Lerner und ein begeisterter Naturfreund. Meine Reise von
+          der Philosophie zum autodidaktischen Programmieren hat mir eine
+          einzigartige Perspektive verliehen, die ich in jedes Projekt
+          einbringe, an dem ich arbeite. Ich freue mich darauf, meine Erkundung
+          der digitalen Welt fortzusetzen und mit anderen zusammenzuarbeiten,
+          die die gleiche Leidenschaft für Innovation und Problemlösung teilen.
+        </p>
+      ),
+    },
+  },
   experience: {
     title: 'Erfahrung',
     box: {

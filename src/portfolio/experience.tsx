@@ -41,9 +41,7 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
             <Show when={props.title}>
               {(title) => <h4 class="!mt-0">{title()(messages())}</h4>}
             </Show>
-            <p class="!mb-0 text-sm text-secondary-content">
-              {contentLinkPreview()?.title}
-            </p>
+            <p class="!mb-0 text-sm">{contentLinkPreview()?.title}</p>
           </div>
         </a>
       </li>
@@ -116,7 +114,10 @@ const OpenSourceContributions: Component = () => {
 export const Experience: Component = () => {
   const { messages } = useLocale()
   return (
-    <div class="flex flex-col gap-8 py-12">
+    <article class="prose flex max-w-none flex-col gap-4 py-12">
+      <ContentFrame as="h1" class="my-0">
+        {messages().experience.title}
+      </ContentFrame>
       <ExperienceBox
         title="delphai"
         image={delphaiLogo.src}
@@ -170,6 +171,6 @@ export const Experience: Component = () => {
         more={messages().experience.citywalx.more()}
       />
       <OpenSourceContributions />
-    </div>
+    </article>
   )
 }

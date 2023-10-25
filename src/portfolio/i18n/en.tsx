@@ -15,6 +15,53 @@ export default {
     subtitle: 'Programmer',
     scrollDownTooltip: 'Scroll down',
   },
+  aboutMe: {
+    title: 'About Me',
+    content: {
+      p1: () => (
+        <p>
+          Hello! I'm Nicklas, and I'm not your typical programmer. I believe
+          that life is all about the journey, and that's why you'll often find
+          me on the road less traveled, exploring the great outdoors through my
+          favorite hobbies: climbing, hiking, and canoeing. These experiences
+          teach me valuable lessons about determination, persistence, and the
+          thrill of pushing my limits.
+        </p>
+      ),
+      p2: () => (
+        <p>
+          My academic background might surprise you – I studied philosophy. It's
+          a discipline that encourages critical thinking, problem-solving, and
+          the exploration of abstract concepts, skills that have proven to be
+          incredibly valuable in my programming career. My journey into the
+          world of programming was an unconventional one, as I'm entirely
+          self-taught. I love the challenge of unraveling complex problems and
+          building solutions from scratch. It's a passion that's only grown
+          stronger over the years.
+        </p>
+      ),
+      p3: () => (
+        <p>
+          In my work as a programmer, I prioritize effective communication, both
+          through documentation and conversation, and I embrace a structured
+          approach that includes rigorous testing and meticulous code reviews. I
+          place great value on creating clean and user-friendly interfaces,
+          whether it's APIs for fellow programmers or UIs for end users, to
+          provide seamless and satisfying experiences.
+        </p>
+      ),
+      p4: () => (
+        <p>
+          I'm not just a programmer; I'm a problem solver, a lifelong learner,
+          and an enthusiast of the great outdoors. My journey from philosophy to
+          self-taught programming has given me a unique perspective that I bring
+          to every project I work on. I'm excited to continue my exploration of
+          the digital world and collaborate with others who share the same
+          passion for innovation and problem-solving.
+        </p>
+      ),
+    },
+  },
   experience: {
     title: 'Experience',
     box: {

@@ -1,6 +1,7 @@
 import IconFaSolidFlask from '~icons/fa-solid/flask'
-import IconFaSolidLightbulb from '~icons/fa-solid/lightbulb'
+import IconFaSolidUser from '~icons/fa-solid/user'
 
+import { AboutMe } from './about-me'
 import { DarkModeToggle } from './dark-mode-toggle'
 import { Experience } from './experience'
 import type { Locale } from './i18n'
@@ -19,17 +20,23 @@ import { type Component, For, onCleanup, onMount, Show } from 'solid-js'
 
 export const sectionDefinitions: SectionDefinition[] = [
   {
+    key: 'about-me',
+    label: (messages) => messages.aboutMe.title,
+    Content: AboutMe,
+    Icon: IconFaSolidUser,
+  },
+  {
     key: 'experience',
     label: (messages) => messages.experience.title,
     Icon: IconFaSolidFlask,
     Content: Experience,
   },
-  {
-    key: 'projects',
-    label: (messages) => messages.projects.title,
-    Icon: IconFaSolidLightbulb,
-    Content: () => <></>,
-  },
+  // {
+  //   key: 'projects',
+  //   label: (messages) => messages.projects.title,
+  //   Icon: IconFaSolidLightbulb,
+  //   Content: () => <></>,
+  // },
 ]
 
 export const App: Component<{ locale: Locale; linkPreviews: LinkPreviews }> = (
@@ -74,7 +81,7 @@ export const App: Component<{ locale: Locale; linkPreviews: LinkPreviews }> = (
                   {...sectionDefinition}
                 />
                 <Show when={idx() + 1 < sectionDefinitions.length}>
-                  <div class="divider px-[10%]" />
+                  <div class="divider" />
                 </Show>
               </>
             )}
