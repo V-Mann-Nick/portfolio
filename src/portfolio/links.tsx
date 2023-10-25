@@ -10,6 +10,7 @@ import {
   mergeProps,
   onCleanup,
   Show,
+  splitProps,
   type ValidComponent,
 } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
@@ -244,20 +245,24 @@ export const Link: Component<LinkProps> = (_props) => {
       }
     >
       {(anchorProps) => {
+        const [, forwardedProps] = splitProps(anchorProps.forwardedProps, [
+          'onFocus',
+          'onBlur',
+        ])
         return (
           <Dynamic
             component={props.as}
             href={links[props.linkKey].link}
             target="_blank"
             class={classes()}
-            ref={anchorProps.ref}
+            {...forwardedProps}
             onMouseEnter={() => {
               setShowTooltip(true)
-              anchorProps.onMouseEnter()
+              forwardedProps.onMouseEnter()
             }}
             onMouseLeave={() => {
               setShowTooltip(false)
-              anchorProps.onMouseLeave()
+              forwardedProps.onMouseLeave()
             }}
           >
             {links[props.linkKey].name}

@@ -48,7 +48,7 @@ const LandingContent: Component = () => {
                     href={media.href}
                     target="_blank"
                     class="btn btn-circle btn-ghost"
-                    {...anchorProps}
+                    {...anchorProps.forwardedProps}
                   >
                     <media.Icon style={{ 'font-size': '1.5rem' }} />
                   </a>
@@ -67,7 +67,7 @@ const LandingContent: Component = () => {
           <a
             class="btn btn-circle btn-ghost mb-16 mt-auto h-24 w-24"
             href={`#${sectionDefinitions[0]!.key}`}
-            {...anchorProps}
+            {...anchorProps.forwardedProps}
           >
             <IconFaSolidArrowDown class="animate-bounce text-5xl text-secondary" />
           </a>

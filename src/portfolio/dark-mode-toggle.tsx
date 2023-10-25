@@ -30,7 +30,7 @@ export const DarkModeToggle: Component<{
             )}
             onClick={() => onDarkModeChange(!isDarkMode())}
             aria-label={label()}
-            {...childProps}
+            {...childProps.forwardedProps}
           >
             <IconFaSolidMoon font-size="1rem" class="swap-on" />
             <IconFaSolidSun font-size="1rem" class="swap-off" />

@@ -54,7 +54,7 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
               href={props.link}
               target="_blank"
               class="not-prose block w-[min(100%,theme(spacing.64))]"
-              {...anchorProps}
+              {...anchorProps.forwardedProps}
             >
               <img src={props.image} alt={props.title} loading="lazy" />
             </a>

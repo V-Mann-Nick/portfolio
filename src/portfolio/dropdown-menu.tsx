@@ -52,9 +52,9 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
   const optionId = createUniqueId()
 
   const Dropdown: Component<
-    Partial<ComponentProps<TooltipProps['children']>>
-  > = (_anchorProps) => {
-    const [focusHandlers, anchorProps] = splitProps(_anchorProps, [
+    Partial<ComponentProps<TooltipProps['children']>['forwardedProps']>
+  > = (_forwardedProps) => {
+    const [focusHandlers, forwardedProps] = splitProps(_forwardedProps, [
       'onFocus',
       'onBlur',
     ])
@@ -66,7 +66,7 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
           props.dropdownClass
         )}
         use:clickOutside={() => onClose()}
-        {...anchorProps}
+        {...forwardedProps}
       >
         <button
           id={triggerId}
@@ -185,7 +185,7 @@ export const DropdownMenu: Component<DropdownProps> = (props) => {
     <>
       {props.tooltip ? (
         <Tooltip {...props.tooltip}>
-          {(anchorProps) => <Dropdown {...anchorProps} />}
+          {(anchorProps) => <Dropdown {...anchorProps.forwardedProps} />}
         </Tooltip>
       ) : (
         <Dropdown />
