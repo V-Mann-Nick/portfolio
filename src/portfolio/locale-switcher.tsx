@@ -1,6 +1,6 @@
 import IconFaSolidGlobe from '~icons/fa-solid/globe'
 
-import { DropdownMenu } from './dropdown-menu'
+import { DropdownMenu, type DropdownProps } from './dropdown-menu'
 import { type Locale, locales } from './i18n'
 import { useLocale } from './locale-provider'
 
@@ -17,7 +17,11 @@ const localeOptions = locales.map((locale) => {
   }
 })
 
-export const LocaleSwitcher: Component<{ btnClass?: string }> = (props) => {
+type LocaleSwitcherProps = {
+  btnClass?: string
+} & Pick<DropdownProps, 'positioningStrategy'>
+
+export const LocaleSwitcher: Component<LocaleSwitcherProps> = (props) => {
   const { currentLocale, setCurrentLocale, messages } = useLocale()
   const label = () => messages().localeSwitcher.label
 
@@ -25,7 +29,7 @@ export const LocaleSwitcher: Component<{ btnClass?: string }> = (props) => {
     <DropdownMenu
       label={label()}
       items={localeOptions}
-      dropdownClass="dropdown-end"
+      placement="bottom-end"
       triggerChildren={
         <>
           <IconFaSolidGlobe />
@@ -35,7 +39,8 @@ export const LocaleSwitcher: Component<{ btnClass?: string }> = (props) => {
       triggerClass={props.btnClass}
       onSelect={(item) => setCurrentLocale(item.key as Locale)}
       currentSelection={currentLocale()}
-      tooltip={{ tooltip: label(), placement: 'bottom' }}
+      positioningStrategy={props.positioningStrategy}
+      tooltip={{ tooltip: label(), placement: 'left' }}
       extraATagProps={({ key }) => ({ lang: key, hreflang: key })}
     />
   )

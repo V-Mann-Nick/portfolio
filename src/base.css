@@ -25,7 +25,3 @@ html {
 .collapse *:last-child {
   margin-bottom: 0;
 }
-
-.dropdown > :not(summary,ul):focus-visible {
-  outline: 2px solid;
-}

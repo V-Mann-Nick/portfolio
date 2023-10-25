@@ -1,7 +1,7 @@
 import IconFaSolidBars from '~icons/fa-solid/bars'
 
 import { DarkModeToggle } from './dark-mode-toggle'
-import { DropdownMenu } from './dropdown-menu'
+import { DropdownMenu, type DropdownProps } from './dropdown-menu'
 import { useLocale } from './locale-provider'
 import { LocaleSwitcher } from './locale-switcher'
 import { currentSection } from './state'
@@ -26,10 +26,11 @@ const NavigationItem: Component<SectionDefinition> = (props) => {
   )
 }
 
-const MobileNavigation: Component<{
-  sections: SectionDefinition[]
-  dropdownClass: string
-}> = (props) => {
+const MobileNavigation: Component<
+  {
+    sections: SectionDefinition[]
+  } & Pick<DropdownProps, 'triggerClass'>
+> = (props) => {
   const { messages } = useLocale()
   return (
     <DropdownMenu
@@ -47,11 +48,11 @@ const MobileNavigation: Component<{
         tooltip: messages().mobileNavigation.label,
         placement: 'right',
       }}
-      dropdownClass={props.dropdownClass}
-      triggerClass="rounded-none"
+      triggerClass={clsx('rounded-none', props.triggerClass)}
       onSelect={({ href }) => (window.location.hash = href!)}
       triggerChildren={<IconFaSolidBars />}
       currentSelection={currentSection()}
+      positioningStrategy="fixed"
     />
   )
 }
@@ -72,10 +73,10 @@ export const Navigation: Component<{ sections: SectionDefinition[] }> = (
         )}
       </For>
     </ul>
-    <MobileNavigation sections={props.sections} dropdownClass="sm:hidden" />
+    <MobileNavigation sections={props.sections} triggerClass="sm:hidden" />
     <div>
       <DarkModeToggle btnClass="rounded-none h-full" />
-      <LocaleSwitcher btnClass="rounded-none" />
+      <LocaleSwitcher btnClass="rounded-none" positioningStrategy="fixed" />
     </div>
   </nav>
 )

@@ -1,4 +1,4 @@
-import type { Placement } from '@popperjs/core'
+import type { Placement, PositioningStrategy } from '@popperjs/core'
 import clsx from 'clsx'
 import {
   type Component,
@@ -9,6 +9,7 @@ import {
   mergeProps,
   onCleanup,
   onMount,
+  type Setter,
   Show,
 } from 'solid-js'
 import { Portal } from 'solid-js/web'
@@ -29,7 +30,11 @@ type AccessibilityType = 'tooltip' | 'menu'
 type AnchorTooltipAriaProps = {
   'aria-describedby': string
 }
-type AnchorMenuAriaProps = Record<string, never>
+type AnchorMenuAriaProps = {
+  'aria-expanded': boolean
+  'aria-controls': string
+  'aria-haspopup': true
+}
 
 export type PopoverProps<
   TTriggerType extends TriggerType,
@@ -44,13 +49,18 @@ export type PopoverProps<
       (TAccessibilityType extends 'tooltip'
         ? AnchorTooltipAriaProps
         : AnchorMenuAriaProps) & { ref: (el: HTMLElement) => void }
-    onClose: () => void
+    showPopover: boolean
+    setShowPopover: Setter<boolean>
   }>
-  content: JSX.Element | Component<{ onClose: () => void }>
+  content:
+    | JSX.Element
+    | Component<{ showPopover: boolean; setShowPopover: Setter<boolean> }>
   delay?: number
   placement: Placement
   popoverContainerClass?: string
   hidePopover?: boolean
+  offset?: number
+  positioningStrategy?: PositioningStrategy
 }
 
 export const Popover = <
@@ -59,7 +69,10 @@ export const Popover = <
 >(
   _props: PopoverProps<TTriggerType, TAccessibilityType>
 ): JSX.Element => {
-  const props = mergeProps({ delay: 200 }, _props)
+  const props = mergeProps(
+    { delay: 200, offset: 10, strategy: 'absolute' as const },
+    _props
+  )
 
   const [showPopover, setShowPopover] = createSignal(false)
   const [isAnimatedIn, setIsAnimatedIn] = createSignal(false)
@@ -68,7 +81,7 @@ export const Popover = <
 
   const anchorEventHandlers = () => {
     let hoverTimeout: NodeJS.Timeout | undefined
-    const resetWhenHover = () => {
+    const reset = () => {
       clearTimeout(hoverTimeout)
       setShowPopover(false)
     }
@@ -83,22 +96,27 @@ export const Popover = <
             hoverTimeout = setTimeout(() => setShowPopover(true), props.delay)
           }
         },
-        onMouseLeave: resetWhenHover,
+        onMouseLeave: reset,
         onFocus: () => setShowPopover(true),
-        onBlur: resetWhenHover,
+        onBlur: reset,
       } satisfies AnchorHoverEventHandlers,
-    } satisfies Record<TriggerType, Record<string, () => void>>
+    } satisfies Record<TriggerType, unknown>
     return eventHandlersByTriggerType[props.triggerType]
   }
 
   const popoverId = createUniqueId()
+  const combinedShowPopover = () => showPopover() && !props.hidePopover
   const anchorAriaProps = () => {
     const ariaPropsByAccessibilityType = {
       tooltip: {
         'aria-describedby': popoverId,
       } satisfies AnchorTooltipAriaProps,
-      menu: {} satisfies AnchorMenuAriaProps,
-    } satisfies Record<AccessibilityType, Record<string, string>>
+      menu: {
+        'aria-expanded': combinedShowPopover(),
+        'aria-controls': popoverId,
+        'aria-haspopup': true,
+      } satisfies AnchorMenuAriaProps,
+    } satisfies Record<AccessibilityType, Record<string, unknown>>
     return ariaPropsByAccessibilityType[props.accessibilityType]
   }
 
@@ -122,8 +140,9 @@ export const Popover = <
 
   usePopper(anchor, popper, {
     placement: props.placement,
+    strategy: props.positioningStrategy,
     modifiers: [
-      { name: 'offset', options: { offset: [0, 10] } },
+      { name: 'offset', options: { offset: [0, props.offset] } },
       { name: 'preventOverflow', options: { padding: 10 } },
       {
         name: 'addZIndex',
@@ -136,8 +155,24 @@ export const Popover = <
     ],
   })
 
-  const onClose = () => setShowPopover(false)
-  const combinedShowPopover = () => showPopover() && !props.hidePopover
+  createEffect(() => {
+    if (props.triggerType !== 'click') return
+    const [anchorElement, popperElement] = [anchor(), popper()]
+    if (!anchorElement || !popperElement) return
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (
+        anchorElement.contains(e.target as Node) ||
+        popperElement.contains(e.target as Node)
+      ) {
+        return
+      }
+      setShowPopover(false)
+    }
+    document.addEventListener('click', handleOutsideClick)
+    onCleanup(() => {
+      document.removeEventListener('click', handleOutsideClick)
+    })
+  })
 
   return (
     <>
@@ -148,13 +183,14 @@ export const Popover = <
           ...anchorEventHandlers(),
           ...anchorAriaProps(),
         }}
-        onClose={onClose}
+        showPopover={combinedShowPopover()}
+        setShowPopover={setShowPopover}
       />
       <Show when={combinedShowPopover()}>
         <Portal ref={setPopper}>
           <div
             id={popoverId}
-            role="tooltip"
+            role={props.accessibilityType === 'tooltip' ? 'tooltip' : undefined}
             class={clsx(
               isAnimatedIn() ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
               'transition-opacity transition-transform',
@@ -162,7 +198,10 @@ export const Popover = <
             )}
           >
             {typeof props.content === 'function' ? (
-              <props.content onClose={onClose} />
+              <props.content
+                showPopover={showPopover()}
+                setShowPopover={setShowPopover}
+              />
             ) : (
               props.content
             )}
