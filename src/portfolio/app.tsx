@@ -4,6 +4,7 @@ import IconFaSolidUser from '~icons/fa-solid/user'
 import { AboutMe } from './about-me'
 import { DarkModeToggle } from './dark-mode-toggle'
 import { Experience } from './experience'
+import { Footer } from './footer'
 import type { Locale } from './i18n'
 import { Landing } from './landing'
 import { LinkPreviewProvider } from './link-preview-provider'
@@ -39,9 +40,12 @@ export const sectionDefinitions: SectionDefinition[] = [
   // },
 ]
 
-export const App: Component<{ locale: Locale; linkPreviews: LinkPreviews }> = (
-  props
-) => {
+type AppProps = {
+  locale: Locale
+  linkPreviews: LinkPreviews
+}
+
+export const App: Component<AppProps> = (props) => {
   // Track the currently visible section
   const sectionRefsByKey: Record<string, HTMLElement | undefined> = {}
   onMount(() => {
@@ -87,6 +91,7 @@ export const App: Component<{ locale: Locale; linkPreviews: LinkPreviews }> = (
             )}
           </For>
         </main>
+        <Footer />
       </LinkPreviewProvider>
     </LocaleProvider>
   )
