@@ -31,7 +31,7 @@ export const Tooltip: Component<TooltipProps> = (props) => {
       popoverContainerClass={clsx(
         props.tooltipContainerClass,
         isPlainTooltip() &&
-          'rounded bg-accent px-2 py-1 text-sm text-neutral-content'
+          'rounded bg-secondary px-2 py-1 text-sm text-secondary-content'
       )}
     />
   )

@@ -35,7 +35,11 @@ const LandingContent: Component = () => {
   return (
     <>
       <div class="mb-auto mt-16" />
-      <img src={meImage.src} class="h-52 w-52 rounded-full object-cover" />
+      <img
+        src={meImage.src}
+        class="h-52 w-52 rounded-full object-cover"
+        alt="Nicklas in the mountains"
+      />
       <div class="flex flex-col items-center gap-2">
         <h1 class="text-4xl">Nicklas Sedlock</h1>
         <h2 class="text-2xl">{messages().landing.subtitle}</h2>
@@ -48,6 +52,7 @@ const LandingContent: Component = () => {
                     href={media.href}
                     target="_blank"
                     class="btn btn-circle btn-ghost"
+                    aria-label={media.title}
                     {...anchorProps.forwardedProps}
                   >
                     <media.Icon style={{ 'font-size': '1.5rem' }} />
@@ -67,6 +72,7 @@ const LandingContent: Component = () => {
           <a
             class="btn btn-circle btn-ghost mb-16 mt-auto h-24 w-24"
             href={`#${sectionDefinitions[0]!.key}`}
+            aria-label={messages().landing.scrollDownTooltip}
             {...anchorProps.forwardedProps}
           >
             <IconFaSolidArrowDown class="animate-bounce text-5xl text-secondary" />

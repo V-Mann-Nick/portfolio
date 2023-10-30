@@ -27,7 +27,7 @@ export const LocaleSwitcher: Component<LocaleSwitcherProps> = (props) => {
 
   return (
     <DropdownMenu
-      label={label()}
+      label={`${label()} (${currentLocale()})`}
       items={localeOptions}
       placement="bottom-end"
       triggerChildren={

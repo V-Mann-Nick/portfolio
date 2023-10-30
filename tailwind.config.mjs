@@ -27,11 +27,11 @@ export default {
 
           secondary: '#81A1C1',
           'secondary-focus': '#5E81AC',
-          'secondary-content': '#D8DEE9',
+          'secondary-content': '#2e3440',
 
-          accent: '#434C5E',
-          'accent-focus': '#4C566A',
-          'accent-content': '#B48EAD',
+          accent: '#B48EAD',
+          'accent-focus': '#95638c',
+          'accent-content': '#ECEFF4',
 
           neutral: '#2E3440',
           'neutral-focus': '#3B4252',
@@ -56,11 +56,11 @@ export default {
 
           secondary: '#81A1C1',
           'secondary-focus': '#5E81AC',
-          'secondary-content': '#D8DEE9',
+          'secondary-content': '#2e3440',
 
-          accent: '#434C5E',
-          'accent-focus': '#4C566A',
-          'accent-content': '#B48EAD',
+          accent: '#B48EAD',
+          'accent-focus': '#95638c',
+          'accent-content': '#ECEFF4',
 
           neutral: '#2E3440',
           'neutral-focus': '#3B4252',

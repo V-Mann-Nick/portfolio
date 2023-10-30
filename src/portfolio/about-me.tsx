@@ -14,10 +14,24 @@ export const AboutMe: Component = () => {
         {messages().aboutMe.title}
       </ContentFrame>
       <ContentFrame>
-        <img src={me2.src} class="float-left mb-0 mr-5" />
+        <img
+          loading="lazy"
+          src={me2.src}
+          height={me2.height}
+          width={me2.width}
+          class="float-left mb-0 mr-5"
+          alt="Nicklas in the mountains"
+        />
         {messages().aboutMe.content.p1()}
         {messages().aboutMe.content.p2()}
-        <img src={dork.src} class="float-right my-0 ml-5" />
+        <img
+          loading="lazy"
+          src={dork.src}
+          height={dork.height}
+          width={dork.width}
+          class="float-right my-0 ml-5"
+          alt="Dorky Nicklas smiling at the camera while coding"
+        />
         {messages().aboutMe.content.p3()}
         {messages().aboutMe.content.p4()}
       </ContentFrame>

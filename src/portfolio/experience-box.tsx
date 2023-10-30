@@ -92,7 +92,7 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
       </Collapse>
       <button
         onClick={() => setIsExpanded((prev) => !prev)}
-        class="btn btn-accent btn-sm btn-block"
+        class="btn btn-secondary btn-sm btn-block"
         id={moreButtonId}
         aria-expanded={isExpanded()}
         aria-controls={collapseId}

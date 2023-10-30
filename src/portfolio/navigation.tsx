@@ -16,7 +16,7 @@ const NavigationItem: Component<SectionDefinition> = (props) => {
     <a
       class={clsx(
         'btn rounded-none px-6',
-        currentSection() === props.key && 'btn-accent'
+        currentSection() === props.key && 'btn-secondary'
       )}
       href={`#${props.key}`}
     >

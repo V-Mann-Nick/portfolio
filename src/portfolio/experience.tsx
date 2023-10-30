@@ -24,6 +24,8 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
   const { getLinkPreview } = useLinkPreviews()
   const imageLinkPreview = () => getLinkPreview(props.imageLinkKey)
   const contentLinkPreview = () => getLinkPreview(props.contentLinkKey)
+  const titleForAlt = () =>
+    props.title?.(messages()) || contentLinkPreview()?.title
   return (
     <Show when={imageLinkPreview()?.image && contentLinkPreview()?.title}>
       <li class="!m-0 !p-0">
@@ -36,6 +38,11 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
             src={imageLinkPreview()?.image}
             class="!m-0 aspect-[2/1] w-52 rounded-lg"
             loading="lazy"
+            alt={
+              titleForAlt()
+                ? `Link preview for '${titleForAlt()}'`
+                : `Link preview`
+            }
           />
           <div>
             <Show when={props.title}>
