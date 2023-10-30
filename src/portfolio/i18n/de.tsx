@@ -3,6 +3,10 @@ import { Link } from '../links'
 import type { DictI18n } from '.'
 
 export default {
+  meta: {
+    description:
+      'Lerne Nicklas kennen, einen Programmierer, der sich leidenschaftlich für die Natur begeistert. Mit seinem autodidaktischen Programmierhintergrund ist er ein Problemlöser und lebenslanger Lerner. Erkunde seine einzigartige Reise.',
+  },
   darkModeToggleTooltip: {
     light: 'Zu hellem Modus wechseln',
     dark: 'Zu dunklem Modus wechseln',

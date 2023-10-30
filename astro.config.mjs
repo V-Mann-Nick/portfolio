@@ -1,27 +1,49 @@
+import sitemap from '@astrojs/sitemap'
 import solid from '@astrojs/solid-js'
 import tailwind from '@astrojs/tailwind'
 import { defineConfig } from 'astro/config'
-import { i18n } from 'astro-i18n-aut/integration'
+import { filterSitemapByDefaultLocale, i18n } from 'astro-i18n-aut/integration'
 import Icons from 'unplugin-icons/vite'
+
+const locales = {
+  en: 'en',
+  de: 'de',
+}
+
+const defaultLocale = 'en'
 
 /**
  * @type {import('astro/types').AstroConfig}
  */
 export default defineConfig({
+  site: 'https://nicklas.sedlock.xyz',
   trailingSlash: 'always',
   build: {
     format: 'directory',
   },
   integrations: [
     i18n({
-      locales: { en: 'en', de: 'de' },
-      defaultLocale: 'en',
+      locales,
+      defaultLocale,
       redirectDefaultLocale: true,
     }),
     solid(),
-    tailwind({ applyBaseStyles: false }),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    sitemap({
+      i18n: {
+        locales,
+        defaultLocale,
+      },
+      filter: filterSitemapByDefaultLocale({ defaultLocale }),
+    }),
   ],
   vite: {
-    plugins: [Icons({ compiler: 'solid' })],
+    plugins: [
+      Icons({
+        compiler: 'solid',
+      }),
+    ],
   },
 })

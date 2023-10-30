@@ -1,6 +1,10 @@
 import { Link } from '../links'
 
 export default {
+  meta: {
+    description:
+      "Meet Nicklas, a programmer who's passionate about the great outdoors. With a self-taught programming background, he's a problem solver and lifelong learner. Explore his unique journey.",
+  },
   darkModeToggleTooltip: {
     light: 'Switch to light mode',
     dark: 'Switch to dark mode',

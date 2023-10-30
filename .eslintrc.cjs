@@ -41,7 +41,7 @@ module.exports = {
   ignorePatterns: ['dist'],
   overrides: [
     {
-      files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
+      files: ['*.js', '*.jsx', '*.ts', '*.tsx', '*.mjs'],
       rules: {
         'simple-import-sort/imports': [
           'error',

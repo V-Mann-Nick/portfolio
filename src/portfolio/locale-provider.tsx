@@ -20,14 +20,18 @@ export const LocaleProvider: ParentComponent<{ initialLocale: Locale }> = (
   props
 ) => {
   const [currentLocale, _setCurrentLocale] = createSignal(props.initialLocale)
+  const messages = () => dictonaries[currentLocale()]
   const setCurrentLocale = (locale: Locale) => {
     _setCurrentLocale(locale)
     if (defaultLocale === locale) {
       history.pushState(null, '', '/' + location.hash)
     } else history.pushState(null, '', `/${locale}/` + location.hash)
     document.documentElement.lang = locale
+    ;[
+      document.querySelector('meta[name=description]'),
+      document.querySelector('meta[property="og:description"]'),
+    ].forEach((el) => el?.setAttribute('content', messages().meta.description))
   }
-  const messages = () => dictonaries[currentLocale()]
 
   return (
     <LocaleContext.Provider

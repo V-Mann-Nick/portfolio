@@ -1,20 +1,39 @@
 ---
 import fetchLinkPreviews from '../portfolio/link-previews'
 import { App } from '../portfolio/app';
+import { dictonaries } from '../portfolio/i18n';
 import { getLocale } from "astro-i18n-aut";
 import '@fontsource-variable/fira-code';
 import '../base.css';
 
 const locale = getLocale(Astro.url);
 const linkPreviews = await fetchLinkPreviews()
+
+const title = "Nicklas Sedlock 👨‍💻⛰️";
+const description = dictonaries[locale].meta.description;
 ---
 
 <html lang={locale}>
 	<head>
+    <title>{title}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Nicklas Sedlock" />
+    <meta name="copyright" content="Nicklas Sedlock" />
+    <meta name="keywords" content="software engineer, programmer, portfolio"
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="title" property="og:title" content={title} />
+    <meta name="description" property="og:description" content={description} />
+    <meta name="type" property="og:type" content="website" />
+    <meta name="image" property="og:image" content="/me.jpg" />
+    <meta name="url" property="og:url" content={Astro.site} />
+    <meta name="robots" content="index,follow" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 		<script is:inline>
       const isDarkMode = (() => {
         if (
