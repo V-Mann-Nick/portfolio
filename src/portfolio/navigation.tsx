@@ -32,9 +32,10 @@ const MobileNavigation: Component<
   } & Pick<DropdownProps, 'triggerClass'>
 > = (props) => {
   const { messages } = useLocale()
+  const label = () => messages().mobileNavigation.label
   return (
     <DropdownMenu
-      label="Placeholder"
+      label={label()}
       items={props.sections.map((section) => ({
         key: section.key,
         label: (
@@ -45,7 +46,7 @@ const MobileNavigation: Component<
         href: `#${section.key}`,
       }))}
       tooltip={{
-        tooltip: messages().mobileNavigation.label,
+        tooltip: label(),
         placement: 'right',
       }}
       triggerClass={clsx('rounded-none', props.triggerClass)}
