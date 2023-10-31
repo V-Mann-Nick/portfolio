@@ -1,3 +1,5 @@
+import { isMobile } from './is-mobile'
+
 import type { Placement, PositioningStrategy } from '@popperjs/core'
 import clsx from 'clsx'
 import {
@@ -61,6 +63,7 @@ export type PopoverProps<
   hidePopover?: boolean
   offset?: number
   positioningStrategy?: PositioningStrategy
+  hideOnMobile?: boolean
 }
 
 export const Popover = <
@@ -105,7 +108,8 @@ export const Popover = <
   }
 
   const popoverId = createUniqueId()
-  const combinedShowPopover = () => showPopover() && !props.hidePopover
+  const combinedShowPopover = () =>
+    showPopover() && !props.hidePopover && (!props.hideOnMobile || !isMobile)
   const anchorAriaProps = () => {
     const ariaPropsByAccessibilityType = {
       tooltip: {

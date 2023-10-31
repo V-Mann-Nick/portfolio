@@ -19,7 +19,7 @@ export const AboutMe: Component = () => {
           src={me2.src}
           height={me2.height}
           width={me2.width}
-          class="float-left mb-0 mr-5"
+          class="sm:float-left sm:mb-0 sm:mr-5"
           alt="Nicklas in the mountains"
         />
         {messages().aboutMe.content.p1()}
@@ -29,7 +29,7 @@ export const AboutMe: Component = () => {
           src={dork.src}
           height={dork.height}
           width={dork.width}
-          class="float-right my-0 ml-5"
+          class="sm:float-right sm:my-0 sm:ml-5"
           alt="Dorky Nicklas smiling at the camera while coding"
         />
         {messages().aboutMe.content.p3()}

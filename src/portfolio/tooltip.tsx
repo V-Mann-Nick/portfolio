@@ -33,6 +33,7 @@ export const Tooltip: Component<TooltipProps> = (props) => {
         isPlainTooltip() &&
           'rounded bg-secondary px-2 py-1 text-sm text-secondary-content'
       )}
+      hideOnMobile
     />
   )
 }

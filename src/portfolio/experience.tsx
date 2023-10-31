@@ -30,13 +30,13 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
     <Show when={imageLinkPreview()?.image && contentLinkPreview()?.title}>
       <li class="!m-0 !p-0">
         <a
-          class="!m-0 flex items-center gap-8 rounded-lg !p-4 !no-underline transition-colors hover:bg-base-300 hover:text-base-content"
+          class="!m-0 flex flex-col items-center gap-6 rounded-lg !p-4 !no-underline transition-colors hover:bg-base-300 hover:text-base-content sm:flex-row sm:gap-8"
           href={links[props.contentLinkKey].link}
           target="_blank"
         >
           <img
             src={imageLinkPreview()?.image}
-            class="!m-0 aspect-[2/1] w-52 rounded-lg"
+            class="!m-0 aspect-[2/1] w-[min(100%,theme(spacing.72))] rounded-lg sm:w-52"
             loading="lazy"
             alt={
               titleForAlt()
@@ -62,7 +62,7 @@ const OsContributionList: Component<{
 }> = (props) => (
   <>
     <h3>{props.title}</h3>
-    <ul class="!m-0 list-none !p-0">
+    <ul class="!m-0 flex list-none flex-col gap-4 !p-0 sm:gap-0">
       <For each={props.contributions}>{OsContribution}</For>
     </ul>
   </>
