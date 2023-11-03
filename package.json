@@ -1,49 +1,16 @@
 {
   "name": "portfolio",
-  "type": "module",
-  "version": "0.0.1",
+  "private": true,
+  "license": "CC-BY-NC-ND-4.0",
   "scripts": {
-    "dev": "concurrently -p '[{name}]' -n 'TS,ASTRO,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' 'astro dev' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/sitemap": "^3.0.2",
-    "@astrojs/solid-js": "^3.0.2",
-    "@astrojs/tailwind": "^5.0.2",
-    "@fontsource-variable/fira-code": "^5.0.14",
-    "@popperjs/core": "^2.11.8",
-    "@tailwindcss/typography": "^0.5.10",
-    "astro": "^3.3.2",
-    "astro-i18n-aut": "^0.4.25",
-    "clsx": "^2.0.0",
-    "daisyui": "^3.9.3",
-    "solid-collapse": "^1.1.0",
-    "solid-js": "^1.8.3",
-    "solid-popper": "^0.3.0",
-    "tailwindcss": "^3.3.3",
-    "ua-parser-js": "^1.0.36"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "fix": "turbo run fix"
   },
   "devDependencies": {
-    "@iconify-json/fa-brands": "^1.1.5",
-    "@iconify-json/fa-solid": "^1.1.5",
-    "@types/node": "^20.8.7",
-    "@types/ua-parser-js": "^0.7.38",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "concurrently": "^8.2.2",
-    "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "eslint-plugin-solid": "^0.13.0",
-    "link-preview-js": "^3.0.5",
-    "nodemon": "^3.0.1",
-    "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.6",
-    "type-fest": "^4.6.0",
-    "typescript": "^5.2.2",
-    "unplugin-icons": "^0.17.1"
-  }
+    "tsconfig": "workspace:*",
+    "turbo": "^1.10.16"
+  },
+  "packageManager": "pnpm@8.6.10"
 }

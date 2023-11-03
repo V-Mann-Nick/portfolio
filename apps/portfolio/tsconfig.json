@@ -1,0 +1,7 @@
+{
+  "extends": "tsconfig/solidjs",
+  "compilerOptions": {
+    "types": ["unplugin-icons/types/solid"]
+  }, 
+  "include": ["src", "tailwind.config.mjs", "astro.config.mjs", ".eslintrc.cjs"]
+}
