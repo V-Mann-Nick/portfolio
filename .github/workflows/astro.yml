@@ -1,15 +1,7 @@
-# Sample workflow for building and deploying an Astro site to GitHub Pages
-#
-# To get started with Astro see: https://docs.astro.build/en/getting-started/
-#
 name: Deploy Astro site to Pages
-
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -24,10 +16,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  BUILD_PATH: "." # default value when not using subfolders
-  # BUILD_PATH: subfolder
-
 jobs:
   build:
     name: Build
@@ -35,30 +23,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Get pnpm version
+        run: echo "PNPM_VERSION=$(jq -r .packageManager package.json | cut -d'@' -f2)" >> $GITHUB_ENV
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: ${{ env.BUILD_PATH }}/package-lock.json
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
-      - name: Install pnpm
-        run: npm install --global pnpm@8.9.2
       - name: Install dependencies
         run: pnpm install
-        working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
-          pnpm astro build \
+          pnpm turbo run build -- \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
-        working-directory: ${{ env.BUILD_PATH }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ${{ env.BUILD_PATH }}/dist
+          path: apps/portfolio/dist
 
   deploy:
     environment:
