@@ -241,7 +241,7 @@ export const Link: Component<LinkProps> = (_props) => {
         </>
       }
       tooltipContainerClass={clsx(
-        'card card-compact w-80 bg-base-100 shadow-xl transition-opacity transition-transform'
+        'card card-compact bg-base-100 w-80 shadow-xl transition-opacity transition-transform'
       )}
     >
       {(anchorProps) => {

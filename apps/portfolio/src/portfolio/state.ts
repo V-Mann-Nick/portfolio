@@ -12,9 +12,9 @@ export const onDarkModeChange = (isDarkMode: boolean) => {
   setIsDarkMode(isDarkMode)
   if (isDarkMode) {
     document.documentElement.classList.add('dark')
-    document.documentElement.dataset.theme = 'nord-dark'
+    document.documentElement.dataset['theme'] = 'nord-dark'
   } else {
     document.documentElement.classList.remove('dark')
-    document.documentElement.dataset.theme = 'nord-light'
+    document.documentElement.dataset['theme'] = 'nord-light'
   }
 }

@@ -54,7 +54,7 @@ export const DropdownMenu: Component<DropdownProps> = (_props) => {
         content={(contentProps) => (
           <ul
             class={clsx(
-              'min-content menu dropdown-content rounded-box z-[1] mt-2 bg-base-200 shadow focus-visible:outline-none'
+              'min-content menu dropdown-content rounded-box bg-base-200 z-[1] mt-2 shadow focus-visible:outline-none'
             )}
             ref={setMenu}
             role="menu"

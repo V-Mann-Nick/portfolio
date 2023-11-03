@@ -62,7 +62,7 @@ export const Navigation: Component<{ sections: SectionDefinition[] }> = (
   props
 ) => (
   <nav
-    class="sticky top-0 z-10 flex h-12 justify-between bg-base-200 px-3 shadow-lg"
+    class="bg-base-200 sticky top-0 z-10 flex h-12 justify-between px-3 shadow-lg"
     aria-label="Main site navigation"
   >
     <ul class="hidden sm:flex">

@@ -4,8 +4,8 @@
   "private": true,
   "license": "CC-BY-NC-ND-4.0",
   "scripts": {
-    "lint": "eslint .",
-    "fix": "eslint --fix ."
+    "fix": "eslint --fix .",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@types/eslint": "^8.44.6",
@@ -16,8 +16,6 @@
     "eslint-plugin-perfectionist": "^2.2.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-solid": "^0.13.0",
-    "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.6",
     "tsconfig": "workspace:*",
     "typescript": "^5.2.2"
   }

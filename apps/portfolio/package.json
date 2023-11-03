@@ -1,14 +1,14 @@
 {
   "name": "portfolio",
-  "type": "module",
   "version": "0.0.0",
   "license": "CC-BY-NC-ND-4.0",
+  "type": "module",
   "scripts": {
-    "dev": "concurrently -p '[{name}]' -n 'TS,ASTRO,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' 'astro dev' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
     "build": "astro build",
-    "preview": "astro preview",
+    "dev": "concurrently -p '[{name}]' -n 'TS,ASTRO,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' 'astro dev' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
+    "fix": "eslint --fix .",
     "lint": "eslint .",
-    "fix": "eslint --fix ."
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.0.3",

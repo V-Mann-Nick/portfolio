@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require('node:path')
-const prettierOptions = require('./prettier-config.js')
 
 const project = resolve(process.cwd(), 'tsconfig.json')
 
@@ -24,9 +23,8 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: ['node_modules/', 'dist/'],
+  ignorePatterns: ['node_modules/', 'dist/', '!.*'],
   rules: {
-    'prettier/prettier': ['error', prettierOptions, { usePrettierrc: false }],
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/consistent-type-imports': [
       'error',

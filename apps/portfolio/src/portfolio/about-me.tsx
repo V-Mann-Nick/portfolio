@@ -8,7 +8,7 @@ import { useLocale } from './locale-provider'
 export const AboutMe: Component = () => {
   const { messages } = useLocale()
   return (
-    <article class="prose flex max-w-none flex-col gap-4 py-12 prose-img:rounded-lg">
+    <article class="prose prose-img:rounded-lg flex max-w-none flex-col gap-4 py-12">
       <ContentFrame class="my-0" as="h1">
         {messages().aboutMe.title}
       </ContentFrame>

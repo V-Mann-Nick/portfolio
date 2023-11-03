@@ -70,7 +70,7 @@ export const App: Component<AppProps> = (props) => {
   return (
     <LocaleProvider initialLocale={props.locale}>
       <LinkPreviewProvider linkPreviews={props.linkPreviews}>
-        <main class="min-h-screen bg-base-300 text-base-content transition-colors duration-100 ease-linear">
+        <main class="bg-base-300 text-base-content min-h-screen transition-colors duration-100 ease-linear">
           <div class="absolute right-5 top-5 flex items-center gap-2">
             <DarkModeToggle />
             <LocaleSwitcher />

@@ -30,7 +30,7 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
     <Show when={imageLinkPreview()?.image && contentLinkPreview()?.title}>
       <li class="!m-0 !p-0">
         <a
-          class="!m-0 flex flex-col items-center gap-6 rounded-lg !p-4 !no-underline transition-colors hover:bg-base-300 hover:text-base-content sm:flex-row sm:gap-8"
+          class="hover:bg-base-300 hover:text-base-content !m-0 flex flex-col items-center gap-6 rounded-lg !p-4 !no-underline transition-colors sm:flex-row sm:gap-8"
           href={links[props.contentLinkKey].link}
           target="_blank"
         >

@@ -11,7 +11,7 @@ export const ContentFrame: ParentComponent<{
   return (
     <Dynamic
       class={[
-        'mx-auto w-[min(calc(100%-theme(spacing.8)),850px)] rounded bg-base-200 px-8 py-6 shadow',
+        'bg-base-200 mx-auto w-[min(calc(100%-theme(spacing.8)),850px)] rounded px-8 py-6 shadow',
         props.class,
       ]
         .filter(Boolean)

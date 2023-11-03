@@ -112,7 +112,7 @@ const cachedFetchLinkPreview = async (key: string, link: string) => {
 }
 
 const choosenFetchLinkPreview =
-  process.env.NODE_ENV === 'production'
+  process.env['NODE_ENV'] === 'production'
     ? fetchLinkPreview
     : cachedFetchLinkPreview
 
