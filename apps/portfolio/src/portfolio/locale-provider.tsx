@@ -25,7 +25,9 @@ export const LocaleProvider: ParentComponent<{ initialLocale: Locale }> = (
     _setCurrentLocale(locale)
     if (defaultLocale === locale) {
       history.pushState(null, '', '/' + location.hash)
-    } else history.pushState(null, '', `/${locale}/` + location.hash)
+    } else {
+      history.pushState(null, '', `/${locale}/` + location.hash)
+    }
     document.documentElement.lang = locale
     ;[
       document.querySelector('meta[name=description]'),
@@ -44,6 +46,8 @@ export const LocaleProvider: ParentComponent<{ initialLocale: Locale }> = (
 
 export const useLocale = () => {
   const context = useContext(LocaleContext)
-  if (!context) throw new Error('LocaleProvider not found')
+  if (!context) {
+    throw new Error('LocaleProvider not found')
+  }
   return context
 }

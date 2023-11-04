@@ -40,7 +40,9 @@ export const LocaleSwitcher: Component<LocaleSwitcherProps> = (props) => {
         </>
       }
       triggerClass={props.btnClass}
-      onSelect={(item) => setCurrentLocale(item.key as Locale)}
+      onSelect={(item) => {
+        setCurrentLocale(item.key as Locale)
+      }}
     />
   )
 }

@@ -28,7 +28,9 @@ export const DarkModeToggle: Component<{
               isDarkMode() && 'swap-active'
             )}
             aria-label={label()}
-            onClick={() => onDarkModeChange(!isDarkMode())}
+            onClick={() => {
+              onDarkModeChange(!isDarkMode())
+            }}
             {...childProps.forwardedProps}
           >
             <IconFaSolidMoon class="swap-on" font-size="1rem" />

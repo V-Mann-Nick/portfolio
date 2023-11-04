@@ -7,14 +7,12 @@ export const Section: Component<
     class?: string
     ref: HTMLElement | undefined
   }
-> = (props) => {
-  return (
-    <section
-      class={['min-h-screen', props.class].filter(Boolean).join(' ')}
-      id={props.key}
-      ref={props.ref}
-    >
-      <props.Content />
-    </section>
-  )
-}
+> = (props) => (
+  <section
+    class={['min-h-screen', props.class].filter(Boolean).join(' ')}
+    id={props.key}
+    ref={props.ref}
+  >
+    <props.Content />
+  </section>
+)

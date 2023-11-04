@@ -2,6 +2,7 @@ import IconFaSolidBars from '~icons/fa-solid/bars'
 import clsx from 'clsx'
 import { type Component, For } from 'solid-js'
 
+import type { SectionDefinitions } from './app'
 import type { SectionDefinition } from './types'
 
 import { DarkModeToggle } from './dark-mode-toggle'
@@ -26,11 +27,11 @@ const NavigationItem: Component<SectionDefinition> = (props) => {
   )
 }
 
-const MobileNavigation: Component<
-  {
-    sections: SectionDefinition[]
-  } & Pick<DropdownProps, 'triggerClass'>
-> = (props) => {
+type MobileNavigationProps = {
+  sections: SectionDefinitions
+} & Pick<DropdownProps, 'triggerClass'>
+
+const MobileNavigation: Component<MobileNavigationProps> = (props) => {
   const { messages } = useLocale()
   const label = () => messages().mobileNavigation.label
   return (
@@ -53,14 +54,16 @@ const MobileNavigation: Component<
       }}
       triggerChildren={<IconFaSolidBars />}
       triggerClass={clsx('rounded-none', props.triggerClass)}
-      onSelect={({ href }) => (window.location.hash = href!)}
+      onSelect={({ href }) => (window.location.hash = href)}
     />
   )
 }
 
-export const Navigation: Component<{ sections: SectionDefinition[] }> = (
-  props
-) => (
+type NavigationProps = {
+  sections: SectionDefinitions
+}
+
+export const Navigation: Component<NavigationProps> = (props) => (
   <nav
     class="bg-base-200 sticky top-0 z-10 flex h-12 justify-between px-3 shadow-lg"
     aria-label="Main site navigation"

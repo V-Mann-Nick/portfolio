@@ -19,7 +19,7 @@ import { Section } from './section'
 import { setCurrentSection } from './state'
 import { throttle } from './utils'
 
-export const sectionDefinitions: SectionDefinition[] = [
+export const sectionDefinitions = [
   {
     key: 'about-me',
     label: (messages) => messages.aboutMe.title,
@@ -38,7 +38,9 @@ export const sectionDefinitions: SectionDefinition[] = [
   //   Icon: IconFaSolidLightbulb,
   //   Content: () => <></>,
   // },
-]
+] as const satisfies readonly SectionDefinition[]
+
+export type SectionDefinitions = typeof sectionDefinitions
 
 type AppProps = {
   locale: Locale
@@ -50,22 +52,33 @@ export const App: Component<AppProps> = (props) => {
   const sectionRefsByKey: Record<string, HTMLElement | undefined> = {}
   onMount(() => {
     const handler = () => {
-      if (!Object.keys(sectionRefsByKey).length) return
-      const [closestKey] = Object.entries(sectionRefsByKey).reduce(
+      const firstSectionKey = Object.keys(sectionRefsByKey)[0]
+      if (!firstSectionKey) {
+        return
+      }
+      const [closestKey] = Object.entries(sectionRefsByKey).reduce<
+        [key: string, closestDistance: number]
+      >(
         ([closestKey, closestDistance], [key, ref]) => {
-          if (!ref) return [closestKey, closestDistance] as const
+          if (!ref) {
+            return [closestKey, closestDistance]
+          }
           const distance = Math.abs(ref.getBoundingClientRect().y)
-          if (distance < closestDistance) return [key, distance] as const
-          return [closestKey, closestDistance] as const
+          if (distance < closestDistance) {
+            return [key, distance]
+          }
+          return [closestKey, closestDistance]
         },
-        [Object.keys(sectionRefsByKey)[0]!, Infinity] as const
+        [firstSectionKey, Infinity]
       )
       setCurrentSection(closestKey)
     }
     handler()
     const throttledHandler = throttle(handler, 150)
     document.addEventListener('scroll', throttledHandler)
-    onCleanup(() => document.removeEventListener('scroll', throttledHandler))
+    onCleanup(() => {
+      document.removeEventListener('scroll', throttledHandler)
+    })
   })
   return (
     <LocaleProvider initialLocale={props.locale}>

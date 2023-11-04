@@ -25,7 +25,7 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
   const imageLinkPreview = () => getLinkPreview(props.imageLinkKey)
   const contentLinkPreview = () => getLinkPreview(props.contentLinkKey)
   const titleForAlt = () =>
-    props.title?.(messages()) || contentLinkPreview()?.title
+    props.title?.(messages()) ?? contentLinkPreview()?.title
   return (
     <Show when={imageLinkPreview()?.image && contentLinkPreview()?.title}>
       <li class="!m-0 !p-0">

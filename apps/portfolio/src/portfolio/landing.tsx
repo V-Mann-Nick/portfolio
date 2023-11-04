@@ -69,7 +69,7 @@ const LandingContent: Component = () => {
         {(anchorProps) => (
           <a
             class="btn btn-circle btn-ghost mb-16 mt-auto h-24 w-24"
-            href={`#${sectionDefinitions[0]!.key}`}
+            href={`#${sectionDefinitions[0].key}`}
             aria-label={messages().landing.scrollDownTooltip}
             {...anchorProps.forwardedProps}
           >

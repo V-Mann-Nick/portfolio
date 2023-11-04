@@ -1,14 +1,17 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { resolve } = require('node:path')
+/** @type {import('node:path')} */
+// eslint-disable-next-line
+const path = require('node:path')
 
-const project = resolve(process.cwd(), 'tsconfig.json')
+const project = path.resolve(process.cwd(), 'tsconfig.json')
 
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/strict-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:prettier/recommended',
-    'plugin:@typescript-eslint/strict',
     'plugin:import/recommended',
   ],
   parser: '@typescript-eslint/parser',
@@ -25,7 +28,9 @@ module.exports = {
   },
   ignorePatterns: ['node_modules/', 'dist/', '!.*'],
   rules: {
-    '@typescript-eslint/no-non-null-assertion': 'off',
+    curly: 'error',
+    camelcase: 'error',
+    'arrow-body-style': ['error', 'as-needed'],
     '@typescript-eslint/consistent-type-imports': [
       'error',
       { fixStyle: 'inline-type-imports' },
@@ -37,7 +42,6 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-    '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }],
     'perfectionist/sort-array-includes': [
       'error',
       { type: 'natural', 'spread-last': true },

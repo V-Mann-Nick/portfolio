@@ -198,8 +198,10 @@ export const Link: Component<LinkProps> = (_props) => {
     const image = new Image()
     image.src = imageLink
     return new Promise<typeof image>((resolve, reject) => {
-      image.onload = () => resolve(image)
-      image.onerror = () => reject(undefined)
+      image.onload = () => {
+        resolve(image)
+      }
+      image.onerror = reject
     })
   })
   createEffect(() => {
@@ -214,10 +216,12 @@ export const Link: Component<LinkProps> = (_props) => {
   })
 
   const showLinkPreview = () => {
-    if (!linkPreview() || image.loading) return false
-    const hasImage = imageLink() && !image.loading && !image.error
-    const hasDescription = linkPreview()?.description?.length
-    return !!(hasImage || hasDescription)
+    if (!linkPreview() || image.loading) {
+      return false
+    }
+    const hasImage = !!(imageLink() && !image.error)
+    const hasDescription = !!linkPreview()?.description?.length
+    return hasImage || hasDescription
   }
 
   return (

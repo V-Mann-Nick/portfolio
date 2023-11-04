@@ -95,8 +95,9 @@ export const Popover = <
       } satisfies AnchorClickEventHandlers,
       hover: {
         onMouseEnter: () => {
-          if (!props.delay) setShowPopover(true)
-          else {
+          if (!props.delay) {
+            setShowPopover(true)
+          } else {
             hoverTimeout = setTimeout(() => setShowPopover(true), props.delay)
           }
         },
@@ -127,7 +128,9 @@ export const Popover = <
 
   onMount(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowPopover(false)
+      if (e.key === 'Escape') {
+        setShowPopover(false)
+      }
     }
     document.addEventListener('keydown', handleEscape)
     onCleanup(() => {
@@ -161,9 +164,13 @@ export const Popover = <
   })
 
   createEffect(() => {
-    if (props.triggerType !== 'click') return
+    if (props.triggerType !== 'click') {
+      return
+    }
     const [anchorElement, popperElement] = [anchor(), popper()]
-    if (!anchorElement || !popperElement) return
+    if (!anchorElement || !popperElement) {
+      return
+    }
     const handleOutsideClick = (e: MouseEvent) => {
       if (
         anchorElement.contains(e.target as Node) ||

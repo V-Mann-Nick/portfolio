@@ -80,14 +80,16 @@ const fetchLinkPreview = async (key: string, link: string) => {
     locales.map((locale) => [locale, processPreview(locale)])
   ) as Record<Locale, ReturnType<typeof processPreview>>
   locales.forEach((locale) => {
-    if (locale === defaultLocale) return
+    if (locale === defaultLocale) {
+      return
+    }
     const isSameAsDefaultLocale = Object.entries(
       processedPreviewsByLocale[locale] ?? {}
     ).every(
       ([key, value]) =>
         value ===
         // @ts-expect-error - this is fine
-        (processedPreviewsByLocale[defaultLocale] ?? {})[key]
+        processedPreviewsByLocale[defaultLocale]?.[key]
     )
     if (isSameAsDefaultLocale) {
       processedPreviewsByLocale[locale] = null
@@ -105,7 +107,9 @@ export type LinkPreview = Awaited<
 
 const cachedFetchLinkPreview = async (key: string, link: string) => {
   const cached = await fileCache.get(key)
-  if (cached) return cached
+  if (cached) {
+    return cached
+  }
   const fetched = await fetchLinkPreview(key, link)
   await fileCache.set(key, fetched)
   return fetched
@@ -119,9 +123,10 @@ const choosenFetchLinkPreview =
 const fetchLinkPreviews = async () =>
   Object.fromEntries(
     await Promise.all(
-      Object.entries(links).map(async ([key, { link }]) => {
-        return [key, await choosenFetchLinkPreview(key, link)]
-      })
+      Object.entries(links).map(async ([key, { link }]) => [
+        key,
+        await choosenFetchLinkPreview(key, link),
+      ])
     )
   ) as Record<keyof typeof links, Awaited<ReturnType<typeof fetchLinkPreview>>>
 
