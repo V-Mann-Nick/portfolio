@@ -1,0 +1,31 @@
+{
+  "name": "curriculum-vitae",
+  "version": "0.0.0",
+  "license": "CC-BY-NC-ND-4.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsx scripts/build.tsx",
+    "dev": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
+    "fix": "eslint --fix .",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^3.1.14",
+    "cheerio": "1.0.0-rc.12",
+    "sharp": "^0.32.6",
+    "theme": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.34",
+    "concurrently": "^8.2.2",
+    "eslint-config-nicklas": "workspace:*",
+    "nodemon": "^3.0.1",
+    "tsconfig": "workspace:*",
+    "tsx": "^3.14.0",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}

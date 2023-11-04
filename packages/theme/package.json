@@ -1,0 +1,16 @@
+{
+  "name": "theme",
+  "version": "0.0.0",
+  "license": "CC-BY-NC-ND-4.0",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "fix": "eslint --fix .",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint-config-nicklas": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.2.2"
+  }
+}

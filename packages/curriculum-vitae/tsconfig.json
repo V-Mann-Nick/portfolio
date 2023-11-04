@@ -1,0 +1,4 @@
+{
+  "extends": "tsconfig/react-node",
+  "include": ["src", ".eslintrc.cjs", ".lintstagedrc.mjs", "scripts"]
+}

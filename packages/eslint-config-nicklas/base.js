@@ -13,6 +13,7 @@ module.exports = {
     'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:prettier/recommended',
     'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { project },
@@ -42,6 +43,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
     'perfectionist/sort-array-includes': [
       'error',
       { type: 'natural', 'spread-last': true },
@@ -66,4 +68,14 @@ module.exports = {
     'perfectionist/sort-named-imports': ['error', { type: 'natural' }],
     'perfectionist/sort-named-exports': ['error', { type: 'natural' }],
   },
+  overrides: [
+    {
+      files: ['*.js', '*.jsx', '*.mjs', '*.cjs'],
+      rules: {
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+      },
+    },
+  ],
 }
