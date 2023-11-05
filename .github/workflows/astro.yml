@@ -44,7 +44,7 @@ jobs:
         run: pnpm install
       - name: Build with Astro
         run: |
-          pnpm turbo run build -- \
+          pnpm turbo run build --filter=portfolio -- \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
       - name: Upload artifact
