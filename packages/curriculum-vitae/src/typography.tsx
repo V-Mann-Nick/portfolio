@@ -18,7 +18,7 @@ export const typography = {
     fontWeight: 600,
   },
   H4: {
-    fontSize: 10,
+    fontSize: 14,
     fontWeight: 600,
   },
   Text: {
