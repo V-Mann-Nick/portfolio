@@ -77,6 +77,7 @@ export const Contact: React.FunctionComponent<ContactProps> = ({
 const keyValueBlockSchema = z.object({
   title: z.string(),
   content: z.string().or(z.array(z.string())),
+  oneLine: z.boolean().optional(),
 })
 
 type KeyValueBlockProps = z.infer<typeof keyValueBlockSchema>
@@ -84,13 +85,15 @@ type KeyValueBlockProps = z.infer<typeof keyValueBlockSchema>
 const KeyValueBlock: React.FunctionComponent<KeyValueBlockProps> = ({
   title,
   content,
+  oneLine,
 }) => {
   const { spacing, colors, typography } = useConfig()
   return (
     <View
       style={{
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: oneLine ? 'row' : 'column',
+        alignItems: oneLine ? 'center' : 'flex-start',
         gap: `${spacing.keyValueBlockGap}mm`,
       }}
     >

@@ -47,7 +47,7 @@ export default {
         {
           icon: { name: 'linkedin', iconSet: 'brands' as const },
           href: 'https://www.linkedin.com/in/nicklas-sedlock-53764b1a8/',
-          text: 'nicklas-sedlock',
+          text: 'nicklas-sedlock-53764b1a8',
         },
       ].filter((i): i is Exclude<typeof i, false> => !!i),
     },
@@ -59,8 +59,8 @@ export default {
             title: 'Programming Languages',
             content: ['Typescript', 'Python', 'Rust'],
           },
-          { title: 'Front-end', content: ['React', 'Vue', 'SolidJS'] },
-          { title: 'Back-end', content: ['FastAPI', 'Keycloak'] },
+          { title: 'Front-end', content: ['React', 'Vue', 'Solid'] },
+          { title: 'Back-end', content: ['FastAPI', 'Fastify', 'Keycloak'] },
           {
             title: 'Databases',
             content: ['PostgreSQL', 'MongoDB', 'Elasticsearch'],
@@ -78,6 +78,14 @@ export default {
             ],
           },
           { title: 'Other', content: ['Linux', 'Git', 'Neovim', 'Nix'] },
+        ],
+      },
+      {
+        title: 'Languages',
+        content: [
+          { title: 'German', content: '- native', oneLine: true },
+          { title: 'English', content: '- native', oneLine: true },
+          { title: 'Spanish', content: '- advanced', oneLine: true },
         ],
       },
     ],
@@ -160,6 +168,24 @@ export default {
                 system on top of it, allowing stakeholders to seamlessly create
                 and assign product licenses.
               </>,
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Education',
+        content: [
+          {
+            title: 'BA Culture and technology: Philosophy',
+            keyProperties: [
+              {
+                icon: { name: 'building-columns' },
+                content: 'TU Berlin',
+              },
+              {
+                icon: { name: 'calendar' },
+                content: { date: new Date(2020, 3) },
+              },
             ],
           },
         ],

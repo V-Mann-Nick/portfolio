@@ -11,7 +11,11 @@ const dateRangeSchema = z.object({
   to: z.coerce.date(),
 })
 
-type DateRangeProps = z.infer<typeof dateRangeSchema>
+const dateSchema = z.object({ date: z.coerce.date() })
+
+const datesSchema = z.union([dateRangeSchema, dateSchema])
+
+type DatesProps = z.infer<typeof datesSchema>
 
 const formatDate = (date: Date, locale: string) =>
   new Intl.DateTimeFormat(locale, {
@@ -19,16 +23,26 @@ const formatDate = (date: Date, locale: string) =>
     year: 'numeric',
   }).format(date)
 
-const DateRange: React.FunctionComponent<DateRangeProps> = ({ from, to }) => {
+const Dates: React.FunctionComponent<DatesProps> = (props) => {
   const { locale } = useConfig()
-  const fromString = formatDate(from, locale)
-  const toString = formatDate(to, locale)
-  return `${fromString} - ${toString}`
+  return (
+    <ZodConditionalRender
+      schema={dateRangeSchema}
+      value={props}
+      fallback={({ date }) => formatDate(date, locale)}
+    >
+      {({ from, to }) => {
+        const fromString = formatDate(from, locale)
+        const toString = formatDate(to, locale)
+        return `${fromString} - ${toString}`
+      }}
+    </ZodConditionalRender>
+  )
 }
 
 const keyPropertySchema = z.object({
   icon: faIconSchema.optional(),
-  content: z.union([zReactNode, dateRangeSchema]),
+  content: z.union([zReactNode, datesSchema]),
 })
 
 type KeyProperty = z.infer<typeof keyPropertySchema>
@@ -50,11 +64,11 @@ const KeyProperty: React.FunctionComponent<KeyProperty> = ({
       {icon && <FaIcon size={36} color={colors.light.accent} {...icon} />}
       <typography.Text style={{ color: colors.light.accent, fontWeight: 600 }}>
         <ZodConditionalRender
-          schema={dateRangeSchema}
+          schema={datesSchema}
           value={content}
           fallback={(content) => content}
         >
-          {(content) => <DateRange {...content} />}
+          {(content) => <Dates {...content} />}
         </ZodConditionalRender>
       </typography.Text>
     </View>

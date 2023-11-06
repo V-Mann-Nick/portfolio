@@ -99,7 +99,7 @@ export const configSchema = z
   })
   .default({
     spacing: {
-      overviewColumnWidth: 80,
+      overviewColumnWidth: 75,
       overviewColumnPaddingX: 6,
       overviewGap: 9,
       overviewBlockHeadingMarginBottom: 3,
@@ -113,7 +113,7 @@ export const configSchema = z
       contentBlockGap: 4,
       contentSubBlockGap: 2,
       contentSubBlockTextGap: 1.5,
-      keyPropertiesGap: 2,
+      keyPropertiesGap: 4,
       pagePaddingTop: 15,
       pagePaddingBottom: 24,
       imageWidth: 50,
