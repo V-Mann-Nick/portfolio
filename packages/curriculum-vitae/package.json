@@ -4,7 +4,7 @@
   "license": "CC-BY-NC-ND-4.0",
   "type": "module",
   "scripts": {
-    "build": "tsx scripts/build.tsx",
+    "build": "tsx src/build.tsx",
     "dev": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
     "fix": "eslint --fix .",
     "lint": "eslint ."
@@ -13,7 +13,8 @@
     "@react-pdf/renderer": "^3.1.14",
     "cheerio": "1.0.0-rc.12",
     "sharp": "^0.32.6",
-    "theme": "workspace:*"
+    "theme": "workspace:*",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20.8.10",

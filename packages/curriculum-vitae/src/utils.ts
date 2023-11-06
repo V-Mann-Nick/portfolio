@@ -2,6 +2,8 @@ import type ReactPDF from '@react-pdf/renderer'
 
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isValidElement } from 'react'
+import { z } from 'zod'
 
 // I wanted to just import it from @react-pdf/types but somehow this leads to
 // problems with both ts-node and tsx. Life's too short...
@@ -22,3 +24,14 @@ export const mergeStyles = (...styles: (Style | Style[] | undefined)[]) =>
   )
 
 export const getDirName = (url: string) => path.dirname(fileURLToPath(url))
+
+const zReactElement = z.custom<React.ReactElement>(isValidElement)
+
+export const zReactNode = z.union([
+  zReactElement,
+  z.string(),
+  z.number(),
+  z.undefined(),
+  z.null(),
+  z.boolean(),
+])

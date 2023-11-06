@@ -2,7 +2,7 @@
 
 # This script is used to run the development server.
 
-pnpm tsx --watch-preserve-output --watch scripts/build.tsx &
+pnpm tsx --watch-preserve-output --watch src/build.tsx &
 
 if command -v zathura &> /dev/null
 then
