@@ -1,18 +1,15 @@
 import { View } from '@react-pdf/renderer'
 import { z } from 'zod'
 
-import { zReactNode } from '../utils'
+import { FaIcon } from '../../common/fa-icon'
+import {
+  type ContactInfoProps,
+  type ContactProps,
+  contactSchema,
+} from '../../common/types'
+import { zReactNode } from '../../common/utils'
 import { useConfig } from './config'
-import { FaIcon, faIconSchema } from './fa-icon'
 import { ZodConditionalRender } from './zod-conditional-render'
-
-const contactInfoSchema = z.object({
-  icon: faIconSchema,
-  text: z.string(),
-  href: z.string().url().optional(),
-})
-
-type ContactInfoProps = z.infer<typeof contactInfoSchema>
 
 const ContactInfo: React.FunctionComponent<ContactInfoProps> = ({
   icon,
@@ -48,12 +45,6 @@ const ContactInfo: React.FunctionComponent<ContactInfoProps> = ({
     </View>
   )
 }
-
-const contactSchema = z.object({
-  contactInfo: z.array(contactInfoSchema),
-})
-
-type ContactProps = z.infer<typeof contactSchema>
 
 export const Contact: React.FunctionComponent<ContactProps> = ({
   contactInfo,
@@ -114,6 +105,7 @@ const overviewBlockSchema = z.object({
     zReactNode,
     z.array(keyValueBlockSchema),
   ]),
+  isHighlightedList: z.boolean().optional(),
 })
 
 type OverviewBlockProps = z.infer<typeof overviewBlockSchema>
@@ -121,8 +113,9 @@ type OverviewBlockProps = z.infer<typeof overviewBlockSchema>
 const OverviewBlock: React.FunctionComponent<OverviewBlockProps> = ({
   title,
   content,
+  isHighlightedList,
 }) => {
-  const { spacing, typography } = useConfig()
+  const { spacing, typography, colors } = useConfig()
   return (
     <View>
       <typography.H3
@@ -144,7 +137,18 @@ const OverviewBlock: React.FunctionComponent<OverviewBlockProps> = ({
             key={idx}
             schema={keyValueBlockSchema}
             value={block}
-            fallback={(block) => <typography.Text>{block}</typography.Text>}
+            fallback={(block) =>
+              isHighlightedList ? (
+                <typography.Text style={{ fontWeight: 600 }}>
+                  <typography.Text style={{ color: colors.dark.accent }}>
+                    ~
+                  </typography.Text>{' '}
+                  {block}
+                </typography.Text>
+              ) : (
+                <typography.Text>{block}</typography.Text>
+              )
+            }
           >
             {(block) => <KeyValueBlock {...block} />}
           </ZodConditionalRender>

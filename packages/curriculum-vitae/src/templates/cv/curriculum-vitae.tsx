@@ -1,6 +1,7 @@
-import { Document, Font, Page, View } from '@react-pdf/renderer'
+import { Document, Page, View } from '@react-pdf/renderer'
 import { z } from 'zod'
 
+import { documentMeta } from '../../common/types'
 import { ConfigProvider, configSchema, useConfig } from './config'
 import { Content, contentSchema } from './content'
 import { Header, headerSchema } from './header'
@@ -9,19 +10,16 @@ import { Triangle } from './triangle'
 
 const WithProviders: React.FunctionComponent<
   Omit<CurriculumVitaeProps, 'config'>
-> = ({ content, header, overview }) => {
-  const { colors, font, fontFamily } = useConfig()
-  if (typeof font !== 'string') {
-    Font.register({
-      family: fontFamily,
-      fonts: Object.entries(font.source).map(([weight, src]) => ({
-        src,
-        fontWeight: Number(weight),
-      })),
-    })
-  }
+> = ({ documentMeta, content, header, overview }) => {
+  const { colors, fontFamily, locale, registerFonts } = useConfig()
+  registerFonts()
   return (
-    <Document>
+    <Document
+      title={documentMeta.title}
+      author={documentMeta.author}
+      subject={documentMeta.subject}
+      language={locale}
+    >
       <Page style={{ fontFamily }} wrap={false}>
         <View
           style={{
@@ -51,6 +49,7 @@ const WithProviders: React.FunctionComponent<
 }
 
 export const curriculumVitaeSchema = z.object({
+  documentMeta,
   header: headerSchema,
   overview: overviewSchema,
   content: contentSchema,

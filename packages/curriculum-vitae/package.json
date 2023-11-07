@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsx src/build.tsx",
-    "dev": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
+    "dev:cover": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh src/build-cover-letter.tsx dist/cover-letter-example.pdf' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
+    "dev:cv": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh src/build-cv.tsx dist/cv.pdf' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
     "fix": "eslint --fix .",
     "lint": "eslint ."
   },

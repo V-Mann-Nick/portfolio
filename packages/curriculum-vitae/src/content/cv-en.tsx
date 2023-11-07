@@ -1,11 +1,17 @@
-import { type CurriculumVitaeProps } from '../template'
-import { getDirName } from '../utils'
+import { getDirName } from '../common/utils'
+import { type CurriculumVitaeProps } from '../templates/cv'
 
 const phoneNumber = process.env['PHONE_NUMBER']
 
 const dirName = getDirName(import.meta.url)
 
 export default {
+  documentMeta: {
+    title: 'Nicklas Sedlock - Curriculum Vitae',
+    author: 'Nicklas Sedlock',
+    subject:
+      'Curriculum Vitae of Nicklas Sedlock - a detail-oriented and versatile programmer with a wide range of expertise',
+  },
   header: {
     title: 'Nicklas Sedlock',
     subtitle: 'Programmer',
@@ -53,14 +59,34 @@ export default {
     },
     overviewBlocks: [
       {
-        title: 'Skills',
+        title: 'Core Skills',
+        content: [
+          'Coding',
+          'Teaching & Mentoring',
+          'Innovation',
+          'Resourcefulness',
+        ],
+        isHighlightedList: true,
+      },
+      {
+        title: 'Technical Skills',
         content: [
           {
             title: 'Programming Languages',
             content: ['Typescript', 'Python', 'Rust'],
           },
-          { title: 'Front-end', content: ['React', 'Vue', 'Solid'] },
-          { title: 'Back-end', content: ['FastAPI', 'Fastify', 'Keycloak'] },
+          {
+            title: 'Frameworks',
+            content: [
+              'React',
+              'Vue',
+              'Solid',
+              'Next',
+              'Astro',
+              'FastAPI',
+              'Fastify',
+            ],
+          },
           {
             title: 'Databases',
             content: ['PostgreSQL', 'MongoDB', 'Elasticsearch'],
@@ -70,14 +96,25 @@ export default {
             content: [
               'Podman',
               'Docker',
-              'Kubernetes',
               'Terraform',
               'Nomad',
               'CI/CD',
               'Grafana',
+              'Kubernetes',
             ],
           },
-          { title: 'Other', content: ['Linux', 'Git', 'Neovim', 'Nix'] },
+          {
+            title: 'Testing',
+            content: [
+              'E2E (Cypress, Gherkin)',
+              'Property-based (Hypothesis)',
+              'Unit (Vitest, Pytest)',
+            ],
+          },
+          {
+            title: 'Other',
+            content: ['Linux', 'Git', 'Neovim', 'Nix', 'Jira'],
+          },
         ],
       },
       {
@@ -166,7 +203,8 @@ export default {
                 Configured and managed Keycloak for user authentication and
                 authorization, and developed a custom, no-code access management
                 system on top of it, allowing stakeholders to seamlessly create
-                and assign product licenses.
+                and assign product licenses, followed by onboarding and learning
+                sessions.
               </>,
             ],
           },

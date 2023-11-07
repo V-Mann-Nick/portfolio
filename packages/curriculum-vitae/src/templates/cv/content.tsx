@@ -1,9 +1,9 @@
 import { View } from '@react-pdf/renderer'
 import { z } from 'zod'
 
-import { zReactNode } from '../utils'
+import { FaIcon, faIconSchema } from '../../common/fa-icon'
+import { zReactNode } from '../../common/utils'
 import { useConfig } from './config'
-import { FaIcon, faIconSchema } from './fa-icon'
 import { ZodConditionalRender } from './zod-conditional-render'
 
 const dateRangeSchema = z.object({
@@ -90,7 +90,7 @@ const ContentSubBlock: React.FunctionComponent<ContentSubBlockProps> = ({
   content,
   isList,
 }) => {
-  const { spacing, typography } = useConfig()
+  const { spacing, typography, colors } = useConfig()
   return (
     <View
       style={{
@@ -123,7 +123,14 @@ const ContentSubBlock: React.FunctionComponent<ContentSubBlockProps> = ({
         {(Array.isArray(content) ? content : [content]).map(
           (achievement, idx) => (
             <typography.Text key={idx}>
-              {isList && '•'} {achievement}
+              {isList && (
+                <typography.Text
+                  style={{ color: colors.light.accent, fontWeight: 600 }}
+                >
+                  ~
+                </typography.Text>
+              )}{' '}
+              {achievement}
             </typography.Text>
           )
         )}

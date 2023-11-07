@@ -4,7 +4,7 @@ import fs from 'node:fs/promises'
 import sharp from 'sharp'
 import { z } from 'zod'
 
-import { getDirName } from '../utils'
+import { getDirName } from './utils'
 
 const fillSvg = (svg: string, color: string) => {
   const $ = loadXml(svg, { xml: true })

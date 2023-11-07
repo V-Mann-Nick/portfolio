@@ -1,11 +1,11 @@
 import type ReactPDF from '@react-pdf/renderer'
 
-import { Link, Text as PdfText } from '@react-pdf/renderer'
+import { Font, Link, Text as PdfText } from '@react-pdf/renderer'
 import React from 'react'
 import { colorsDark, colorsLight } from 'theme'
 import { z } from 'zod'
 
-import { mergeStyles } from '../utils'
+import { mergeStyles } from './utils'
 
 const typographyStyleSchema = z.object({
   fontSize: z.number().positive(),
@@ -52,28 +52,6 @@ const fontSchema = z.union([
 
 export const configSchema = z
   .object({
-    spacing: z.object({
-      overviewColumnWidth: z.number().positive(),
-      overviewColumnPaddingX: z.number().positive(),
-      overviewGap: z.number().positive(),
-      overviewBlockHeadingMarginBottom: z.number().positive(),
-      overviewBlockContentGap: z.number().positive(),
-      keyValueBlockGap: z.number().positive(),
-      contactGap: z.number().positive(),
-      contactItemGap: z.number().positive(),
-      contentColumnPaddingX: z.number().positive(),
-      contentGap: z.number().positive(),
-      contentBlockHeadingMarginBottom: z.number().positive(),
-      contentBlockGap: z.number().positive(),
-      contentSubBlockGap: z.number().positive(),
-      keyPropertiesGap: z.number().positive(),
-      contentSubBlockTextGap: z.number().positive(),
-      pagePaddingTop: z.number().positive(),
-      pagePaddingBottom: z.number().positive(),
-      imageWidth: z.number().positive(),
-      imageHeight: z.number().positive(),
-      headerPaddingBottom: z.number().positive(),
-    }),
     colors: z.object({
       dark: z.object({
         background: z.string(),
@@ -98,28 +76,6 @@ export const configSchema = z
     locale: z.enum(['de', 'en']),
   })
   .default({
-    spacing: {
-      overviewColumnWidth: 75,
-      overviewColumnPaddingX: 6,
-      overviewGap: 9,
-      overviewBlockHeadingMarginBottom: 3,
-      overviewBlockContentGap: 3,
-      keyValueBlockGap: 1.5,
-      contactGap: 3,
-      contactItemGap: 2,
-      contentColumnPaddingX: 7,
-      contentGap: 3,
-      contentBlockHeadingMarginBottom: 3,
-      contentBlockGap: 4,
-      contentSubBlockGap: 2,
-      contentSubBlockTextGap: 1.5,
-      keyPropertiesGap: 4,
-      pagePaddingTop: 15,
-      pagePaddingBottom: 24,
-      imageWidth: 50,
-      imageHeight: 50,
-      headerPaddingBottom: 8,
-    },
     colors: {
       dark: {
         background: colorsDark['base-300'],
@@ -171,23 +127,9 @@ export const configSchema = z
     locale: 'en',
   })
 
-const configSchemaTransformed = configSchema.transform((config) => {
-  const extendedSpacing = {
-    ...config.spacing,
-    get imageMarginLeft(): number {
-      return (this.overviewColumnWidth - this.imageWidth) / 2
-    },
-    get imageMarginRight(): number {
-      return this.imageMarginLeft + this.contentColumnPaddingX
-    },
-    get headerHeight(): number {
-      return this.imageHeight + this.pagePaddingTop + this.headerPaddingBottom
-    },
-    get contentPaddingTop(): number {
-      return this.headerHeight
-    },
-  }
-
+export const transformConfig = <TConfig extends z.infer<typeof configSchema>>(
+  config: TConfig
+) => {
   type TypographyComponentsByName = {
     [K in keyof typeof config.typography]: <TAs extends 'text' | 'link'>(
       props: TypographyProps<TAs>
@@ -209,34 +151,51 @@ const configSchemaTransformed = configSchema.transform((config) => {
     })
   ) as TypographyComponentsByName
 
+  const registerFonts = () => {
+    if (typeof config.font === 'string') {
+      return
+    }
+    Font.register({
+      family: 'custom-font',
+      fonts: Object.entries(config.font.source).map(([weight, src]) => ({
+        src,
+        fontWeight: Number(weight),
+      })),
+    })
+  }
+
   return {
     ...config,
-    spacing: extendedSpacing,
     typography,
     fontFamily: typeof config.font === 'string' ? config.font : 'custom-font',
+    registerFonts,
   }
-})
-
-const configContext = React.createContext<z.infer<
-  typeof configSchemaTransformed
-> | null>(null)
-
-type ConfigProviderProps = {
-  config?: z.infer<typeof configSchema>
 }
 
-export const ConfigProvider: React.FunctionComponent<
-  React.PropsWithChildren<ConfigProviderProps>
-> = ({ config, children }) => (
-  <configContext.Provider value={configSchemaTransformed.parse(config)}>
-    {children}
-  </configContext.Provider>
-)
+export const createConfigProvider = <TConfigIn, TConfigOut>(
+  schema: z.ZodType<TConfigOut, z.ZodTypeDef, TConfigIn>
+) => {
+  const configContext = React.createContext<TConfigOut | null>(null)
 
-export const useConfig = () => {
-  const config = React.useContext(configContext)
-  if (!config) {
-    throw new Error('useConfig must be used within a ConfigProvider')
+  type ConfigProviderProps = {
+    config?: TConfigIn
   }
-  return config
+
+  const ConfigProvider: React.FunctionComponent<
+    React.PropsWithChildren<ConfigProviderProps>
+  > = ({ config, children }) => (
+    <configContext.Provider value={schema.parse(config)}>
+      {children}
+    </configContext.Provider>
+  )
+
+  const useConfig = () => {
+    const config = React.useContext(configContext)
+    if (!config) {
+      throw new Error('useConfig must be used within a ConfigProvider')
+    }
+    return config
+  }
+
+  return { ConfigProvider, useConfig }
 }
