@@ -24,7 +24,6 @@ export const WithProviders: React.FunctionComponent<
           backgroundColor: colors.light.background,
           color: colors.light.text,
         }}
-        wrap={false}
       >
         <Header {...header} />
         <Content {...content} />
@@ -35,10 +34,12 @@ export const WithProviders: React.FunctionComponent<
 
 export const coverLetterSchema = z.object({
   documentMeta,
-  config: configSchema.optional(),
+  config: configSchema,
   header: headerSchema,
   content: contentSchema,
 })
+
+export type CoverLetterInput = z.input<typeof coverLetterSchema>
 
 export type CoverLetterProps = z.infer<typeof coverLetterSchema>
 

@@ -1,6 +1,8 @@
 import type ReactPDF from '@react-pdf/renderer'
+import type { PartialDeep } from 'type-fest'
 
 import { Font, Link, Text as PdfText } from '@react-pdf/renderer'
+import merge from 'lodash.merge'
 import React from 'react'
 import { colorsDark, colorsLight } from 'theme'
 import { z } from 'zod'
@@ -50,94 +52,98 @@ const fontSchema = z.union([
   }),
 ])
 
-export const configSchema = z
-  .object({
-    colors: z.object({
-      dark: z.object({
-        background: z.string(),
-        text: z.string(),
-        accent: z.string(),
-      }),
-      light: z.object({
-        background: z.string(),
-        text: z.string(),
-        accent: z.string(),
-      }),
+export const configSchema = z.object({
+  colors: z.object({
+    dark: z.object({
+      background: z.string(),
+      text: z.string(),
+      accent: z.string(),
     }),
-    typography: z.object({
-      H1: typographyStyleSchema,
-      H2: typographyStyleSchema,
-      H3: typographyStyleSchema,
-      H4: typographyStyleSchema,
-      KeyTitle: typographyStyleSchema,
-      Text: typographyStyleSchema,
+    light: z.object({
+      background: z.string(),
+      text: z.string(),
+      accent: z.string(),
     }),
-    font: fontSchema,
-    locale: z.enum(['de', 'en']),
-  })
-  .default({
-    colors: {
-      dark: {
-        background: colorsDark['base-300'],
-        text: colorsDark['base-content'],
-        accent: colorsDark.info,
-      },
-      light: {
-        background: colorsLight['base-200'],
-        text: colorsLight['base-content'],
-        accent: colorsLight.primary,
-      },
-    },
-    typography: {
-      H1: {
-        fontSize: 32,
-        fontWeight: 700,
-      },
-      H2: {
-        fontSize: 18,
-        fontWeight: 600,
-      },
-      H3: {
-        fontSize: 16,
-        fontWeight: 600,
-      },
-      H4: {
-        fontSize: 12,
-        fontWeight: 600,
-      },
-      Text: {
-        fontSize: 10,
-        fontWeight: 400,
-      },
-      KeyTitle: {
-        fontSize: 8,
-        fontWeight: 600,
-        textTransform: 'uppercase',
-      },
-    },
-    font: {
-      source: {
-        300: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_GNsFVfxN87gsj0.ttf',
-        400: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sFVfxN87gsj0.ttf',
-        500: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sFVfxN87gsj0.ttf',
-        600: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_ONrFVfxN87gsj0.ttf',
-        700: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_NprFVfxN87gsj0.ttf',
-      },
-    },
-    locale: 'en',
-  })
+  }),
+  typography: z.object({
+    H1: typographyStyleSchema,
+    H2: typographyStyleSchema,
+    H3: typographyStyleSchema,
+    H4: typographyStyleSchema,
+    KeyTitle: typographyStyleSchema,
+    Text: typographyStyleSchema,
+  }),
+  font: fontSchema,
+  locale: z.enum(['de', 'en']),
+})
 
-export const transformConfig = <TConfig extends z.infer<typeof configSchema>>(
+export type Config = z.infer<typeof configSchema>
+
+const defaultConfig = {
+  colors: {
+    dark: {
+      background: colorsDark['base-300'],
+      text: colorsDark['base-content'],
+      accent: colorsDark.info,
+    },
+    light: {
+      background: colorsLight['base-200'],
+      text: colorsLight['base-content'],
+      accent: colorsLight.primary,
+    },
+  },
+  typography: {
+    H1: {
+      fontSize: 32,
+      fontWeight: 700,
+    },
+    H2: {
+      fontSize: 18,
+      fontWeight: 600,
+    },
+    H3: {
+      fontSize: 16,
+      fontWeight: 600,
+    },
+    H4: {
+      fontSize: 12,
+      fontWeight: 600,
+    },
+    Text: {
+      fontSize: 10,
+      fontWeight: 400,
+    },
+    KeyTitle: {
+      fontSize: 8,
+      fontWeight: 600,
+      textTransform: 'uppercase',
+    },
+  },
+  font: {
+    source: {
+      300: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_GNsFVfxN87gsj0.ttf',
+      400: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sFVfxN87gsj0.ttf',
+      500: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sFVfxN87gsj0.ttf',
+      600: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_ONrFVfxN87gsj0.ttf',
+      700: 'https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_NprFVfxN87gsj0.ttf',
+    },
+  },
+  locale: 'en',
+} satisfies Config
+
+export const transformConfig = <TConfig extends PartialDeep<Config>>(
   config: TConfig
 ) => {
+  const mergedConfig = merge(defaultConfig, config) as TConfig & Config
+
   type TypographyComponentsByName = {
-    [K in keyof typeof config.typography]: <TAs extends 'text' | 'link'>(
+    [K in keyof typeof mergedConfig.typography]: <TAs extends 'text' | 'link'>(
       props: TypographyProps<TAs>
     ) => JSX.Element
   }
 
   const typography = Object.fromEntries(
-    Object.entries(config.typography).map(([name, style]) => {
+    Object.entries(mergedConfig.typography).map(([name, style]) => {
       const Component = <TAs extends 'text' | 'link'>(
         props: TypographyProps<TAs>
       ) => {
@@ -152,12 +158,12 @@ export const transformConfig = <TConfig extends z.infer<typeof configSchema>>(
   ) as TypographyComponentsByName
 
   const registerFonts = () => {
-    if (typeof config.font === 'string') {
+    if (typeof mergedConfig.font === 'string') {
       return
     }
     Font.register({
       family: 'custom-font',
-      fonts: Object.entries(config.font.source).map(([weight, src]) => ({
+      fonts: Object.entries(mergedConfig.font.source).map(([weight, src]) => ({
         src,
         fontWeight: Number(weight),
       })),
@@ -165,9 +171,10 @@ export const transformConfig = <TConfig extends z.infer<typeof configSchema>>(
   }
 
   return {
-    ...config,
+    ...mergedConfig,
     typography,
-    fontFamily: typeof config.font === 'string' ? config.font : 'custom-font',
+    fontFamily:
+      typeof mergedConfig.font === 'string' ? mergedConfig.font : 'custom-font',
     registerFonts,
   }
 }

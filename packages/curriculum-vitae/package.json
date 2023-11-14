@@ -4,20 +4,23 @@
   "license": "CC-BY-NC-ND-4.0",
   "type": "module",
   "scripts": {
-    "build": "tsx src/build.tsx",
-    "dev:cover": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh src/build-cover-letter.tsx dist/cover-letter-example.pdf' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
-    "dev:cv": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh src/build-cv.tsx dist/cv.pdf' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
+    "build:cv": "tsx src/build.tsx --template=cv --content=src/content/cv-en.tsx --output=dist/Nicklas_Sedlock-cv_en.pdf",
+    "dev:cover-example": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh \"--template=cover-letter --content=src/content/cover-letter-example.tsx --output=dist/cover-letter-example.pdf\" dist/cover-letter-example.pdf' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
+    "dev:cv": "concurrently -p '[{name}]' -n 'TS,REACT-PDF,LINT' -c 'magenta.bold,cyan.bold,yellow.bold' 'tsc -w' './dev.sh \"--template=cv --content=src/content/cv-en.tsx --output=dist/Nicklas_Sedlock-cv_en.pdf\" dist/Nicklas_Sedlock-cv_en.pdf' 'nodemon -w src -e ts,tsx --exec \"pnpm eslint src || exit 0\"'",
     "fix": "eslint --fix .",
     "lint": "eslint ."
   },
   "dependencies": {
     "@react-pdf/renderer": "^3.1.14",
     "cheerio": "1.0.0-rc.12",
+    "commander": "^11.1.0",
+    "lodash.merge": "^4.6.2",
     "sharp": "^0.32.6",
     "theme": "workspace:*",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/lodash.merge": "^4.6.9",
     "@types/node": "^20.8.10",
     "@types/react": "^18.2.34",
     "concurrently": "^8.2.2",
@@ -25,6 +28,7 @@
     "nodemon": "^3.0.1",
     "tsconfig": "workspace:*",
     "tsx": "^3.14.0",
+    "type-fest": "^4.6.0",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {

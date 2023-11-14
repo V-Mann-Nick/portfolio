@@ -5,6 +5,7 @@ import { zReactNode } from '../../common//utils'
 import { useConfig } from './config'
 
 export const contentSchema = z.object({
+  subject: z.string().optional(),
   city: z.string(),
   date: z.coerce.date().optional(),
   greeting: z.string(),
@@ -15,6 +16,7 @@ export const contentSchema = z.object({
 export type ContentProps = z.infer<typeof contentSchema>
 
 export const Content: React.FunctionComponent<ContentProps> = ({
+  subject,
   city,
   date,
   greeting,
@@ -35,11 +37,17 @@ export const Content: React.FunctionComponent<ContentProps> = ({
         paddingBottom: `${spacing.contentPaddingY}mm`,
         paddingLeft: `${spacing.contentPaddingX}mm`,
         paddingRight: `${spacing.contentPaddingX}mm`,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: `${spacing.contentGap}mm`,
       }}
     >
       <typography.Text style={{ marginLeft: 'auto' }}>
         {city}, {dateString}
       </typography.Text>
+      {subject && (
+        <typography.Text style={{ fontWeight: 600 }}>{subject}</typography.Text>
+      )}
       <View
         style={{
           display: 'flex',

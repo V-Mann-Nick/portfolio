@@ -53,7 +53,7 @@ export const curriculumVitaeSchema = z.object({
   header: headerSchema,
   overview: overviewSchema,
   content: contentSchema,
-  config: configSchema.optional(),
+  config: configSchema,
 })
 
 export type CurriculumVitaeProps = z.infer<typeof curriculumVitaeSchema>

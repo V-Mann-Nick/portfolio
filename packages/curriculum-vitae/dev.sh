@@ -2,13 +2,28 @@
 
 # This script is used to run the development server.
 
-pnpm tsx --watch-preserve-output --watch $1 &
+pids=()
+
+function cleanup {
+  for pid in "${pids[@]}"
+  do
+    kill $pid
+  done
+}
+
+trap cleanup EXIT
+
+pnpm tsx --watch-preserve-output --watch ./src/build.tsx $1 &
+pids+=($!)
 
 if command -v zathura &> /dev/null
 then
-    while [ ! -f dist/cv.pdf ]
+    while [ ! -f $2 ]
     do
       sleep 1
     done
-    zathura $2
+    zathura $2 &
+    pids+=($!)
 fi
+
+wait

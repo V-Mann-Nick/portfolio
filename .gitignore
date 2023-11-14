@@ -39,3 +39,5 @@ dist/
 
 # cached font-awesome icons for CV
 .fa-icons/
+
+letters/

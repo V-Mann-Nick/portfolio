@@ -1,15 +1,20 @@
 import { renderToFile } from '@react-pdf/renderer'
 
-import { getDirName } from './common/utils'
-import cvEn from './content/cv-en'
 import { CurriculumVitae, curriculumVitaeSchema } from './templates/cv'
 
-const DIR_NAME = getDirName(import.meta.url)
-const DIST_FOLDER = `${DIR_NAME}/../dist`
+const contentFile = `${process.cwd()}/${process.argv[2]}`
+const outputPath = process.argv[3]
+
+console.log(`Building cv from ${contentFile} to ${outputPath}`)
 
 try {
-  curriculumVitaeSchema.parse(cvEn)
-  await renderToFile(<CurriculumVitae {...cvEn} />, `${DIST_FOLDER}/cv.pdf`)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const content = (await import(contentFile)).default as unknown
+  await renderToFile(
+    <CurriculumVitae {...curriculumVitaeSchema.parse(content)} />,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    outputPath!
+  )
 } catch (error) {
   console.error(error)
 }

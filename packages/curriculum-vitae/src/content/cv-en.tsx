@@ -12,9 +12,10 @@ export default {
     subject:
       'Curriculum Vitae of Nicklas Sedlock - a detail-oriented and versatile programmer with a wide range of expertise',
   },
+  config: {},
   header: {
     title: 'Nicklas Sedlock',
-    subtitle: 'Programmer',
+    subtitle: 'Full Stack Engineer',
     picture: `${dirName}/me.jpeg`,
   },
   overview: {
@@ -73,19 +74,11 @@ export default {
         content: [
           {
             title: 'Programming Languages',
-            content: ['Typescript', 'Python', 'Rust'],
+            content: ['Typescript', 'Python', 'Rust', 'Java'],
           },
           {
             title: 'Frameworks',
-            content: [
-              'React',
-              'Vue',
-              'Solid',
-              'Next',
-              'Astro',
-              'FastAPI',
-              'Fastify',
-            ],
+            content: ['React', 'Solid', 'Next', 'Astro', 'FastAPI', 'Fastify'],
           },
           {
             title: 'Databases',
