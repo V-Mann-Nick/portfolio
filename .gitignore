@@ -41,3 +41,5 @@ dist/
 .fa-icons/
 
 letters/
+
+.direnv/
