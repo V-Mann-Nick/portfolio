@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@react-pdf/pdfkit@3.0.2':
+    hash: arny5ytmqovwgyw6s5lpnyak5a
+    path: patches/@react-pdf__pdfkit@3.0.2.patch
+
 importers:
 
   .:
@@ -1244,7 +1249,7 @@ packages:
       '@babel/runtime': 7.23.2
       '@react-pdf/fns': 2.0.1
       '@react-pdf/image': 2.2.2
-      '@react-pdf/pdfkit': 3.0.2
+      '@react-pdf/pdfkit': 3.0.2(patch_hash=arny5ytmqovwgyw6s5lpnyak5a)
       '@react-pdf/primitives': 3.0.1
       '@react-pdf/stylesheet': 4.1.8
       '@react-pdf/textkit': 4.2.0
@@ -1257,7 +1262,7 @@ packages:
       - encoding
     dev: false
 
-  /@react-pdf/pdfkit@3.0.2:
+  /@react-pdf/pdfkit@3.0.2(patch_hash=arny5ytmqovwgyw6s5lpnyak5a):
     resolution: {integrity: sha512-+m5rwNCwyEH6lmnZWpsQJvdqb6YaCCR0nMWrc/KKDwznuPMrGmGWyNxqCja+bQPORcHZyl6Cd/iFL0glyB3QGw==}
     dependencies:
       '@babel/runtime': 7.23.2
@@ -1267,6 +1272,7 @@ packages:
       fontkit: 2.0.2
       vite-compatible-readable-stream: 3.6.1
     dev: false
+    patched: true
 
   /@react-pdf/png-js@2.2.0:
     resolution: {integrity: sha512-csZU5lfNW73tq7s7zB/1rWXGro+Z9cQhxtsXwxS418TSszHUiM6PwddouiKJxdGhbVLjRIcuuFVa0aR5cDOC6w==}
@@ -1301,7 +1307,7 @@ packages:
       '@babel/runtime': 7.23.2
       '@react-pdf/font': 2.3.7
       '@react-pdf/layout': 3.6.3
-      '@react-pdf/pdfkit': 3.0.2
+      '@react-pdf/pdfkit': 3.0.2(patch_hash=arny5ytmqovwgyw6s5lpnyak5a)
       '@react-pdf/primitives': 3.0.1
       '@react-pdf/render': 3.2.7
       '@react-pdf/types': 2.3.4
