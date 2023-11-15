@@ -4,15 +4,35 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
+    pnpm2nix = {
+      url = "github:nzbr/pnpm2nix-nzbr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     nixpkgs,
     systems,
+    pnpm2nix,
     ...
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
+    nodejs = forEachSystem (system: nixpkgs.legacyPackages.${system}.nodejs_21);
+    pnpm = forEachSystem (system: nixpkgs.legacyPackages.${system}.nodejs_21.pkgs.pnpm);
   in {
+    # This is just for learning and testing. Not actually used - builds take too long.
+    packages = forEachSystem (system: {
+      portfolio = pnpm2nix.packages.${system}.mkPnpmPackage {
+        src = ./.;
+        nodejs = nodejs.${system};
+        pnpm = pnpm.${system};
+        installInPlace = true;
+        extraBuildInputs = [
+          nixpkgs.legacyPackages.${system}.vips
+        ];
+        script = "--filter portfolio build --outDir ../../dist";
+      };
+    });
     devShells =
       forEachSystem
       (
