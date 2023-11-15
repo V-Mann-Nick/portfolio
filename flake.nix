@@ -41,12 +41,16 @@
         in {
           default = pkgs.mkShell {
             packages = [
-              pkgs.nodejs_21
-              pkgs.nodejs_21.pkgs.pnpm
+              nodejs.${system}
+              pnpm.${system}
             ];
             # Sync the actual version of pnpm with the version in package.json
             shellHook = ''
-              ${pkgs.jq}/bin/jq ".packageManager = \"pnpm@$(pnpm --version)\"" package.json | ${pkgs.moreutils}/bin/sponge package.json
+              jq=${pkgs.jq}/bin/jq
+              sponge=${pkgs.moreutils}/bin/sponge
+              $jq ".packageManager = \"pnpm@${pnpm.${system}.version}\"" package.json | $sponge package.json
+              $jq ".engines.pnpm = \"${pnpm.${system}.version}\"" package.json | $sponge package.json
+              $jq ".engines.node = \"${nodejs.${system}.version}\"" package.json | $sponge package.json
             '';
           };
         }
