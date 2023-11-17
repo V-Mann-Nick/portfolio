@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    systems.url = "github:nix-systems/default";
     pnpm2nix = {
       url = "github:nzbr/pnpm2nix-nzbr";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,45 +15,39 @@
     pnpm2nix,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    nodejs = forEachSystem (system: nixpkgs.legacyPackages.${system}.nodejs_21);
-    pnpm = forEachSystem (system: nixpkgs.legacyPackages.${system}.nodejs_21.pkgs.pnpm);
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+    nodejs = pkgs.nodejs_21;
+    pnpm = pkgs.nodejs_21.pkgs.pnpm;
+    mkPnpmPackage = pnpm2nix.packages.${system}.mkPnpmPackage;
   in {
     # This is just for learning and testing. Not actually used - builds take too long.
-    packages = forEachSystem (system: {
-      portfolio = pnpm2nix.packages.${system}.mkPnpmPackage {
+    packages.${system} = rec {
+      portfolio = mkPnpmPackage {
+        inherit nodejs pnpm;
         src = ./.;
-        nodejs = nodejs.${system};
-        pnpm = pnpm.${system};
         installInPlace = true;
-        extraBuildInputs = [
-          nixpkgs.legacyPackages.${system}.vips
-        ];
-        script = "--filter portfolio build --outDir ../../dist";
+        extraBuildInputs = [pkgs.vips];
+        script = "build --no-cache --filter portfolio -- --outDir ../../dist";
+        # Allow build to access internet
+        __noChroot = true;
       };
-    });
-    devShells =
-      forEachSystem
-      (
-        system: let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in {
-          default = pkgs.mkShell {
-            packages = [
-              nodejs.${system}
-              pnpm.${system}
-            ];
-            # Sync the actual version of pnpm with the version in package.json
-            shellHook = ''
-              jq=${pkgs.jq}/bin/jq
-              sponge=${pkgs.moreutils}/bin/sponge
-              $jq ".packageManager = \"pnpm@${pnpm.${system}.version}\"" package.json | $sponge package.json
-              $jq ".engines.pnpm = \"${pnpm.${system}.version}\"" package.json | $sponge package.json
-              $jq ".engines.node = \"${nodejs.${system}.version}\"" package.json | $sponge package.json
-            '';
-          };
-        }
-      );
-    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    };
+    devShells.${system}.default = pkgs.mkShell {
+      packages = [
+        nodejs
+        pnpm
+        pkgs.caddy
+      ];
+      # Sync the actual version of pnpm with the version in package.json
+      shellHook = ''
+        jq=${pkgs.jq}/bin/jq
+        sponge=${pkgs.moreutils}/bin/sponge
+        $jq ".packageManager = \"pnpm@${pnpm.version}\"" package.json | $sponge package.json
+        $jq ".engines.pnpm = \"${pnpm.version}\"" package.json | $sponge package.json
+        $jq ".engines.node = \"${nodejs.version}\"" package.json | $sponge package.json
+      '';
+    };
+    formatter.${system} = pkgs.alejandra;
   };
 }
