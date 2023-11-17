@@ -1,6 +1,8 @@
 {
   description = "Envrionment for the Portfolio Monorepo";
 
+  nixConfig.sandbox = "relaxed";
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     pnpm2nix = {
@@ -31,6 +33,18 @@
         script = "build --no-cache --filter portfolio -- --outDir ../../dist";
         # Allow build to access internet
         __noChroot = true;
+      };
+      image = pkgs.dockerTools.buildImage {
+        name = "portfolio";
+        tag = "latest";
+        config = {
+          Cmd = [
+            "${pkgs.caddy}/bin/caddy"
+            "file-server"
+            "--root"
+            portfolio
+          ];
+        };
       };
     };
     devShells.${system}.default = pkgs.mkShell {
