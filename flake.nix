@@ -1,6 +1,7 @@
 {
   description = "Envrionment for the Portfolio Monorepo";
 
+  # Requires root to configure trusted-users
   nixConfig.sandbox = "relaxed";
 
   inputs = {
