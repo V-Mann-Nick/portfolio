@@ -74,7 +74,7 @@ const LandingContent: Component = () => {
             aria-label={messages().landing.scrollDownTooltip}
             {...anchorProps.forwardedProps}
           >
-            <IconFaSolidArrowDown class="text-secondary animate-bounce text-5xl" />
+            <IconFaSolidArrowDown class="text-accent animate-bounce text-5xl" />
           </a>
         )}
       </Tooltip>

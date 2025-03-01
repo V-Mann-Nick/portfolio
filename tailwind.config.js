@@ -11,8 +11,8 @@ const colorsLight = {
   "secondary-focus": "#5E81AC",
   "secondary-content": "#2e3440",
 
-  accent: "#B48EAD",
-  "accent-focus": "#95638c",
+  accent: "#A3BE8C",
+  "accent-focus": "#89ac6c",
   "accent-content": "#ECEFF4",
 
   neutral: "#2E3440",
@@ -39,8 +39,8 @@ const colorsDark = {
   "secondary-focus": "#5E81AC",
   "secondary-content": "#2e3440",
 
-  accent: "#B48EAD",
-  "accent-focus": "#95638c",
+  accent: "#A3BE8C",
+  "accent-focus": "#89ac6c",
   "accent-content": "#ECEFF4",
 
   neutral: "#2E3440",
