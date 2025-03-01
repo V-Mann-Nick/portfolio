@@ -1,0 +1,20 @@
+{
+  "imports": {
+    "~icons/fa-solid/flask": "./src/icons.d.ts",
+    "~icons/fa-solid/user": "./src/icons.d.ts",
+    "~icons/fa-solid/moon": "./src/icons.d.ts",
+    "~icons/fa-solid/sun": "./src/icons.d.ts",
+    "~icons/fa-solid/chevron-down": "./src/icons.d.ts",
+    "~icons/fa-brands/osi": "./src/icons.d.ts",
+    "~icons/fa-brands/github": "./src/icons.d.ts",
+    "~icons/fa-brands/linkedin": "./src/icons.d.ts",
+    "~icons/fa-solid/arrow-down": "./src/icons.d.ts",
+    "~icons/fa-solid/globe": "./src/icons.d.ts",
+    "~icons/fa-solid/bars": "./src/icons.d.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "solid-js",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"]
+  }
+}

@@ -45,3 +45,6 @@ letters/
 .direnv/
 
 /result
+
+# pre-commit managed by nix pre-commit-hooks
+.pre-commit-config.yaml
