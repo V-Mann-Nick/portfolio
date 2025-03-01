@@ -6,6 +6,8 @@ import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import { filterSitemapByDefaultLocale, i18n } from "astro-i18n-aut/integration";
 import Icons from "unplugin-icons/vite";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const locales = {
   en: "en",
@@ -13,6 +15,11 @@ const locales = {
 };
 
 const defaultLocale = "en";
+
+const workspaceRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+);
 
 export default defineConfig({
   site: "https://nicklas.sedlock.xyz",
@@ -42,5 +49,12 @@ export default defineConfig({
     plugins: [
       Icons({ compiler: "solid" }),
     ],
+    server: {
+      fs: {
+        allow: [
+          workspaceRoot,
+        ],
+      },
+    },
   },
 });

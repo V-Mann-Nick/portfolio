@@ -18,9 +18,15 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
-    devShells.${system}.default = pkgs.mkShell {
-      inherit (self.checks.${system}.pre-commit) shellHook;
-      packages = [pkgs.deno];
+    devShells.${system} = {
+      default = pkgs.mkShell {
+        inherit (self.checks.${system}.pre-commit) shellHook;
+        packages = [pkgs.deno];
+        LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+      };
+      build = pkgs.mkShell {
+        packages = [pkgs.deno];
+      };
     };
     checks.${system}.pre-commit = pre-commit-hooks.lib.${system}.run {
       src = ./.;

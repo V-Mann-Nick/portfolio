@@ -1,5 +1,5 @@
 {
-  "name": "portfolio",
+  "name": "website",
   "private": true,
   "license": "CC-BY-NC-ND-4.0",
   "scripts": {
@@ -8,24 +8,25 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/solid-js": "^5.0.1",
-    "@astrojs/tailwind": "^5.1.4",
-    "@fontsource-variable/fira-code": "^5.1.1",
+    "@astrojs/solid-js": "^5.0.5",
+    "@astrojs/tailwind": "^6.0.0",
+    "@fontsource-variable/fira-code": "^5.2.0",
     "@iconify-json/fa-brands": "^1.2.1",
     "@iconify-json/fa-solid": "^1.2.1",
     "@popperjs/core": "^2.11.8",
-    "@tailwindcss/typography": "^0.5.15",
-    "astro": "^5.1.1",
+    "@tailwindcss/typography": "^0.5.16",
+    "astro": "^5.4.1",
     "astro-i18n-aut": "^0.7.3",
     "clsx": "^2.1.1",
     "daisyui": "^4.12.23",
-    "link-preview-js": "^3.0.12",
+    "link-preview-js": "^3.0.14",
     "solid-collapse": "^1.1.0",
-    "solid-js": "^1.9.3",
+    "solid-js": "^1.9.5",
     "solid-popper": "^0.3.0",
-    "tailwindcss": "^3.4.17",
-    "type-fest": "^4.31.0",
-    "ua-parser-js": "^2.0.0",
-    "unplugin-icons": "^0.22.0"
+    "tailwindcss": "^4.0.9",
+    "type-fest": "^4.36.0",
+    "ua-parser-js": "^2.0.2",
+    "unplugin-icons": "^22.1.0",
+    "zod": "^3.24.2"
   }
 }

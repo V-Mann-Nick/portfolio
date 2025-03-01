@@ -29,13 +29,13 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - name: Install dependencies
-        run: nix develop -c deno install --allow-scripts
+        run: nix develop '.#build' -c deno install --allow-scripts
       - name: Build with Astro
-        run: nix develop -c deno run build
+        run: nix develop '.#build' -c deno task -f website build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: website/dist
 
   deploy:
     environment:
