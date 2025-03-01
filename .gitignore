@@ -28,9 +28,6 @@ yarn-error.log*
 # generated types
 .astro/
 
-# development cache for link previews
-.link-preview-cache/
-
 # utility folder for old stuff
 old/
 
