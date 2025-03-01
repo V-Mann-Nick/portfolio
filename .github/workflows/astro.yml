@@ -29,11 +29,11 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: nix develop -c deno install --allow-scripts
       - name: Build with Astro
-        run: deno run build
+        run: nix develop -c deno run build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
