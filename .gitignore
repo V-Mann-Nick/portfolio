@@ -1,10 +1,6 @@
 # dependencies
 node_modules
 
-# local env files
-.env
-.envrc
-
 # generated types
 .astro/
 
