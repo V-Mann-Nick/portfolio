@@ -23,6 +23,7 @@
         inherit (self.checks.${system}.pre-commit) shellHook;
         packages = [pkgs.deno];
         LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+        ENABLE_DENO_LSP = 1;
       };
       build = pkgs.mkShell {
         packages = [pkgs.deno];
@@ -32,7 +33,10 @@
       src = ./.;
       hooks = {
         alejandra.enable = true;
-        denofmt.enable = true;
+        denofmt = {
+          enable = true;
+          pass_filenames = false;
+        };
         denolint.enable = true;
       };
     };

@@ -1,11 +1,13 @@
 import { z } from "astro/zod";
 import { getLinkPreview } from "link-preview-js";
 import fs from "node:fs/promises";
+import mime from "mime";
 
 import { defaultLocale, type Locale, locales } from "./i18n/locales.ts";
 import { links } from "./links.ts";
 
 const CACHE_FOLDER = ".link-preview-cache";
+const IMAGES_FOLDER = "public/link-imgs";
 
 const cacheItemSchema = z.object({
   timestamp: z.number(),
@@ -72,9 +74,49 @@ async function fetchLinkPreview(key: string, link: string) {
       image: previewAsserted.images[0],
     };
   };
+
   const processedPreviewsByLocale = Object.fromEntries(
     locales.map((locale) => [locale, processPreview(locale)]),
   ) as Record<Locale, ReturnType<typeof processPreview>>;
+
+  const image = processedPreviewsByLocale.en?.image ??
+    processedPreviewsByLocale.de?.image;
+
+  if (image) {
+    const pathname = new URL(image).pathname;
+    const match = pathname.match(/\.([^.\/]+)$/);
+    let extension = match ? match[1] : null;
+    console.log(`Fetching image for ${key}`);
+    try {
+      const response = await fetch(image);
+      if (response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType) {
+          const ctExtensions = mime.getExtension(contentType);
+          extension = ctExtensions ?? extension;
+        }
+        const data = await response.arrayBuffer();
+        const filename = extension ? `${key}.${extension}` : `${key}`;
+        await fs.writeFile(
+          `${IMAGES_FOLDER}/${filename}`,
+          new Uint8Array(data),
+        );
+        locales.forEach((locale) => {
+          const preview = processedPreviewsByLocale[locale];
+          if (preview) {
+            preview.image = `link-imgs/${filename}`;
+          }
+        });
+      } else {
+        console.error("Could get body from response");
+        return;
+      }
+    } catch (err) {
+      console.error(`Error fetching image: ${err}`);
+      return;
+    }
+  }
+
   locales.forEach((locale) => {
     if (locale === defaultLocale) {
       return;
@@ -84,13 +126,13 @@ async function fetchLinkPreview(key: string, link: string) {
     ).every(
       ([key, value]) =>
         value ===
-          // @ts-expect-error - this is fine
-          processedPreviewsByLocale[defaultLocale]?.[key],
+          processedPreviewsByLocale[defaultLocale]?.[key as keyof LinkPreview],
     );
     if (isSameAsDefaultLocale) {
       processedPreviewsByLocale[locale] = null;
     }
   });
+
   console.log(`Done with ${key}`);
   const linkPreview = {
     timestamp: Date.now(),
@@ -100,8 +142,10 @@ async function fetchLinkPreview(key: string, link: string) {
   return linkPreview;
 }
 
-export type LinkPreview = Awaited<
-  ReturnType<typeof fetchLinkPreview>
+export type LinkPreview = NonNullable<
+  Awaited<
+    ReturnType<typeof fetchLinkPreview>
+  >
 >["previews"][Locale];
 
 export async function fetchLinkPreviews() {
@@ -125,5 +169,5 @@ export async function getCachedLinkPreviews() {
 
 export type LinkPreviews = Record<
   keyof typeof links,
-  Awaited<ReturnType<typeof fetchLinkPreview>>
+  NonNullable<Awaited<ReturnType<typeof fetchLinkPreview>>>
 >;

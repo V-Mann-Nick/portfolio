@@ -23,6 +23,8 @@
     "npm:daisyui@^4.12.23": "4.12.24",
     "npm:link-preview-js@^3.0.14": "3.0.14",
     "npm:lodash@^4.17.21": "4.17.21",
+    "npm:mime@*": "4.1.0",
+    "npm:mime@^4.1.0": "4.1.0",
     "npm:react@19": "19.0.0",
     "npm:sharp@~0.33.5": "0.33.5",
     "npm:solid-collapse@^1.1.0": "1.1.0_solid-js@1.9.5__seroval@1.2.1",
@@ -2513,6 +2515,9 @@
         "mime-db"
       ]
     },
+    "mime@4.1.0": {
+      "integrity": "sha512-X5ju04+cAzsojXKes0B/S4tcYtFAJ6tTMuSPBEn9CPGlrWr8Fiw7qYeLT0XyH80HSoAoqWCaz+MWKh22P7G1cw=="
+    },
     "minimatch@9.0.5": {
       "integrity": "sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==",
       "dependencies": [
@@ -3731,6 +3736,7 @@
             "npm:clsx@^2.1.1",
             "npm:daisyui@^4.12.23",
             "npm:link-preview-js@^3.0.14",
+            "npm:mime@^4.1.0",
             "npm:solid-collapse@^1.1.0",
             "npm:solid-js@^1.9.5",
             "npm:solid-popper@0.3",
