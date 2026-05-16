@@ -5,5 +5,10 @@
   "nodeModulesDir": "auto",
   "fmt": {
     "exclude": ["**/.link-preview-cache/**"]
-  }
+  },
+  "allowScripts": {
+    "allow": ["npm:sharp@0.34.5"],
+    "deny": ["npm:esbuild@0.25.0", "npm:esbuild@0.27.7", "npm:sharp@0.33.5"]
+  },
+  "exclude": ["**/.astro"]
 }

@@ -59,7 +59,7 @@ export const DropdownMenu = <TItem extends ItemConstraint>(
       content={(contentProps) => (
         <ul
           class={clsx(
-            "min-content menu dropdown-content rounded-box bg-base-200 z-[1] mt-2 shadow focus-visible:outline-none",
+            "min-content menu dropdown-content rounded-box bg-base-200 z-1 mt-2 shadow-sm focus-visible:outline-hidden",
           )}
           ref={setMenu}
           role="menu"

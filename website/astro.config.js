@@ -1,8 +1,8 @@
 // @ts-check
 
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 import solid from "@astrojs/solid-js";
-import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import { filterSitemapByDefaultLocale, i18n } from "astro-i18n-aut/integration";
 import Icons from "unplugin-icons/vite";
@@ -34,9 +34,6 @@ export default defineConfig({
       redirectDefaultLocale: true,
     }),
     solid(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
     sitemap({
       i18n: {
         locales,
@@ -46,9 +43,7 @@ export default defineConfig({
     }),
   ],
   vite: {
-    plugins: [
-      Icons({ compiler: "solid" }),
-    ],
+    plugins: [Icons({ compiler: "solid" }), tailwindcss()],
     server: {
       fs: {
         allow: [

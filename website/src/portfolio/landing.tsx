@@ -48,7 +48,7 @@ const LandingContent: Component = () => {
               <Tooltip placement="bottom" tooltip={media.title}>
                 {(anchorProps) => (
                   <a
-                    class="btn btn-circle btn-ghost"
+                    class="btn btn-circle btn-ghost h-12 w-12"
                     href={media.href}
                     target="_blank"
                     aria-label={media.title}

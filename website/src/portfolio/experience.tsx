@@ -30,14 +30,14 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
     props.title?.(messages()) ?? contentLinkPreview()?.title;
   return (
     <Show when={imageLinkPreview()?.image && contentLinkPreview()?.title}>
-      <li class="!m-0 !p-0">
+      <li class="m-0! p-0!">
         <a
-          class="hover:bg-base-300 hover:text-base-content !m-0 flex flex-col items-center gap-6 rounded-lg !p-4 !no-underline transition-colors sm:flex-row sm:gap-8"
+          class="hover:bg-base-300 hover:text-base-content m-0! flex flex-col items-center gap-6 rounded-lg p-4! no-underline! transition-colors sm:flex-row sm:gap-8"
           href={links[props.contentLinkKey].link}
           target="_blank"
         >
           <img
-            class="!m-0 aspect-[2/1] w-[min(100%,theme(spacing.72))] rounded-lg sm:w-52"
+            class="m-0! aspect-2/1 w-[min(100%,--spacing(72))] rounded-lg sm:w-52"
             alt={titleForAlt()
               ? `Link preview for '${titleForAlt()}'`
               : `Link preview`}
@@ -46,9 +46,9 @@ const OsContribution: Component<OsContributionDefinition> = (props) => {
           />
           <div>
             <Show when={props.title}>
-              {(title) => <h4 class="!mt-0">{title()(messages())}</h4>}
+              {(title) => <h4 class="mt-0!">{title()(messages())}</h4>}
             </Show>
-            <p class="!mb-0 text-sm">{contentLinkPreview()?.title}</p>
+            <p class="mb-0! text-sm">{contentLinkPreview()?.title}</p>
           </div>
         </a>
       </li>
@@ -62,7 +62,7 @@ const OsContributionList: Component<{
 }> = (props) => (
   <>
     <h3>{props.title}</h3>
-    <ul class="!m-0 flex list-none flex-col gap-4 !p-0 sm:gap-0">
+    <ul class="m-0! flex list-none flex-col gap-4 p-0! sm:gap-0">
       <For each={props.contributions}>{OsContribution}</For>
     </ul>
   </>
@@ -71,7 +71,7 @@ const OsContributionList: Component<{
 const OpenSourceContributions: Component = () => {
   const { messages } = useLocale();
   return (
-    <ContentFrame class="prose max-w-none shadow" as="article">
+    <ContentFrame class="prose max-w-none shadow-sm" as="article">
       <h2 class="flex gap-4">
         <FaBrandsOsi /> {messages().experience.openSource.title}
       </h2>

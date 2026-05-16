@@ -16,7 +16,7 @@ const NavigationItem: Component<SectionDefinition> = (props) => {
   return (
     <a
       class={clsx(
-        "btn rounded-none px-6",
+        "btn rounded-none px-6 h-full",
         currentSection() === props.key && "btn-secondary",
       )}
       href={`#${props.key}`}
@@ -80,7 +80,10 @@ export const Navigation: Component<NavigationProps> = (props) => (
     <MobileNavigation sections={props.sections} triggerClass="sm:hidden" />
     <div>
       <DarkModeToggle btnClass="rounded-none h-full" />
-      <LocaleSwitcher btnClass="rounded-none" positioningStrategy="fixed" />
+      <LocaleSwitcher
+        btnClass="rounded-none h-full"
+        positioningStrategy="fixed"
+      />
     </div>
   </nav>
 );

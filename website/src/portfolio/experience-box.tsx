@@ -51,7 +51,7 @@ export const ExperienceBox: Component<ExperienceBoxProps> = (props) => {
         <Tooltip placement="bottom" tooltip={props.title}>
           {(anchorProps) => (
             <a
-              class="not-prose block w-[min(100%,theme(spacing.64))]"
+              class="not-prose block w-[min(100%,--spacing(64))]"
               href={props.link}
               target="_blank"
               {...anchorProps.forwardedProps}

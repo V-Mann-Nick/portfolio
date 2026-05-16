@@ -34,7 +34,7 @@ export const Tooltip: Component<TooltipProps> = (props) => {
       popoverContainerClass={clsx(
         props.tooltipContainerClass,
         isPlainTooltip() &&
-          "bg-secondary text-secondary-content rounded px-2 py-1 text-sm",
+          "bg-secondary text-secondary-content rounded-sm px-2 py-1 text-sm",
       )}
       triggerType="hover"
     />

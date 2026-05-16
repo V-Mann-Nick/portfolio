@@ -1,6 +1,90 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    "Fira Code Variable",
+    sans-serif,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif;
+}
+
+@plugin "@tailwindcss/typography";
+
+@variant dark (&:where(.dark, .dark *));
+
+@plugin "daisyui" {
+  logs: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "nord-light";
+
+  --color-primary: "#8FBCBB";
+  --color-primary-focus: "#88C0D0";
+  --color-primary-content: "#D8DEE9";
+
+  --color-secondary: "#81A1C1";
+  --color-secondary-focus: "#5E81AC";
+  --color-secondary-content: "#2e3440";
+
+  --color-accent: "#A3BE8C";
+  --color-accent-focus: "#89ac6c";
+  --color-accent-content: "#ECEFF4";
+
+  --color-neutral: "#2E3440";
+  --color-neutral-focus: "#3B4252";
+  --color-neutral-content: "#D8DEE9";
+
+  --color-base-100: "#ECEFF4";
+  --color-base-200: "#E5E9F0";
+  --color-base-300: "#D8DEE9";
+  --color-base-content: "#2E3440";
+
+  --color-info: "#EBCB8B";
+  --color-success: "#A3BE8C";
+  --color-warning: "#D08770";
+  --color-error: "#BF616A";
+}
+
+@plugin "daisyui/theme" {
+  name: "nord-dark";
+
+  prefersdark: true;
+
+  --color-primary: "#8FBCBB";
+  --color-primary-focus: "#88C0D0";
+  --color-primary-content: "#D8DEE9";
+
+  --color-secondary: "#81A1C1";
+  --color-secondary-focus: "#5E81AC";
+  --color-secondary-content: "#2e3440";
+
+  --color-accent: "#A3BE8C";
+  --color-accent-focus: "#89ac6c";
+  --color-accent-content: "#ECEFF4";
+
+  --color-neutral: "#2E3440";
+  --color-neutral-focus: "#3B4252";
+  --color-neutral-content: "#D8DEE9";
+
+  --color-base-100: "#434c5e";
+  --color-base-200: "#3b4252";
+  --color-base-300: "#2e3440";
+  --color-base-content: "#eceff4";
+
+  --color-info: "#EBCB8B";
+  --color-success: "#A3BE8C";
+  --color-warning: "#D08770";
+  --color-error: "#BF616A";
+}
 
 html {
   scroll-behavior: smooth;
@@ -8,7 +92,7 @@ html {
 }
 
 .btn {
-  @apply normal-case;
+  @apply normal-case shadow-none border-0;
 }
 
 .collapse {
