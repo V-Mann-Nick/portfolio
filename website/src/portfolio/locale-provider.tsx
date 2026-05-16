@@ -28,10 +28,12 @@ export const LocaleProvider: ParentComponent<{ initialLocale: Locale }> = (
   const messages = () => dictonaries[currentLocale()];
   const setCurrentLocale = (locale: Locale) => {
     _setCurrentLocale(locale);
+    const path = globalThis.location.pathname.replace(/(de|en)\//, "");
+    console.log(path);
     if (defaultLocale === locale) {
-      history.pushState(null, "", "/" + location.hash);
+      history.pushState(null, "", path + location.hash);
     } else {
-      history.pushState(null, "", `/${locale}/` + location.hash);
+      history.pushState(null, "", `/${locale}${path}` + location.hash);
     }
     document.documentElement.lang = locale;
     [

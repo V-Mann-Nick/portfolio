@@ -1,0 +1,11 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { PrivacyPolicy } from '../portfolio/privacy-policy.tsx';
+import MainLayout from '../layouts/main.astro';
+
+const locale = getLocale(Astro.url);
+---
+
+<MainLayout>
+  <PrivacyPolicy client:load locale={locale} />
+</MainLayout>

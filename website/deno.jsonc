@@ -10,7 +10,8 @@
     "~icons/fa-brands/linkedin": "./src/icons.d.ts",
     "~icons/fa-solid/arrow-down": "./src/icons.d.ts",
     "~icons/fa-solid/globe": "./src/icons.d.ts",
-    "~icons/fa-solid/bars": "./src/icons.d.ts"
+    "~icons/fa-solid/bars": "./src/icons.d.ts",
+    "~icons/fa-solid/arrow-left": "./src/icons.d.ts"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
